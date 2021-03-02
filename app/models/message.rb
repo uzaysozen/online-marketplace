@@ -1,11 +1,11 @@
 # == Schema Information
 #
-# Table name: notifications
+# Table name: messages
 #
 #  id         :bigint           not null, primary key
-#  name       :string
+#  content    :text
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
-class Notification < ApplicationRecord
+class Message < ApplicationRecord
 end

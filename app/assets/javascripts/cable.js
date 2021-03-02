@@ -5,5 +5,6 @@
 
 (function() {
     this.App || (this.App = {});
+    this.App.rooms || (this.App.rooms = []);
     App.cable = ActionCable.createConsumer();
 }).call(this);

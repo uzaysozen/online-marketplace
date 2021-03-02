@@ -12,7 +12,7 @@
 
 .card.mb-3
   .card-header
-    Flash Examples
+    Flash Examplesrai
   .card-body
     %button#show-flash.btn.btn-outline-primary{ type: :button }
       = icon 'fas', 'exclamation-circle', 'Show flash message'
@@ -22,6 +22,10 @@
     Form Examples
   .card-body
     - collection = %w(These Are Some Options)
+
+    = simple_form_for @message, remote: true do |f|
+      = f.input :content, as: :string
+      = f.button :submit
 
     = simple_form_for :form_examples do |f|
       = f.input :string, as: :string
