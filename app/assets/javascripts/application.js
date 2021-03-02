@@ -1,5 +1,4 @@
 //= require jquery
-//= require jquery_ujs
 //= require ajax_setup
 //= require ajax_modal
 //= require popper
@@ -9,3 +8,6 @@
 //= require modal
 //= require select2
 //= require select2_init
+//= require rails-ujs
+//= require turbolinks
+//= require cable

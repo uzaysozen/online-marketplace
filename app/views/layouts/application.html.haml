@@ -35,13 +35,38 @@
               %span.navbar-toggler-icon
 
             .collapse.navbar-collapse#navbar-content
-              %ul.nav.navbar-nav
-                = navbar_link_to :root, title: "Go to the home page", identifier: :home do
-                  = icon 'fas', 'home'
-                  Home
-                = navbar_link_to '#', title: "Go to an unavailable page", class: 'disabled', identifier: :unavailable_page do
-                  = icon 'fas', 'ban'
-                  Unavailable Page
+              %ul.nav.navbar-nav.navbar-right
+                %li.dropdown
+                  %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", href: "#", role: "button"}
+                    Notification (
+                    %b.notifications-count>
+                      = Notification.all.length
+                    )
+                  %ul.dropdown-menu.notify-drop
+                    .notify-drop-title
+                      .row
+                        .col-md-6.col-sm-6.col-xs-6
+                          Notifications (
+                          %b#notifications-count>
+                            = Notification.all.length
+                          )
+                        .col-md-6.col-sm-6.col-xs-6.text-right
+                          %a.rIcon.allRead{"data-placement" => "bottom", "data-tooltip" => "tooltip", href: "", title: "tümü okundu."}
+                            %i.fa.fa-dot-circle-o
+                    / end notify title
+                    / notify content
+                    #notification.drop-content
+                      - Notification.all.each do |notification|
+                        %li
+                          .col-md-3.col-sm-3.col-xs-3
+                            = notification.name
+              -#%ul.nav.navbar-nav
+              -#  = navbar_link_to :root, title: "Go to the home page", identifier: :home do
+              -#    = icon 'fas', 'home'
+              -#    Home
+              -#  = navbar_link_to '#', title: "Go to an unavailable page", class: 'disabled', identifier: :unavailable_page do
+              -#    = icon 'fas', 'ban'
+              -#    Unavailable Page
               -# - if user_signed_in?
               -#   %ul.nav.navbar-nav.ml-auto
               -#     %li.nav-item.dropdown
