@@ -1,6 +1,6 @@
-class WebNotificationsChannel < ApplicationCable::Channel
+class MessagesChannel < ApplicationCable::Channel
   def subscribed
-    stream_from "web_notifications_channel"
+    stream_from "messages_channel"
   end
 
   def unsubscribed
