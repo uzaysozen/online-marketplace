@@ -1,0 +1,2 @@
+class ListingRating < ApplicationRecord
+end
