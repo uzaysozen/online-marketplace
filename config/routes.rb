@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount EpiCas::Engine, at: "/"
+  devise_for :users
   resources :notifications
   resources :messages
   match "/403", to: "errors#error_403", via: :all

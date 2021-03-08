@@ -5,6 +5,7 @@ git_source(:gitlab) { |repo_name| "git@git.shefcompsci.org.uk:#{repo_name}.git" 
 
 gem 'airbrake', github: 'epigenesys/airbrake', branch: 'airbrake-v4'
 gem 'rubycas-client', gitlab: 'gems/rubycas-client'
+gem 'epi_cas', gitlab: 'gems/epi_cas'
 gem 'epi_js'
 
 gem 'rails', '6.0.3.3'
