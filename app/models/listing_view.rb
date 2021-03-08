@@ -1,0 +1,2 @@
+class ListingView < ApplicationRecord
+end
