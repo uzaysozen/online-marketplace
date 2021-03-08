@@ -5,8 +5,6 @@ class CreateListingQuestions < ActiveRecord::Migration[6.0]
       t.string :answer, :limit => 50
       t.bigint :listing_id
 
-      t.timestamps :created_at
-      t.timestamps :updated_at
       t.timestamps
     end
   end

@@ -4,8 +4,6 @@ class CreateUserFavourites < ActiveRecord::Migration[6.0]
       t.bigint :listing_id
       t.bigint :user_id
 
-      t.timestamps :created_at
-      t.timestamps :updated_at
       t.timestamps
     end
   end

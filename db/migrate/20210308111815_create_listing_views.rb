@@ -4,8 +4,6 @@ class CreateListingViews < ActiveRecord::Migration[6.0]
       t.bigint :user_id
       t.bigint :listing_id
       
-      t.timestamps :created_at
-      t.timestamps :updated_at
       t.timestamps
     end
   end

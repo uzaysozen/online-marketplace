@@ -6,8 +6,6 @@ class CreateConversationMessages < ActiveRecord::Migration[6.0]
       t.bigint :conversation_id
       t.bigint :sender_id
       
-      t.timestamps :created_at
-      t.timestamps :updated_at
       t.timestamps
     end
   end

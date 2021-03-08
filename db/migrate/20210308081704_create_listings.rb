@@ -15,8 +15,6 @@ class CreateListings < ActiveRecord::Migration[6.0]
       t.bigint :listing_condition_id
       t.bigint :category_id
 
-      t.timestamps :created_at
-      t.timestamps :updated_at
       t.timestamps
     end
   end
