@@ -6,7 +6,7 @@ class CreateListings < ActiveRecord::Migration[6.0]
       t.string :title, :limit => 50
       t.text :description
       t.decimal :price
-      t.decimal :discounted_price
+      t.decimal :discounted_price, :null => true
       t.string :location, :limit => 50
       t.bigint :creator_id
       t.bigint :moderator_id
