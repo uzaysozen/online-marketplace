@@ -1,0 +1,2 @@
+class ListingCondition < ApplicationRecord
+end
