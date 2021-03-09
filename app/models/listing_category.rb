@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: categories
+# Table name: listing_categories
 #
 #  id         :bigint           not null, primary key
 #  name       :string(50)
@@ -8,5 +8,5 @@
 #  updated_at :datetime         not null
 #  parent_id  :bigint
 #
-class Category < ApplicationRecord
+class ListingCategory < ApplicationRecord
 end
