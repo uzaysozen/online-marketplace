@@ -11,4 +11,5 @@
 class Conversation < ApplicationRecord
     belongs_to :listing
     belongs_to :participant , class_name: "User"
+    has_many :conversation_messages
 end

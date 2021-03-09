@@ -28,4 +28,10 @@ class User < ApplicationRecord
   include EpiCas::DeviseHelper
   
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  has_many :reports
+  has_many :user_favourites
+  has_many :listings
+  has_many :listing_views
+  has_many :conversations
+  has_many :conversation_messages
   end

@@ -8,4 +8,5 @@
 #  updated_at :datetime         not null
 #
 class ListingCondition < ApplicationRecord
+    has_many :listings
 end
