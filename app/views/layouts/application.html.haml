@@ -13,13 +13,13 @@
   %body{ class: environment_notice_body_class }
     = render 'layouts/environment_notice'
 
-    = render 'components/notifications'
+    = render 'shared/notifications'
 
     #wrap
-      = render 'components/navbar'
+      = render 'shared/navbar'
 
       %main
         #main-container.container
           = yield
 
-    = render 'components/footer'
+    = render 'shared/footer'
