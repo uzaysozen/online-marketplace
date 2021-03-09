@@ -1,6 +1,5 @@
-.toasts{:style => "position: absolute; top: 0; right: 0;"}
+.toasts
   - flash.each do |name, msg|
-    - next unless name == 'alert' || name == 'notice'
     -#.alert.fade.in
     -#  .container
     -#    - if name == 'notice'
@@ -10,11 +9,15 @@
     -#    = msg
     -#    %a{ href: '#', title: 'Hide this message', data: { dismiss: :alert } } Dismiss
     -#
-    .toast{"aria-atomic" => "true", "aria-live" => "assertive", :role => "alert"}
-    .toast-header
-      %strong.mr-auto
-        = name
-      %button.ml-2.mb-1.close{"aria-label" => "Close", "data-dismiss" => "toast", :type => "button"}
-        %span{"aria-hidden" => "true"} ×
-    .toast-body
-      = msg
+    .toast{"aria-atomic": "true", "aria-live": "assertive", "role": "alert", "data-delay": "5000"}
+      .toast-header
+        %strong.mr-auto
+          - if name == 'notice'
+            = icon('fas', 'info-circle')
+          - else
+            = icon('fas', 'exclamation-circle')
+          = name.titleize
+        %button.ml-2.mb-1.close{"aria-label": "Close", "data-dismiss": "toast", "type": "button"}
+          %span{"aria-hidden" => "true"} ×
+      .toast-body
+        = msg
