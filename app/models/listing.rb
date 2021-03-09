@@ -25,5 +25,5 @@ class Listing < ApplicationRecord
     belongs_to :receiver, class_name: "User"
     belongs_to :listing_condition
     belongs_to :listing_status
-    belongs_to :listing_categories
+    belongs_to :listing_category
 end
