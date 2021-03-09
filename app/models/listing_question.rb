@@ -10,4 +10,5 @@
 #  listing_id :bigint
 #
 class ListingQuestion < ApplicationRecord
+    belongs_to :listing
 end

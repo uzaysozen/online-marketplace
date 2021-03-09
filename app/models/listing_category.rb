@@ -9,4 +9,5 @@
 #  parent_id  :bigint
 #
 class ListingCategory < ApplicationRecord
+    has_and_belongs_to_many :listings
 end

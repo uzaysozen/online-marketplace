@@ -9,4 +9,6 @@
 #  participant_id :bigint
 #
 class Conversation < ApplicationRecord
+    belongs_to :listing
+    belongs_to :participant , class_name: "User"
 end
