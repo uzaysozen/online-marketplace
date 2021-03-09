@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: listing_ratings
+#
+#  id            :bigint           not null, primary key
+#  buyer_rating  :integer
+#  seller_rating :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  listing_id    :bigint
+#
 require 'rails_helper'
 
 RSpec.describe ListingRating, type: :model do

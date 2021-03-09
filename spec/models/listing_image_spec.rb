@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: listing_images
+#
+#  id         :bigint           not null, primary key
+#  image_path :string(50)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
 require 'rails_helper'
 
 RSpec.describe ListingImage, type: :model do
