@@ -15,11 +15,10 @@
 
     = render 'shared/notifications'
 
-    #wrap
-      = render 'shared/navbar'
+    = render 'shared/navbar'
 
-      %main
-        #main-container.container
-          = yield
+    %main.bg-gray.row.m-0
+      #main-container.container.bg-white.py-6.my-auto
+        = yield
 
     = render 'shared/footer'

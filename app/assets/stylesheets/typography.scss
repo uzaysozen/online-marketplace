@@ -1,0 +1,37 @@
+@import 'variables';
+
+.text-small {
+  font-size: $font-small;
+}
+
+.text-medium {
+  font-size: $font-medium;
+}
+
+.text-large {
+  font-size: $font-large;
+}
+
+.text-huge {
+  font-size: $font-huge;
+}
+
+.text-black {
+  color: $primary-font;
+}
+
+.text-darkgray {
+  color: $darkgray
+}
+
+.text-white {
+  color: $secondary-font;
+}
+
+.text-blue {
+  color: $secondary-color;
+}
+
+.text-red {
+  color: $primary-color;
+}
