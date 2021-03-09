@@ -30,8 +30,8 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   has_many :reports
   has_many :user_favourites
-  has_many :listings
+  has_many :listings, foreign_key: "creator_id"
   has_many :listing_views
-  has_many :conversations
-  has_many :conversation_messages
+  has_many :conversations, foreign_key: "participant_id"
+  has_many :conversation_messages, foreign_key: "sender_id"
   end
