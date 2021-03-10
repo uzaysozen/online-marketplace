@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   devise_for :users
   resources :notifications
   resources :messages
+  resources :listing_conditions do
+    post :search, on: :collection
+  end
   match "/403", to: "errors#error_403", via: :all
   match "/404", to: "errors#error_404", via: :all
   match "/422", to: "errors#error_422", via: :all
