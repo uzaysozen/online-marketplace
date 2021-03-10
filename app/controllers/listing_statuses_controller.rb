@@ -47,8 +47,7 @@ class ListingStatusesController < ApplicationController
   
     # POST /listing_statuses/search
     def search
-      @listing_statuses = ListingStatus.all
-      @listing_statuses = @listing_statuses.where(name: params[:search][:name]) if params[:search][:name].present?
+      @listing_statuses = ListingStatus.where(name: params[:search][:name])
       render :index
     end
   
