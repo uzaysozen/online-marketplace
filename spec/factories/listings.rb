@@ -12,8 +12,8 @@
 #  title                :string(50)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
-#  category_id          :bigint
 #  creator_id           :bigint
+#  listing_category_id  :bigint
 #  listing_condition_id :bigint
 #  listing_status_id    :bigint
 #  moderator_id         :bigint

@@ -9,4 +9,6 @@
 #  user_id    :bigint
 #
 class ListingView < ApplicationRecord
+    belongs_to :user
+    belongs_to :listing
 end

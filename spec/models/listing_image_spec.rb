@@ -6,6 +6,7 @@
 #  image_path :string(50)
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  listing_id :bigint
 #
 require 'rails_helper'
 

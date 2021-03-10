@@ -11,4 +11,7 @@
 #  sender_id       :bigint
 #
 class ConversationMessage < ApplicationRecord
+    belongs_to :conversation
+    belongs_to :sender, class_name: "User"
+    has_many :reports
 end
