@@ -1,6 +1,6 @@
 - content_for :title, 'Log In'
 
-.row.justify-content-center.px-5
+.row.justify-content-center.px-5.flex-column-reverse.flex-md-row
   .col-12.col-md-8
     .border-gray.rounded.h-100
       .row.p-4
@@ -15,9 +15,13 @@
             The official sell and swap page of The University Of Sheffield
         .col-12.col-sm-6.text-huge.text-red.text-center
           = icon('fas', 'store')
+        .col-12.d-flex.flex-column.flex-md-row.logo-image-container.justify-content-start.pt-3
+          =image_tag "/images/logos/su.png"
+          =image_tag "/images/logos/uos.png"
+
 
   .col-12.col-md-4
-    .card.card-light
+    .card.card-light.h-100
       = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
         .card-header
           Log In

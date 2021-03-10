@@ -2,6 +2,8 @@
 %html
   %head
     %title Project - #{content_for(:title)}
+    %link{ rel: "preconnect", href: "https://fonts.gstatic.com"}
+    %link{ href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap", rel: "stylesheet"}
     %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
     %meta{ :'http-equiv' => 'X-UA-Compatible', content: 'IE=edge' }
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "content-type"}
@@ -18,7 +20,7 @@
     = render 'shared/navbar'
 
     %main.bg-gray.row.m-0
-      #main-container.container.bg-white.py-6.my-auto
+      #main-container.container.bg-white.py-6.my-auto.rounded
         = yield
 
     = render 'shared/footer'

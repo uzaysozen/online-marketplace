@@ -1,14 +1,15 @@
 /*
-  *= require colours
-  *= require typography
   *= require bootstrap_setup
   *= require font_awesome_setup
+
   *= require select2
   *= require select2-bootstrap
+
+  *= require colours
+  *= require typography
   *= require forms
-  *= require layout
+  *= require main
   *= require warning_page
-  *= require environment_notice
   *= require notifications
-  *= require bs_overrides
+  *= require images
 */
