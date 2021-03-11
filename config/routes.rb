@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   resources :listings
   resources :reports
   resources :user_favourites
+  resources :users do
+    post :search, on: :collection
+  end
 
   match "/403", to: "errors#error_403", via: :all
   match "/404", to: "errors#error_404", via: :all
