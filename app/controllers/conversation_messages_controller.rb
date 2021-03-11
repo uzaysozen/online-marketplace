@@ -47,7 +47,7 @@ class ConversationMessagesController < ApplicationController
   
     # POST /conversation_messages/search
     def search
-      @conversation_messages = ConversationMessage.where(conversation_id: params[:search][:conversation_id])
+      @conversation_messages = ConversationMessage.where(conversation_id: params[:search][:conversation_id], sender_id: params[:search][:sender_id])
       @conversation_messages = @conversation_messages.where(content: params[:search][:content]) if params[:search][:content].present?
       render :index
     end
