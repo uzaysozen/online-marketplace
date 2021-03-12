@@ -11,3 +11,4 @@
 //= require rails-ujs
 //= require turbolinks
 //= require cable
+//= require reload_toast_init

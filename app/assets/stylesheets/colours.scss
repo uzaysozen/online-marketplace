@@ -1,0 +1,21 @@
+@import 'variables';
+
+.bg-white {
+  background-color: $primary-background;
+}
+
+.bg-gray {
+  background-color: $secondary-background;
+}
+
+.bg-darkgray {
+  background-color: $tertiary-background;
+}
+
+.bg-red {
+  background-color: $primary-color;
+}
+
+.border-gray {
+  border: 1px solid $gray;
+}
