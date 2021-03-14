@@ -33,4 +33,5 @@ class Listing < ApplicationRecord
     has_many :user_favourites
     has_many :reports
     has_many :conversations
+    has_many_attached :images
 end
