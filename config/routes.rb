@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :conversation_messages do
     post :search, on: :collection
   end
-  resources :conversations
+
   resources :listing_images
   resources :listing_views
   resources :listings
@@ -30,6 +30,10 @@ Rails.application.routes.draw do
   resources :user_favourites
   resources :users do
     post :search, on: :collection
+  end
+
+  scope :profile do
+    resources :conversations
   end
 
   match "/403", to: "errors#error_403", via: :all
