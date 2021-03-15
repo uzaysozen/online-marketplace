@@ -30,6 +30,6 @@ module ApplicationHelper
   end
 
   def path_contains?(route)
-    request.path.contains?(route)
+    request.path.include?(route)
   end
 end

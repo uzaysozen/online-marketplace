@@ -1,16 +1,16 @@
 %ul.nav.nav-tabs.nav-justified.text-medium
   %li.nav-item
-    = link_to root_path, class: 'nav-link {}' do
+    = link_to root_path, class: "nav-link #{'active' if path_contains? 'listings'}" do
       = icon 'fas', 'tag', 'Listings'
   %li.nav-item
-    = link_to root_path, class: 'nav-link' do
-      = icon 'fas', 'envelope', 'Messages'
+    = link_to root_path, class: "nav-link #{'active' if path_contains? 'conversations'}" do
+      = icon 'fas', 'envelope', 'Conversations'
   %li.nav-item
-    = link_to root_path, class: 'nav-link' do
+    = link_to root_path, class: "nav-link #{'active' if path_contains? 'favourites'}" do
       = icon 'fas', 'heart', 'Favourites'
   %li.nav-item
-    = link_to root_path, class: 'nav-link' do
+    = link_to root_path, class: "nav-link #{'active' if path_contains? 'reviews'}" do
       = icon 'fas', 'star', 'Reviews'
   %li.nav-item
-    = link_to root_path, class: 'nav-link' do
+    = link_to root_path, class: "nav-link #{'active' if path_contains? 'settings'}" do
       = icon 'fas', 'cog', 'Settings'
