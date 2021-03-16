@@ -25,4 +25,11 @@ module ApplicationHelper
     lookup_context.exists?(partial_name, prefixes, true)
   end
 
+  def path_starts_with?(route)
+    request.path.start_with?(route)
+  end
+
+  def path_contains?(route)
+    request.path.include?(route)
+  end
 end

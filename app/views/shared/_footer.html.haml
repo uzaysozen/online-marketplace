@@ -1,5 +1,35 @@
-%footer#footer.bg-darkgray
-  .container
-    %p.text-white
+%footer#footer.bg-darkgray.text-white.px-4
+  .row.pt-4.m-0
+    .col-4.text-small
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.
+      Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique,
+      tortor mauris molestie elit, et lacinia ipsum quam nec dui. Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna.
+      Aenean velit odio, elementum in tempus ut, vehicula eu di
+
+    .col-4.borderx-gray.text-center
+      .text-medium
+        Have A Question? Contact Us!
+      .text-small.pt-3
+        One of our admin team will be happy to help!
+
+      %button.btn.btn-light.btn-lg.my-3
+        Contact Us
+
+    .col-4.text-center
+      %ul
+        %li
+          Home
+        %li
+          About
+        %li
+          Contact
+        %li
+          FAQ
+        %li
+          Login
+  .row.py-4.m-0
+    .col-8.text-small
+      The official marketplace of The University of Sheffield and The University of Sheffield Student Union
+      %br
       &copy; #{Date.today.year}
       = link_to 'epiGenesys', 'https://www.epigenesys.org.uk', target: '_blank', title: 'Go to the epiGenesys website'

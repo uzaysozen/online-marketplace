@@ -19,3 +19,9 @@
 .border-gray {
   border: 1px solid $gray;
 }
+
+.borderx-gray {
+  border: 1px solid $gray;
+  border-top: 0;
+  border-bottom: 0;
+}
