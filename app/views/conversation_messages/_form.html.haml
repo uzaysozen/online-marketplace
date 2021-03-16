@@ -6,7 +6,6 @@
   .form-inputs
     = f.input :content, label: false
     = f.hidden_field :conversation_id, :value => conversation.id
-    = f.hidden_field :listing_id, :value => conversation.listing.id
 
   .form-actions
     = f.button :submit, "Send Message"
