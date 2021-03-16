@@ -9,7 +9,7 @@
     .conversation
       #messages
         - @conversation.conversation_messages.each do |message|
-          = render 'conversation_messages/conversation_message', message: message, user: message.sender
+          = render 'conversation_messages/conversation_message', message: message, current_user: current_user
       = render 'conversation_messages/form', conversation_message: ConversationMessage.new, conversation: @conversation
   .panel-footer
 
