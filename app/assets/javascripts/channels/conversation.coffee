@@ -3,9 +3,7 @@ load = ->
 
   if conversation_element == null
     App.cable.disconnect()
-    console.log "channel idle..."
   else
-    console.log "trying to connect..."
     conversation_id = conversation_element.getAttribute('data-conversation-id')
     
     for subscription in App.cable.subscriptions.subscriptions
@@ -17,13 +15,11 @@ load = ->
     },
       connected: ->
         # Called when the subscription is ready for use on the server
-        console.log "connected to " + conversation_id
 
       disconnected: ->
         # Called when the subscription has been terminated by the server
 
       received: (data) ->
-        console.log data
         element = document.getElementById('user-id')
         user_id = Number(element.getAttribute('data-user-id'))
 
