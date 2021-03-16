@@ -26,7 +26,6 @@ class Listing < ApplicationRecord
     belongs_to :listing_condition
     belongs_to :listing_status
     belongs_to :listing_category
-    has_many :listing_images
     has_many :listing_views
     has_many :listing_questions
     has_many :listing_ratings
