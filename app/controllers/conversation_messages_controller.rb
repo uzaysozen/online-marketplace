@@ -24,7 +24,7 @@ class ConversationMessagesController < ApplicationController
       @conversation_message = ConversationMessage.new(conversation_message_params)
       @conversation_message.sender = current_user
       @conversation_message.save
-      SendConversationMessageJob.perform_later(@conversation_message)
+      SendConversationMessageJob.perform_later(@conversation_message, current_user)
       head :ok
     end 
   

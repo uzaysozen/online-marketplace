@@ -1,5 +1,4 @@
 #conversation-id{"data-conversation-id" => "#{@conversation.try(:id)}"}
-#user-id{"data-user-id" => "#{current_user.id}"}
 
 .panel.panel-default
   .panel-heading
@@ -10,7 +9,7 @@
     .conversation
       #messages
         - @conversation.conversation_messages.each do |message|
-          = render 'conversation_messages/conversation_message', message: message
+          = render 'conversation_messages/conversation_message', message: message, user: message.sender
       = render 'conversation_messages/form', conversation_message: ConversationMessage.new, conversation: @conversation
   .panel-footer
 
