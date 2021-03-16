@@ -22,13 +22,11 @@ class ConversationMessagesController < ApplicationController
     # POST /conversation_messages
     def create
       @conversation_message = ConversationMessage.new(conversation_message_params)
-  
-      if @conversation_message.save
-        redirect_to conversation_messages_path, notice: 'Conversation message was successfully created.'
-      else
-        render :new
-      end
-    end
+      @conversation_message.sender = current_user
+      @conversation_message.save
+      SendConversationMessageJob.perform_later(@conversation_message)
+      head :ok
+    end 
   
     # PATCH/PUT /conversation_messages/1
     def update
@@ -60,6 +58,6 @@ class ConversationMessagesController < ApplicationController
   
       # Only allow a trusted parameter "white list" through.
       def conversation_message_params
-        params.require(:conversation_message).permit(:content)
+        params.require(:conversation_message).permit(:content, :conversation_id, :listing_id)
       end
   end
