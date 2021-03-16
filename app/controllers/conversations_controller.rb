@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
   
     # GET /conversations
     def index
-      @conversations = Conversation.all
+      @conversations = Listing.find_by_id(params[:listing_id]).conversations
     end
   
     # GET /conversations/1
@@ -42,7 +42,7 @@ class ConversationsController < ApplicationController
     # DELETE /conversations/1
     def destroy
       @conversation.destroy
-      redirect_to conversations_url, notice: 'Conversation was successfully deleted.'
+      redirect_to listing_conversations_url, notice: 'Conversation was successfully deleted.'
     end
   
     private
@@ -53,6 +53,6 @@ class ConversationsController < ApplicationController
   
       # Only allow a trusted parameter "white list" through.
       def conversation_params
-        params.require(:conversation)
+        params.require(:listing_id, :participant_id)
       end
   end
