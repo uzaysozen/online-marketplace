@@ -9,6 +9,10 @@ class ListingsController < ApplicationController
     # GET /listings/1
     def show
     end
+
+    def mylistings
+      @listings = Listing.where(creator_id: current_user.id)
+    end
   
     # GET /listings/new
     def new
@@ -53,6 +57,8 @@ class ListingsController < ApplicationController
   
       # Only allow a trusted parameter "white list" through.
       def listing_params
-        params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :images [])
+        #params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :images [])
+        params.require(:listing).permit(:title, :description, :price, :creator_id, :receiver_id, :moderator_id,
+          :listing_category_id, :listing_condition_id, :listing_status_id, :discounted_price, :location, :is_active, :is_moderated, images: [])
       end
   end

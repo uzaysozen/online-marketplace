@@ -1,0 +1,11 @@
+- @listings.each do |listing|
+  %tr
+    %td= listing.title
+    %td= listing.description
+    %td= listing.price
+    %td= listing.creator_id
+    %td= listing.receiver_id
+    %td= listing.listing_category.name
+    %td= listing.listing_condition.name
+    %td= listing.listing_status.name
+    %td= link_to 'See Conversations', listing_conversations_path(listing.id)

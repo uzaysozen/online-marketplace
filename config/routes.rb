@@ -22,8 +22,7 @@ Rails.application.routes.draw do
   resources :conversation_messages do
     post :search, on: :collection
   end
-
-  resources :listing_images
+  
   resources :listing_views
   resources :listings
   resources :reports
@@ -32,8 +31,16 @@ Rails.application.routes.draw do
     post :search, on: :collection
   end
 
-  scope :profile do
-    resources :conversations
+  resources :listings do
+    scope :profile do
+      resources :conversations
+    end
+    resources :conversation_messages, except: :create
+    post 'conversation_messages/:id' => 'conversation_messages#create'
+  end
+
+  resource :listing do
+    get :mylistings
   end
 
   match "/403", to: "errors#error_403", via: :all

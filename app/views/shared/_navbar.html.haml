@@ -14,6 +14,9 @@
         = navbar_link_to '#', title: "Go to an unavailable page", class: 'disabled', identifier: :unavailable_page do
           = icon 'fas', 'ban'
           Unavailable Page
+        = navbar_link_to listings_path, title: "Go to listings", identifier: :listings do
+          = icon 'fas', 'folder-open'
+          Listings
 
       %ul.nav.navbar-nav.ml-auto
         - if user_signed_in?
@@ -24,6 +27,8 @@
             .dropdown-menu{ aria: { labelledby: '#navbar-user-link' } }
               = link_to destroy_user_session_path, class: 'dropdown-item', method: :delete, title: "Log out of the system" do
                 = icon 'fas', 'sign-out-alt', 'Log out'
+              = link_to mylistings_listing_path, class: 'dropdown-item', title: "My Listings" do
+                = icon 'fas', 'list', 'My Listings'
         - else
           = navbar_link_to new_user_session_path, identifier: :login do
             Login

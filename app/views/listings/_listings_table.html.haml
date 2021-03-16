@@ -1,0 +1,11 @@
+- @listings.each do |listing|
+  %tr
+    %td= listing.title
+    %td= listing.description
+    %td= listing.price
+    %td= listing.creator_id
+    %td= listing.receiver_id
+    %td= listing.listing_category.name
+    %td= listing.listing_condition.name
+    %td= listing.listing_status.name
+    %td= link_to 'Enquire', listing_conversation_path(listing.id, current_user.conversations.find_or_create_by(listing_id: listing.id, participant_id: current_user.id))
