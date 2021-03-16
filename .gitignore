@@ -46,4 +46,3 @@ vendor/webdrivers
 
 # Don't version node/npm modules
 node_modules/
-package-lock.json
