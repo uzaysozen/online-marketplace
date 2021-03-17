@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_10_171410) do
+ActiveRecord::Schema.define(version: 2021_03_17_130805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,12 @@ ActiveRecord::Schema.define(version: 2021_03_10_171410) do
 
   create_table "listing_conditions", force: :cascade do |t|
     t.string "name", limit: 50
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "listing_deliveries", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -109,6 +115,14 @@ ActiveRecord::Schema.define(version: 2021_03_10_171410) do
     t.bigint "listing_status_id"
     t.bigint "listing_condition_id"
     t.bigint "listing_category_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "delivery_id"
+    t.boolean "swap"
+  end
+
+  create_table "listings_delivery", force: :cascade do |t|
+    t.string "name", limit: 50
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -1,0 +1,26 @@
+= simple_form_for(@listing) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :title, hint: 'Use a descriptive title to promote your item'
+    = f.input :price, hint: 'Leaving he price empty will set the price as \'Free\''   
+    = f.input :image, as: :file, label: 'Add a photo'
+    = f.input :description, hint: '(Max 200 words)'
+    = f.association :listing_condition, label: 'Condition'
+    = f.association :listing_category, label: 'Category'
+    -#= f.input :delivery, as: := radio_button object_name, method, tag_value, {}
+    -#= f.input :swap, label: 'Swaps'
+
+
+    -# metadata
+    = f.association :listing_status, :value => 0
+    = f.hidden_field :is_active, :value => false
+    = f.hidden_field :is_moderated, :vaue => false
+    = f.hidden_field :creator_id, :value => current_user.id
+    = f.hidden_field :receiver_id, :value => current_user.id
+    = f.hidden_field :moderator_id, :value => current_user.id
+    = f.hidden_field :location, :value => nil
+    = f.hidden_field :discounted_price, :value => nil
+
+  .form-actions
+    = f.button :submit
