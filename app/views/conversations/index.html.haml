@@ -1,6 +1,6 @@
 .panel.panel-default
   .panel-heading
-    %h3.panel-title Listing conversations
+    %h3.panel-title My conversations
   .panel-body
 
   %table.table
@@ -16,7 +16,7 @@
           %td= convo.id
           %td= convo.participant.givenname
           %td= convo.listing.title
-          %td= link_to 'Reply', listing_conversation_path(convo.listing.id, current_user.conversations.find_by(listing_id: convo.listing.id, participant_id: convo.listing.receiver.id))
+          %td= link_to 'Reply', convo
 
   .panel-footer
-    = link_to 'Go Back', mylistings_listing_path, class: 'btn btn-default'
+    = link_to 'Go Back', :back, class: 'btn btn-default'

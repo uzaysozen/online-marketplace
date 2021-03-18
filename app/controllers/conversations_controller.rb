@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
   
     # GET /conversations
     def index
-      @conversations = Listing.find_by_id(params[:listing_id]).conversations
+      @conversations = Conversation.where(participant_id: current_user.id)
     end
   
     # GET /conversations/1

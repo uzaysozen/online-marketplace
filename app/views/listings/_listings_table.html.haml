@@ -8,4 +8,4 @@
     %td= listing.listing_category.name
     %td= listing.listing_condition.name
     %td= listing.listing_status.name
-    %td= link_to 'Enquire', listing_conversation_path(listing.id, current_user.conversations.find_or_create_by(listing_id: listing.id, participant_id: current_user.id))
+    %td= link_to 'Enquire', conversation_path(current_user.conversations.find_or_create_by(listing_id: listing.id, participant_id: current_user.id))

@@ -19,28 +19,28 @@ Rails.application.routes.draw do
   resources :listing_ratings do
     post :search, on: :collection
   end
-  resources :conversation_messages do
-    post :search, on: :collection
-  end
   
   resources :listing_views
-  resources :listings
+  resources :listings do
+    collection do
+      get :mylistings
+    end
+  end
   resources :reports
   resources :user_favourites
   resources :users do
     post :search, on: :collection
   end
 
-  resources :listings do
-    scope :profile do
-      resources :conversations
+  scope :profile do
+    resources :conversations do
+      resources :conversation_messages, except: :create do
+        member do
+          post :send_message
+          patch :delete_message
+        end
+      end
     end
-    resources :conversation_messages, except: :create
-    post 'conversation_messages/:id' => 'conversation_messages#create'
-  end
-
-  resource :listing do
-    get :mylistings
   end
 
   match "/403", to: "errors#error_403", via: :all
