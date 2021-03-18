@@ -20,8 +20,12 @@ load = ->
         # Called when the subscription has been terminated by the server
 
       received: (data) ->
-        messageContainer = document.getElementById('messages')
-        messageContainer.innerHTML = messageContainer.innerHTML + data.html
+        if data.message.is_deleted
+          messageContent = document.getElementById('message-' + data.message.id)
+          messageContent.innerHTML = data.html
+        else
+          messageContainer = document.getElementById('messages')
+          messageContainer.innerHTML = messageContainer.innerHTML + data.html
 
 document.addEventListener 'turbolinks:load', load
 

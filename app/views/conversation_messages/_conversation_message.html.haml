@@ -1,4 +1,13 @@
-%div{class: "message #{'me' if message.sender == current_user}"}
-  .content-container
-    .content
-      = message.content
+- if message.is_deleted
+  %div{class: "message #{'me' if message.sender == current_user}", id: "message-#{message.id}"}
+    .content-container
+      .content
+        This message was deleted
+- else
+  %div{class: "message #{'me' if message.sender == current_user}", id: "message-#{message.id}"}
+    .content-container
+      .content
+        = message.content
+        - if message.sender == current_user
+          .delete-form
+            = render 'conversation_messages/delete_form', message: message

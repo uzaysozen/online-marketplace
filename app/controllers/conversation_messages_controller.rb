@@ -1,5 +1,5 @@
 class ConversationMessagesController < ApplicationController
-    before_action :set_conversation_message, only: [:show, :edit, :update, :destroy]
+    before_action :set_conversation_message, only: [:show, :edit, :update, :destroy, :delete_message]
   
     # GET /conversation_messages
     def index
@@ -20,9 +20,16 @@ class ConversationMessagesController < ApplicationController
     end
   
     # POST /conversation_messages
-    def create
+    def send_message
       @conversation_message = ConversationMessage.new(conversation_message_params)
       @conversation_message.sender = current_user
+      @conversation_message.save
+      SendConversationMessageJob.perform_later(@conversation_message, current_user)
+      head :ok
+    end 
+
+    def delete_message
+      @conversation_message.is_deleted = true
       @conversation_message.save
       SendConversationMessageJob.perform_later(@conversation_message, current_user)
       head :ok

@@ -24,6 +24,9 @@
             .content {
               background-color: #3385ff;
               color: white;
+              .delete-form {
+                display: inline-block;
+              }
             }
           }
         }
