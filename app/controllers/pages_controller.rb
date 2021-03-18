@@ -7,4 +7,8 @@ class PagesController < ApplicationController
     @message = Message.new
   end
 
+  def admin
+    @current_nav_identifier = :admin
+  end
+
 end
