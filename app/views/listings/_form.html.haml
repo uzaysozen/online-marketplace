@@ -8,18 +8,19 @@
     = f.input :description, hint: '(Max 200 words)'
     = f.association :listing_condition, label: 'Condition'
     = f.association :listing_category, label: 'Category'
-    -#= f.input :delivery, as: := radio_button object_name, method, tag_value, {}
-    -#= f.input :swap, label: 'Swaps'
+    = f.association :listing_deliveries, label: 'Delivery'
+    = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
+    %p Swaps
+    = f.input :swap, label: 'Open to swaps'
+    = f.association :listing_tags, label: 'Tags', hint: 'Add relevant keywords to ensure your listing appear on search (E.g. Education)'
 
-
-    -# metadata
-    = f.association :listing_status, :value => 0
+    -# Hidden metadata
+    = f.hidden_field :listing_status_id, :value => 0
     = f.hidden_field :is_active, :value => false
     = f.hidden_field :is_moderated, :vaue => false
     = f.hidden_field :creator_id, :value => current_user.id
     = f.hidden_field :receiver_id, :value => current_user.id
     = f.hidden_field :moderator_id, :value => current_user.id
-    = f.hidden_field :location, :value => nil
     = f.hidden_field :discounted_price, :value => nil
 
   .form-actions

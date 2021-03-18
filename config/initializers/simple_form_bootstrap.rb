@@ -15,7 +15,7 @@
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
   # Default class for buttons
-  config.button_class = 'btn'
+  config.button_class = 'btn btn-outline-secondary btn-lg'
 
   # Define the default class of the input wrapper of the boolean input.
   config.boolean_label_class = 'form-check-label'
@@ -58,9 +58,9 @@ SimpleForm.setup do |config|
     b.optional :min_max
     b.optional :readonly
     b.use :label
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
     b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
     b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
 
   # vertical input for boolean

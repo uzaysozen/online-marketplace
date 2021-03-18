@@ -14,7 +14,6 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  creator_id           :bigint
-#  delivery_id          :bigint
 #  listing_category_id  :bigint
 #  listing_condition_id :bigint
 #  listing_status_id    :bigint
@@ -28,11 +27,12 @@ class Listing < ApplicationRecord
     belongs_to :listing_condition
     belongs_to :listing_status
     belongs_to :listing_category
-    belongs_to :listing_delivery
     has_many :listing_images
     has_many :listing_views
     has_many :listing_questions
     has_many :listing_ratings
+    has_many :listing_deliveries
+    has_many :listing_tags
     has_many :user_favourites
     has_many :reports
     has_many :conversations

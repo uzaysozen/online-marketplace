@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_130805) do
+ActiveRecord::Schema.define(version: 2021_03_17_171547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,12 @@ ActiveRecord::Schema.define(version: 2021_03_17_130805) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "deliveries", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "listing_categories", force: :cascade do |t|
     t.bigint "parent_id"
     t.datetime "created_at", precision: 6, null: false
@@ -60,9 +66,10 @@ ActiveRecord::Schema.define(version: 2021_03_17_130805) do
   end
 
   create_table "listing_deliveries", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "listing_id"
+    t.bigint "delivery_id"
   end
 
   create_table "listing_images", force: :cascade do |t|
@@ -94,6 +101,13 @@ ActiveRecord::Schema.define(version: 2021_03_17_130805) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "listing_tags", force: :cascade do |t|
+    t.bigint "listing_id"
+    t.bigint "tag_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "listing_views", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "listing_id"
@@ -117,8 +131,14 @@ ActiveRecord::Schema.define(version: 2021_03_17_130805) do
     t.bigint "listing_category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "delivery_id"
     t.boolean "swap"
+  end
+
+  create_table "listings_deliveries", force: :cascade do |t|
+    t.bigint "listing_id"
+    t.bigint "listing_delivery_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "listings_delivery", force: :cascade do |t|
@@ -164,6 +184,12 @@ ActiveRecord::Schema.define(version: 2021_03_17_130805) do
     t.string "key", limit: 50
     t.string "value"
     t.text "blocked_words"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

@@ -2,10 +2,11 @@
 #
 # Table name: listing_deliveries
 #
-#  id         :bigint           not null, primary key
-#  name       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id          :bigint           not null, primary key
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  delivery_id :bigint
+#  listing_id  :bigint
 #
 require 'rails_helper'
 
