@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   get :javascript_warning, to: 'errors#javascript_warning'
 
   root to: "pages#home"
+  get "pages/admin" => "pages#admin"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
