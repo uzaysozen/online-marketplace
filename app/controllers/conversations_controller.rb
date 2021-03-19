@@ -3,7 +3,7 @@ class ConversationsController < ApplicationController
   
     # GET /conversations
     def index
-      @conversations = Conversation.where(participant_id: current_user.id)
+      @conversations = Conversation.profile(current_user)
     end
   
     # GET /conversations/1
