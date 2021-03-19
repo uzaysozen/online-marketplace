@@ -25,6 +25,10 @@
               = icon 'fas', 'user-circle', current_user.username
               %b.caret
             .dropdown-menu{ aria: { labelledby: '#navbar-user-link' } }
+              - if current_user.administrator?
+                = link_to pages_admin_path, class: 'dropdown-item', title: "Admin's Page", identifier: :admin do
+                  Admin Page
+                .dropdown-divider
               = link_to destroy_user_session_path, class: 'dropdown-item', method: :delete, title: "Log out of the system" do
                 = icon 'fas', 'sign-out-alt', 'Log out'
         - else

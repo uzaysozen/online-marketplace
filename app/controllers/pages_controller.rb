@@ -6,4 +6,8 @@ class PagesController < ApplicationController
     @current_nav_identifier = :home
   end
 
+  def admin
+    @current_nav_identifier = :admin
+  end
+
 end
