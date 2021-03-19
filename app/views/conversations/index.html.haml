@@ -1,1 +1,22 @@
-= render @conversations
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title My conversations
+  .panel-body
+
+  %table.table
+    %thead
+      %tr
+        %th Conversation ID
+        %th Name
+        %th Listing
+
+    %tbody
+      - @conversations.each do |convo|
+        %tr
+          %td= convo.id
+          %td= convo.participant.givenname
+          %td= convo.listing.title
+          %td= link_to 'Reply', convo
+
+  .panel-footer
+    = link_to 'Go Back', :back, class: 'btn btn-default'

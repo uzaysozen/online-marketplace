@@ -15,6 +15,7 @@ module Project
   class Application < Rails::Application
     # Send queued jobs to delayed_job
     config.active_job.queue_adapter = :delayed_job
+    config.generators.javascript_engine = :js
 
     # This points to our own routes middleware to handle exceptions
     config.exceptions_app = self.routes

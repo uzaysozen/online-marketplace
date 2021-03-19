@@ -1,0 +1,21 @@
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title My Listings
+  .panel-body
+
+  %table.table
+    %thead
+      %tr
+        %th Title
+        %th Description
+        %th Price
+        %th Creator
+        %th Receiver
+        %th Category
+        %th Condition
+        %th Status
+
+    %tbody#listings-table
+      = render 'mylistings_table'
+  .panel-footer
+    = link_to 'Go Back', listings_path, class: 'btn btn-default'

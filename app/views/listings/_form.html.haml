@@ -1,0 +1,23 @@
+= simple_form_for(@listing) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :title
+    = f.input :description
+    = f.input :price
+    = f.input :is_active
+    = f.input :is_moderated
+    = f.input :image, as: :file
+    = f.hidden_field :creator_id, :value => current_user.id
+    = f.hidden_field :receiver_id, :value => current_user.id
+    = f.hidden_field :moderator_id, :value => current_user.id
+    = f.hidden_field :location, :value => nil
+    = f.hidden_field :discounted_price, :value => nil
+    
+
+    = f.association :listing_category
+    = f.association :listing_status
+    = f.association :listing_condition
+
+  .form-actions
+    = f.button :submit

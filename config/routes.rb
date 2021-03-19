@@ -19,13 +19,13 @@ Rails.application.routes.draw do
   resources :listing_ratings do
     post :search, on: :collection
   end
-  resources :conversation_messages do
-    post :search, on: :collection
-  end
-
-  resources :listing_images
+  
   resources :listing_views
-  resources :listings
+  resources :listings do
+    collection do
+      get :mylistings
+    end
+  end
   resources :reports
   resources :user_favourites
   resources :users do
@@ -33,7 +33,14 @@ Rails.application.routes.draw do
   end
 
   scope :profile do
-    resources :conversations
+    resources :conversations do
+      resources :conversation_messages, except: :create do
+        member do
+          post :send_message
+          patch :delete_message
+        end
+      end
+    end
   end
 
   match "/403", to: "errors#error_403", via: :all

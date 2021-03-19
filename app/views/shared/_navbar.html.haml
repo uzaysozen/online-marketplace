@@ -14,6 +14,9 @@
         = navbar_link_to '#', title: "Go to an unavailable page", class: 'disabled', identifier: :unavailable_page do
           = icon 'fas', 'ban'
           Unavailable Page
+        = navbar_link_to listings_path, title: "Go to listings", identifier: :listings do
+          = icon 'fas', 'folder-open'
+          Listings
 
       %ul.nav.navbar-nav.ml-auto
         - if user_signed_in?
