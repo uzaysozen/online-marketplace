@@ -3,7 +3,7 @@
 
   .form-inputs
     = f.input :title, hint: 'Use a descriptive title to promote your item'
-    = f.input :price, hint: 'Leaving he price empty will set the price as \'Free\''   
+    = f.input :price, hint: 'Leaving the price empty will set the price as \'Free\''   
     = f.input :image, as: :file, label: 'Add a photo'
     = f.input :description, hint: '(Max 200 words)'
     = f.association :listing_condition, label: 'Condition'
