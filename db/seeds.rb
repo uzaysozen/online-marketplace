@@ -6,3 +6,6 @@ categories = ListingCategory.create([{name: 'Books'}, {name: 'Clothing'}, {name:
 
 # Item conditions
 conditions = ListingCondition.create([{name: 'New'}, {name: 'Used'}, {name: 'For parts or not working'}])
+
+# Listing status
+listing_status = ListingStatus.create([{name: 'Pending'}, {name: 'Active'}, {name: 'Complete'}, {name: 'Deleted'}])
