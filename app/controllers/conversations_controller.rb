@@ -4,6 +4,7 @@ class ConversationsController < ApplicationController
     # GET /conversations
     def index
       @conversations = Conversation.profile(current_user)
+      #TODO remove message content before returning
     end
   
     # GET /conversations/1
