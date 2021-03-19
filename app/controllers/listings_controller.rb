@@ -9,6 +9,10 @@ class ListingsController < ApplicationController
     # GET /listings/1
     def show
     end
+
+    def mylistings
+      @listings = Listing.where(creator_id: current_user.id)
+    end
   
     # GET /listings/new
     def new

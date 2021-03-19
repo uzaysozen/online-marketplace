@@ -1,0 +1,34 @@
+.conversation {
+    height: 60vh;
+  
+    #messages {
+      height: 70%;
+      overflow-y: scroll;
+      padding-bottom: 200px;
+      padding-top: 10px;
+    }
+
+    .message {
+        min-height: 59px;
+        .content-container {
+          display: inline-block;
+          .content {
+            background-color: #4d94ff;
+            padding: 8px 16px;
+            border-radius: 20px;
+          }
+        }
+        &.me {
+          .content-container {
+            float: right;
+            .content {
+              background-color: #3385ff;
+              color: white;
+              .delete-form {
+                display: inline-block;
+              }
+            }
+          }
+        }
+      }
+}
