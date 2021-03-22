@@ -22,8 +22,10 @@ Rails.application.routes.draw do
   
   resources :listing_views
   resources :listings do
-    collection do
-      get :mylistings
+    scope :profile do
+      collection do
+        get :mylistings
+      end
     end
   end
   resources :reports

@@ -1,17 +1,17 @@
 class ListingsController < ApplicationController
     before_action :set_listing, only: [:show, :edit, :update, :destroy]
-  
+    
     # GET /listings
     def index
       @listings = Listing.all
     end
+
+    def mylistings
+      @listings = Listing.profile(current_user)
+    end
   
     # GET /listings/1
     def show
-    end
-
-    def mylistings
-      @listings = Listing.where(creator_id: current_user.id)
     end
   
     # GET /listings/new
