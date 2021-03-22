@@ -38,8 +38,8 @@ Rails.application.routes.draw do
     resources :conversations do
       resources :conversation_messages, except: :create do
         member do
-          post :send_message
-          patch :delete_message
+          post :send_message, :as => 'send'
+          patch :delete_message, :as => 'delete'
         end
       end
     end
