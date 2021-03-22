@@ -14,6 +14,7 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  creator_id           :bigint
+#  delivery_id          :bigint
 #  listing_category_id  :bigint
 #  listing_condition_id :bigint
 #  listing_status_id    :bigint
