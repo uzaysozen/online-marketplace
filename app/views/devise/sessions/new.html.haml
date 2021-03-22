@@ -29,6 +29,6 @@
           = f.input :username, autofocus: true, required: true
           = f.input :password, required: true
         .card-footer
-          = submit_button 'Log in'
+          = submit_button 'Log in', feedback_text: 'Logging in...'
           .mt-3= render "devise/shared/links"
 
