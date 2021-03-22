@@ -3,7 +3,12 @@ class ConversationsController < ApplicationController
   
     # GET /conversations
     def index
-      @conversations = Conversation.profile(current_user)
+      @sent = Conversation.profile(current_user)
+      listings = Listing.profile(current_user)
+      @received = []
+      listings.each do |listing|
+        @received += listing.conversations
+      end
     end
   
     # GET /conversations/1
