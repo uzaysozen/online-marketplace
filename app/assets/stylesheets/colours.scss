@@ -28,6 +28,14 @@
   border-bottom: 0;
 }
 
+.border-red {
+  border: solid 2px $primary-color;
+}
+
+.border-blue {
+  border: solid 2px $secondary-color;
+}
+
 // Buttons
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
