@@ -14,6 +14,7 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  creator_id           :bigint
+#  delivery_id          :bigint
 #  listing_category_id  :bigint
 #  listing_condition_id :bigint
 #  listing_status_id    :bigint
@@ -36,4 +37,5 @@ class Listing < ApplicationRecord
     has_many :reports
     has_many :conversations
     has_many_attached :images
+    scope :profile, ->(current_user) { where(creator_id: current_user.id) }
 end

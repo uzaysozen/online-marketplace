@@ -22,8 +22,10 @@ Rails.application.routes.draw do
   
   resources :listing_views
   resources :listings do
-    collection do
-      get :mylistings
+    scope :profile do
+      collection do
+        get :mylistings
+      end
     end
   end
   resources :reports
@@ -36,8 +38,8 @@ Rails.application.routes.draw do
     resources :conversations do
       resources :conversation_messages, except: :create do
         member do
-          post :send_message
-          patch :delete_message
+          post :send_message, :as => 'send'
+          patch :delete_message, :as => 'delete'
         end
       end
     end

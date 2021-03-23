@@ -20,9 +20,9 @@ load = ->
         # Called when the subscription has been terminated by the server
 
       received: (data) ->
-        if data.message.is_deleted
-          messageContent = document.getElementById('message-' + data.message.id)
-          messageContent.innerHTML = data.html
+        if data.message_id
+          messageContent = document.getElementById('message-' + data.message_id)
+          messageContent.remove()
         else
           messageContainer = document.getElementById('messages')
           messageContainer.innerHTML = messageContainer.innerHTML + data.html

@@ -86,7 +86,6 @@ ActiveRecord::Schema.define(version: 2021_03_18_090626) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-<<<<<<< HEAD
   create_table "listing_deliveries", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -94,15 +93,6 @@ ActiveRecord::Schema.define(version: 2021_03_18_090626) do
     t.bigint "delivery_id"
   end
 
-  create_table "listing_images", force: :cascade do |t|
-    t.string "image_path", limit: 50
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "listing_id"
-  end
-
-=======
->>>>>>> master
   create_table "listing_questions", force: :cascade do |t|
     t.string "question", limit: 50
     t.string "answer", limit: 50
@@ -155,14 +145,8 @@ ActiveRecord::Schema.define(version: 2021_03_18_090626) do
     t.bigint "listing_category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "delivery_id"
     t.boolean "swap"
-  end
-
-  create_table "listings_deliveries", force: :cascade do |t|
-    t.bigint "listing_id"
-    t.bigint "listing_delivery_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "listings_delivery", force: :cascade do |t|

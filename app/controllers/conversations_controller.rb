@@ -3,12 +3,17 @@ class ConversationsController < ApplicationController
   
     # GET /conversations
     def index
-      @conversations = Conversation.profile(current_user)
-      #TODO remove message content before returning
+      @sent = Conversation.profile(current_user)
+      listings = Listing.profile(current_user)
+      @received = []
+      listings.each do |listing|
+        @received += listing.conversations
+      end
     end
   
     # GET /conversations/1
     def show
+      @messages = @conversation.conversation_messages.where(is_deleted: nil)
     end
   
     # GET /conversations/new
@@ -42,8 +47,12 @@ class ConversationsController < ApplicationController
   
     # DELETE /conversations/1
     def destroy
-      @conversation.destroy
-      redirect_to listing_conversations_url, notice: 'Conversation was successfully deleted.'
+      if @conversation.conversation_messages.empty?
+        @conversation.destroy
+        redirect_to listings_path
+      else
+        redirect_to conversations_path
+      end
     end
   
     private
