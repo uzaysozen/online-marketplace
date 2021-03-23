@@ -8,9 +8,8 @@
   .panel-body
     .conversation
       #messages
-        - @conversation.conversation_messages.each do |message|
+        - @messages.each do |message|
           = render 'conversation_messages/conversation_message', message: message, current_user: current_user
       = render 'conversation_messages/send_form', conversation_message: ConversationMessage.new, conversation: @conversation
   .panel-footer
-
-    = link_to 'Back', :back
+    = link_to 'Back', @conversation, method: :delete

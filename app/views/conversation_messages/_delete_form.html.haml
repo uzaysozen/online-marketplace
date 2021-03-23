@@ -1,5 +1,5 @@
 -# frozen_string_literal: true
-= simple_form_for(message, url: delete_message_conversation_conversation_message_path(message.conversation, message), method: :patch, remote: true) do |f|
+= simple_form_for(message, url: delete_conversation_conversation_message_path(message.conversation, message), method: :patch, remote: true) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 

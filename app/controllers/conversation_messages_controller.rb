@@ -31,7 +31,7 @@ class ConversationMessagesController < ApplicationController
     def delete_message
       @conversation_message.is_deleted = true
       @conversation_message.save
-      SendConversationMessageJob.perform_later(@conversation_message, current_user)
+      DeleteConversationMessageJob.perform_later(@conversation_message.conversation, @conversation_message.id)
       head :ok
     end 
   
