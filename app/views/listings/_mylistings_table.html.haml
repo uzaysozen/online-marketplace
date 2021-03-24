@@ -8,3 +8,4 @@
     %td= listing.listing_category.name
     %td= listing.listing_condition.name
     %td= listing.listing_status.name
+    %td= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' }
