@@ -21,6 +21,7 @@ class ListingsController < ApplicationController
   
     # GET /listings/1/edit
     def edit
+      render layout: false
     end
   
     # POST /listings
@@ -37,9 +38,10 @@ class ListingsController < ApplicationController
     # PATCH/PUT /listings/1
     def update
       if @listing.update(listing_params)
-        redirect_to listings_path, notice: 'Listing was successfully updated.'
+        @listings = Listing.all
+        render 'update_success'
       else
-        render :edit
+        render 'update_failure'
       end
     end
   
