@@ -4,8 +4,6 @@ set :user,        'demo.team01'
 set :deploy_to,   -> { "/srv/services/#{fetch(:user)}" }
 set :log_level,   :debug
 
-set :rvm_ruby_version, 'ruby-2.6.2'
-
 ## Server configuration
 server fetch(:server), user: fetch(:user), roles: %w{web app db}
 
