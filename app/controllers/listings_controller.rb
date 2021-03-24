@@ -48,6 +48,13 @@ class ListingsController < ApplicationController
       @listing.destroy
       redirect_to listings_url, notice: 'Listing was successfully deleted.'
     end
+
+    # POST /products/search
+    def search
+      @listings = Listing.all
+      @listings = @listings.where("title like ?", "%#{params[:search][:search_title]}%") if params[:search][:search_title].present?
+      render :index
+    end
   
     private
       # Callback functions to share common setup or constraints between actions.
