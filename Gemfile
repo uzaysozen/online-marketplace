@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby '~> 2.6.2'
+ruby '2.6.6'
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}.git" }
 git_source(:gitlab) { |repo_name| "git@git.shefcompsci.org.uk:#{repo_name}.git" }
 
