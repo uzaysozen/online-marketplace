@@ -1,0 +1,55 @@
+- content_for :title, 'My listings'
+
+
+.row.justify-content-left.flex-column-reverse.flex-md-row.listing-container
+  .col-12.col-md-12
+    .border-none.rounded.h-100
+      .row.p-2
+        
+        .col-12.col-sm-2.pl-0.text-left.listing-image-container
+          %p
+          =image_tag "/images/logos/su.png"
+
+        .col-12.col-sm-5.pl-0.text-left.listing-description-container
+          
+          .text-medium.text-red.text-left
+            %p
+            Item Name          
+            %p
+               
+          .text-small.text-black.border-right-black
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.
+            Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique,
+
+        .col-12.col-sm-3.pl-5.text-left.listing-price-container  
+          .text-small.text-black
+            %p
+            acc19pm  
+            %p
+          .text-small.text-darkgray 
+            Condition
+            %p
+
+          .text-small.text-darkgray 
+            Delivery Option
+            %p
+
+          .text-medium.text-black
+            £10.00
+
+        .col-12.col-sm-2.text-left    
+          
+          .text-small.text-center.btn-secondary.rounded
+            %p
+            Edit
+            %p
+
+          .text-small.text-center.text-blue.border-blue.rounded 
+            See Details
+            
+          %p 
+
+          .text-small.text-center.text-red.border-red.rounded
+            = icon('fas', 'trash') 
+            Delete
+

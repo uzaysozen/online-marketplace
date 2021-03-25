@@ -33,7 +33,18 @@ Rails.application.routes.draw do
   resources :users do
     post :search, on: :collection
   end
+  
+  resources :listings do
+    scope :profile do
+      resources :conversations
+    end
+    resources :conversation_messages, except: :create
+    post 'conversation_messages/:id' => 'conversation_messages#create'
+  end
 
+  resource :listing do
+    get :mylistings
+  end
   scope :profile do
     resources :conversations do
       resources :conversation_messages, except: :create do
