@@ -19,7 +19,7 @@
     -# TODO: find out how to make status hidden
     = f.association :listing_status
     = f.hidden_field :is_active, :value => false
-    = f.hidden_field :is_moderated, :vaue => false
+    = f.hidden_field :is_moderated, :value => false
     = f.hidden_field :creator_id, :value => current_user.id
     = f.hidden_field :receiver_id, :value => current_user.id
     = f.hidden_field :moderator_id, :value => current_user.id

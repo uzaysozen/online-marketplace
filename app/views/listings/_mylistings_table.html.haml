@@ -8,3 +8,7 @@
     %td= listing.listing_category.name
     %td= listing.listing_condition.name
     %td= listing.listing_status.name
+    %td
+      = link_to 'Edit', edit_listing_path(listing), class: 'ajax-modal'
+      %br
+      = link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' }

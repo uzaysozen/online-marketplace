@@ -4,6 +4,14 @@
   .panel-body
     %p There are #{@listings.size} listings available.
 
+  = simple_form_for :search, url: search_listings_path, method: :post do |f|
+    = f.input :search_title, hint: 'Note: Entered characters are case-sensitive'
+
+    = f.submit 'Search', class: 'btn btn-default', id: 'search-button'
+    = link_to 'Reset', listings_path
+  
+  %br
+
   %table.table
     %thead
       %tr
