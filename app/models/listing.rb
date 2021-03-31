@@ -9,10 +9,12 @@
 #  is_moderated         :boolean
 #  location             :string(50)
 #  price                :decimal(, )
+#  swap                 :boolean
 #  title                :string(50)
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  creator_id           :bigint
+#  delivery_id          :bigint
 #  listing_category_id  :bigint
 #  listing_condition_id :bigint
 #  listing_status_id    :bigint
@@ -29,8 +31,11 @@ class Listing < ApplicationRecord
     has_many :listing_views
     has_many :listing_questions
     has_many :listing_ratings
+    has_many :listing_deliveries
+    has_many :listing_tags
     has_many :user_favourites
     has_many :reports
     has_many :conversations
     has_many_attached :images
+    scope :profile, ->(current_user) { where(creator_id: current_user.id) }
 end

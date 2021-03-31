@@ -67,6 +67,12 @@ ActiveRecord::Schema.define(version: 2021_03_18_090626) do
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
   end
 
+  create_table "deliveries", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "listing_categories", force: :cascade do |t|
     t.bigint "parent_id"
     t.datetime "created_at", precision: 6, null: false
@@ -78,6 +84,13 @@ ActiveRecord::Schema.define(version: 2021_03_18_090626) do
     t.string "name", limit: 50
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "listing_deliveries", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "listing_id"
+    t.bigint "delivery_id"
   end
 
   create_table "listing_questions", force: :cascade do |t|
@@ -98,6 +111,13 @@ ActiveRecord::Schema.define(version: 2021_03_18_090626) do
 
   create_table "listing_statuses", force: :cascade do |t|
     t.string "name", limit: 50
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "listing_tags", force: :cascade do |t|
+    t.bigint "listing_id"
+    t.bigint "tag_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -123,6 +143,14 @@ ActiveRecord::Schema.define(version: 2021_03_18_090626) do
     t.bigint "listing_status_id"
     t.bigint "listing_condition_id"
     t.bigint "listing_category_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "delivery_id"
+    t.boolean "swap"
+  end
+
+  create_table "listings_delivery", force: :cascade do |t|
+    t.string "name", limit: 50
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -164,6 +192,12 @@ ActiveRecord::Schema.define(version: 2021_03_18_090626) do
     t.string "key", limit: 50
     t.string "value"
     t.text "blocked_words"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

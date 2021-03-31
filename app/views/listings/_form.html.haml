@@ -2,22 +2,28 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :title
-    = f.input :description
-    = f.input :price
-    = f.input :is_active
-    = f.input :is_moderated
-    = f.input :image, as: :file
+    = f.input :title, hint: 'Use a descriptive title to promote your item'
+    = f.input :price, hint: 'Leaving the price empty will set the price as \'Free\''   
+    = f.input :image, as: :file, label: 'Add a photo'
+    = f.input :description, hint: '(Max 200 words)'
+    = f.association :listing_condition, label: 'Condition'
+    = f.association :listing_category, label: 'Category'
+    -# = f.association :listing_deliveries, label: 'Delivery', as: :check_boxes
+    = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
+    %p Swaps
+    = f.input :swap, label: 'Open to swaps'
+    -# TODO: Add to tag linker table
+    -# = f.association :listing_tags, label: 'Tags', hint: 'Add relevant keywords to ensure your listing appear on search (E.g. Education)'
+
+    -# Hidden metadata
+    -# TODO: find out how to make status hidden
+    = f.association :listing_status
+    = f.hidden_field :is_active, :value => false
+    = f.hidden_field :is_moderated, :value => false
     = f.hidden_field :creator_id, :value => current_user.id
     = f.hidden_field :receiver_id, :value => current_user.id
     = f.hidden_field :moderator_id, :value => current_user.id
-    = f.hidden_field :location, :value => nil
     = f.hidden_field :discounted_price, :value => nil
-    
-
-    = f.association :listing_category
-    = f.association :listing_status
-    = f.association :listing_condition
 
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: 'btn-secondary btn-lg'

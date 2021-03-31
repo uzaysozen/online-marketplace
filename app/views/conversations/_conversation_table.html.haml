@@ -1,0 +1,19 @@
+%h5= title
+%table.table 
+  %thead
+    %tr
+      %th Conversation ID
+      %th Name
+      %th Listing
+
+    %tbody
+      - conversations.each do |convo|
+        %tr
+          - if convo.listing.nil?
+            %td= convo.id
+            %td= convo.participant.givenname
+          - else
+            %td= convo.id
+            %td= convo.participant.givenname
+            %td= convo.listing.title
+          %td= link_to 'Reply', convo

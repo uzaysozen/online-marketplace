@@ -1,4 +1,7 @@
-%h1 New listing
+- content_for :title, 'New Listing'
+
+%h1 Create a listing
 = render 'form'
 
-= link_to 'Back', listings_path
+%br
+= link_to 'Cancel', listings_path, class: 'btn btn-outline-primary btn-lg'

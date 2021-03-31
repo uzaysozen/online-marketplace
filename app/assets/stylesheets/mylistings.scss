@@ -1,0 +1,14 @@
+@import 'variables';
+
+.listing-container {
+  border-top: solid 1px $gray;
+}
+
+.listing-description-container {
+  border-right: solid 1px $gray;
+  line-height: 1.2;
+}
+
+.listing-price-container {
+  line-height: 1.0;
+}
