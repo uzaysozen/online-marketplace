@@ -26,7 +26,25 @@ class ListingsController < ApplicationController
   
     # POST /listings
     def create
+      tags = listing_params[:listing_tags]
+      print "\n \n \n \n"
+      print tags
+      print "\n \n \n \n"
+      listing_params.delete(:listing_tags)
+
+      print "\n \n \n \n"
+      print listing_params[:listing_tags]
+      print "\n \n \n \n"
+
       @listing = Listing.new(listing_params)
+      @listing.listing_status = ListingStatus.first
+      @listing.creator_id = current_user.id
+      @listing.is_active = true
+      @listing.is_moderated = true
+      @listing.receiver_id = current_user.id
+      @listing.moderator_id = current_user.id
+
+      
   
       if @listing.save
         redirect_to listings_path, notice: 'Listing was successfully created.'
@@ -67,6 +85,6 @@ class ListingsController < ApplicationController
       # Only allow a trusted parameter "white list" through.
       def listing_params
         params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id, 
-          :listing_category_id, :swap, :listing_status_id, :is_active, :is_moderated, :creator_id, :receiver_id, :moderator_id)
+          :listing_category_id, :swap, :image, listing_tags: [])
       end
   end
