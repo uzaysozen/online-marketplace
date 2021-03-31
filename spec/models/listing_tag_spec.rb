@@ -8,6 +8,11 @@
 #  listing_id :bigint
 #  tag_id     :bigint
 #
+# Indexes
+#
+#  index_listing_tags_on_listing_id  (listing_id)
+#  index_listing_tags_on_tag_id      (tag_id)
+#
 require 'rails_helper'
 
 RSpec.describe ListingTag, type: :model do

@@ -32,10 +32,13 @@ class Listing < ApplicationRecord
     has_many :listing_questions
     has_many :listing_ratings
     has_many :listing_deliveries
-    has_many :listing_tags
     has_many :user_favourites
     has_many :reports
     has_many :conversations
     has_many_attached :images
+
+    has_many :listing_tags
+    has_many :tags, through: :listing_tags
+
     scope :profile, ->(current_user) { where(creator_id: current_user.id) }
 end

@@ -8,7 +8,12 @@
 #  listing_id :bigint
 #  tag_id     :bigint
 #
+# Indexes
+#
+#  index_listing_tags_on_listing_id  (listing_id)
+#  index_listing_tags_on_tag_id      (tag_id)
+#
 class ListingTag < ApplicationRecord
-    belongs_to :listings
-    belongs_to :tags
+    belongs_to :listing
+    belongs_to :tag
 end
