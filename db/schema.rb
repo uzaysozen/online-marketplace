@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_01_145254) do
+ActiveRecord::Schema.define(version: 2021_04_01_154601) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,17 +39,21 @@ ActiveRecord::Schema.define(version: 2021_04_01_145254) do
   create_table "conversation_messages", force: :cascade do |t|
     t.boolean "is_deleted"
     t.text "content"
-    t.bigint "conversation_id"
-    t.bigint "sender_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "conversation_id"
+    t.bigint "sender_id"
+    t.index ["conversation_id"], name: "index_conversation_messages_on_conversation_id"
+    t.index ["sender_id"], name: "index_conversation_messages_on_sender_id"
   end
 
   create_table "conversations", force: :cascade do |t|
-    t.bigint "listing_id"
-    t.bigint "participant_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "listing_id"
+    t.bigint "participant_id"
+    t.index ["listing_id"], name: "index_conversations_on_listing_id"
+    t.index ["participant_id"], name: "index_conversations_on_participant_id"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -251,6 +255,10 @@ ActiveRecord::Schema.define(version: 2021_04_01_145254) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "conversation_messages", "conversations"
+  add_foreign_key "conversation_messages", "users", column: "sender_id"
+  add_foreign_key "conversations", "listings"
+  add_foreign_key "conversations", "users", column: "participant_id"
   add_foreign_key "listing_categories", "listing_categories", column: "parent_category_id"
   add_foreign_key "listing_deliveries", "deliveries"
   add_foreign_key "listing_deliveries", "listings"
