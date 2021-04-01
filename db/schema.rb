@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_01_111320) do
+ActiveRecord::Schema.define(version: 2021_04_01_145254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -90,24 +90,28 @@ ActiveRecord::Schema.define(version: 2021_04_01_111320) do
   create_table "listing_deliveries", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "listing_id"
     t.bigint "delivery_id"
+    t.bigint "listing_id"
+    t.index ["delivery_id"], name: "index_listing_deliveries_on_delivery_id"
+    t.index ["listing_id"], name: "index_listing_deliveries_on_listing_id"
   end
 
   create_table "listing_questions", force: :cascade do |t|
     t.string "question", limit: 50
     t.string "answer", limit: 50
-    t.bigint "listing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "listing_id"
+    t.index ["listing_id"], name: "index_listing_questions_on_listing_id"
   end
 
   create_table "listing_ratings", force: :cascade do |t|
-    t.bigint "listing_id"
     t.integer "seller_rating"
     t.integer "buyer_rating"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "listing_id"
+    t.index ["listing_id"], name: "index_listing_ratings_on_listing_id"
   end
 
   create_table "listing_statuses", force: :cascade do |t|
@@ -126,10 +130,12 @@ ActiveRecord::Schema.define(version: 2021_04_01_111320) do
   end
 
   create_table "listing_views", force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "listing_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "listing_id"
+    t.bigint "user_id"
+    t.index ["listing_id"], name: "index_listing_views_on_listing_id"
+    t.index ["user_id"], name: "index_listing_views_on_user_id"
   end
 
   create_table "listings", force: :cascade do |t|
@@ -140,17 +146,21 @@ ActiveRecord::Schema.define(version: 2021_04_01_111320) do
     t.decimal "price"
     t.decimal "discounted_price"
     t.string "location", limit: 50
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "swap"
+    t.bigint "listing_category_id"
     t.bigint "creator_id"
     t.bigint "moderator_id"
     t.bigint "receiver_id"
-    t.bigint "listing_status_id"
     t.bigint "listing_condition_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.bigint "delivery_id"
-    t.boolean "swap"
-    t.bigint "listing_category_id"
+    t.bigint "listing_status_id"
+    t.index ["creator_id"], name: "index_listings_on_creator_id"
     t.index ["listing_category_id"], name: "index_listings_on_listing_category_id"
+    t.index ["listing_condition_id"], name: "index_listings_on_listing_condition_id"
+    t.index ["listing_status_id"], name: "index_listings_on_listing_status_id"
+    t.index ["moderator_id"], name: "index_listings_on_moderator_id"
+    t.index ["receiver_id"], name: "index_listings_on_receiver_id"
   end
 
   create_table "listings_delivery", force: :cascade do |t|
@@ -175,12 +185,16 @@ ActiveRecord::Schema.define(version: 2021_04_01_111320) do
   create_table "reports", force: :cascade do |t|
     t.text "message"
     t.text "outcome"
-    t.bigint "moderator_id"
-    t.bigint "user_id"
-    t.bigint "listing_id"
-    t.bigint "conversation_message_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "conversation_message_id"
+    t.bigint "listing_id"
+    t.bigint "moderator_id"
+    t.bigint "reporter_id"
+    t.index ["conversation_message_id"], name: "index_reports_on_conversation_message_id"
+    t.index ["listing_id"], name: "index_reports_on_listing_id"
+    t.index ["moderator_id"], name: "index_reports_on_moderator_id"
+    t.index ["reporter_id"], name: "index_reports_on_reporter_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -207,10 +221,12 @@ ActiveRecord::Schema.define(version: 2021_04_01_111320) do
   end
 
   create_table "user_favourites", force: :cascade do |t|
-    t.bigint "listing_id"
-    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "listing_id"
+    t.bigint "user_id"
+    t.index ["listing_id"], name: "index_user_favourites_on_listing_id"
+    t.index ["user_id"], name: "index_user_favourites_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -236,4 +252,11 @@ ActiveRecord::Schema.define(version: 2021_04_01_111320) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "listing_categories", "listing_categories", column: "parent_category_id"
+  add_foreign_key "listings", "listing_conditions"
+  add_foreign_key "listings", "listing_statuses"
+  add_foreign_key "listings", "users", column: "creator_id"
+  add_foreign_key "listings", "users", column: "moderator_id"
+  add_foreign_key "listings", "users", column: "receiver_id"
+  add_foreign_key "reports", "users", column: "moderator_id"
+  add_foreign_key "reports", "users", column: "reporter_id"
 end

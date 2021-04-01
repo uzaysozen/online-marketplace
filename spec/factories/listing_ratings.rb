@@ -9,6 +9,10 @@
 #  updated_at    :datetime         not null
 #  listing_id    :bigint
 #
+# Indexes
+#
+#  index_listing_ratings_on_listing_id  (listing_id)
+#
 FactoryBot.define do
   factory :listing_rating do
     

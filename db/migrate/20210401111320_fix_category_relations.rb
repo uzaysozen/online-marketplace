@@ -9,7 +9,7 @@ class FixCategoryRelations < ActiveRecord::Migration[6.0]
     change_table :listings do |t|
       t.remove :listing_category_id
 
-      t.belongs_to :listing_category
+      t.belongs_to :listing_category, foreign_key: "listing_category_id"
     end
   end
 end

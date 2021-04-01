@@ -9,4 +9,5 @@
 #
 class Delivery < ApplicationRecord
     has_many :listing_deliveries
+    has_many :listings, through: :listing_deliveries
 end

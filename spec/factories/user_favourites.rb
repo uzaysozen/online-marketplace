@@ -8,6 +8,11 @@
 #  listing_id :bigint
 #  user_id    :bigint
 #
+# Indexes
+#
+#  index_user_favourites_on_listing_id  (listing_id)
+#  index_user_favourites_on_user_id     (user_id)
+#
 FactoryBot.define do
   factory :user_favourite do
     

@@ -8,6 +8,11 @@
 #  listing_id :bigint
 #  user_id    :bigint
 #
+# Indexes
+#
+#  index_listing_views_on_listing_id  (listing_id)
+#  index_listing_views_on_user_id     (user_id)
+#
 require 'rails_helper'
 
 RSpec.describe ListingView, type: :model do
