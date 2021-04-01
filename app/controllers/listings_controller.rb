@@ -37,9 +37,11 @@ class ListingsController < ApplicationController
       @listing.receiver_id = current_user.id
       @listing.moderator_id = current_user.id
 
-      # tags.each do |tag|
-      #   @listing.tags << Tag.first_or_create({name: tag})
-      # end
+      tags.each do |tag|
+        # Create new tags, add to listing
+        # TODO: normalise captialisation, get rid of blank tag
+        @listing.tags << Tag.where(name: tag).first_or_create
+      end
   
       if @listing.save
         redirect_to listings_path, notice: 'Listing was successfully created.'
