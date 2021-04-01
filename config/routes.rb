@@ -21,38 +21,31 @@ Rails.application.routes.draw do
   end
   
   resources :listing_views
+
   resources :listings do
-    post :search, on: :collection
     scope :profile do
-      collection do
-        get :mylistings
-      end
+      get :mylistings, on: :collection
     end
+    post :search, on: :collection
+    post :add_favourite, on: :member
   end
+
   resources :reports
-  resources :user_favourites
+  
+  scope :profile do
+    resources :user_favourites
+  end
+  
   resources :users do
     post :search, on: :collection
   end
-  
-  resources :listings do
-    scope :profile do
-      resources :conversations
-    end
-    resources :conversation_messages, except: :create
-    post 'conversation_messages/:id' => 'conversation_messages#create'
-  end
 
-  resource :listing do
-    get :mylistings
-  end
+  
   scope :profile do
     resources :conversations do
       resources :conversation_messages, except: :create do
-        member do
-          post :send_message, :as => 'send'
-          patch :delete_message, :as => 'delete'
-        end
+        post :send_message, :as => 'send', on: :member
+        patch :delete_message, :as => 'delete', on: :member
       end
     end
   end
