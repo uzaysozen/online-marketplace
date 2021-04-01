@@ -1,4 +1,5 @@
 - @listings.each do |listing|
+  - favourite = UserFavourite.find_by(listing: listing, user: current_user)
   %tr
     %td= listing.title
     %td= listing.description
@@ -9,3 +10,9 @@
     %td= listing.listing_condition.name
     %td= listing.listing_status.name
     %td= link_to 'Enquire', conversation_path(current_user.conversations.find_or_create_by(listing_id: listing.id, participant_id: current_user.id))
+    - if listing.creator != current_user
+      - if favourite.present?
+        %td= link_to 'Remove From Favourites', favourite, method: :delete
+      - else
+        %td= link_to 'Add To Favourites', add_favourite_listing_path(listing), method: :post
+
