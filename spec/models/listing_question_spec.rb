@@ -13,6 +13,10 @@
 #
 #  index_listing_questions_on_listing_id  (listing_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (listing_id => listings.id)
+#
 require 'rails_helper'
 
 RSpec.describe ListingQuestion, type: :model do

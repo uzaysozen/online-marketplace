@@ -13,6 +13,10 @@
 #
 #  index_listing_ratings_on_listing_id  (listing_id)
 #
+# Foreign Keys
+#
+#  fk_rails_...  (listing_id => listings.id)
+#
 class ListingRating < ApplicationRecord
     belongs_to :listing
 end

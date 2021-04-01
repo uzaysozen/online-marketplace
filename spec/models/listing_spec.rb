@@ -32,6 +32,7 @@
 # Foreign Keys
 #
 #  fk_rails_...  (creator_id => users.id)
+#  fk_rails_...  (listing_category_id => listing_categories.id)
 #  fk_rails_...  (listing_condition_id => listing_conditions.id)
 #  fk_rails_...  (listing_status_id => listing_statuses.id)
 #  fk_rails_...  (moderator_id => users.id)

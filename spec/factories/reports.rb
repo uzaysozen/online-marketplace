@@ -21,6 +21,8 @@
 #
 # Foreign Keys
 #
+#  fk_rails_...  (conversation_message_id => conversation_messages.id)
+#  fk_rails_...  (listing_id => listings.id)
 #  fk_rails_...  (moderator_id => users.id)
 #  fk_rails_...  (reporter_id => users.id)
 #
