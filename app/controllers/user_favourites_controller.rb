@@ -3,7 +3,7 @@ class UserFavouritesController < ApplicationController
   
     # GET /user_favourites
     def index
-      @user_favourites = UserFavourite.all
+      @user_favourites = UserFavourite.profile(current_user)
     end
   
     # GET /user_favourites/1
@@ -29,7 +29,7 @@ class UserFavouritesController < ApplicationController
     # DELETE /user_favourites/1
     def destroy
       @user_favourite.destroy
-      redirect_to user_favourites_url, notice: 'User favourite was successfully deleted.'
+      redirect_back fallback_location: user_favourites_path, notice: 'Listing removed succesfully from favourites.'
     end
   
     private

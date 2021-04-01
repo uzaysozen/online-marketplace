@@ -1,5 +1,5 @@
 class ListingsController < ApplicationController
-    before_action :set_listing, only: [:show, :edit, :update, :destroy]
+    before_action :set_listing, only: [:show, :edit, :update, :destroy, :add_favourite]
     
     # GET /listings
     def index
@@ -57,7 +57,14 @@ class ListingsController < ApplicationController
       @listings = @listings.where("title like ?", "%#{params[:search][:search_title]}%") if params[:search][:search_title].present?
       render :index
     end
-  
+    
+    def add_favourite
+      @favourite = UserFavourite.new(listing: @listing, user: current_user)
+      if @favourite.save
+        redirect_to listings_path, notice: 'Listing was successfully added to the favourites.'
+      end
+    end
+    
     private
       # Callback functions to share common setup or constraints between actions.
       def set_listing
