@@ -2,7 +2,7 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 
 # Categories 
-categories = ListingCategory.first_or_create([{name: 'Books'}, {name: 'Clothing'}, {name: 'Electronics'}])
+categories = ListingCategory.first_or_create([{id: 1, name: 'Books'}, {id: 2, name: 'Clothing'}, {id: 3, name: 'Electronics'}, {id: 4, name: 'Phones', parent_category_id: 3}])
 
 # Item conditions
 conditions = ListingCondition.first_or_create([{name: 'New'}, {name: 'Used'}, {name: 'For parts or not working'}])
