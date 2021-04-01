@@ -1,0 +1,11 @@
+- favourites.each do |favourite|
+  %tr
+    %td= favourite.listing.title
+    %td= favourite.listing.description
+    %td= favourite.listing.price
+    %td= favourite.listing.creator_id
+    %td= favourite.listing.receiver_id
+    %td= favourite.listing.listing_category.name
+    %td= favourite.listing.listing_condition.name
+    %td= favourite.listing.listing_status.name
+    %td= link_to 'Remove From Favourites', favourite, method: :delete

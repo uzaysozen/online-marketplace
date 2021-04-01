@@ -1,0 +1,22 @@
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title My Favorite Listings
+    %h5 There are currently #{ @user_favourites.size } favourite listings
+  .panel-body
+
+  %table.table
+    %thead
+      %tr
+        %th Title
+        %th Description
+        %th Price
+        %th Creator
+        %th Receiver
+        %th Category
+        %th Condition
+        %th Status
+
+    %tbody#favourites-table
+      = render 'favourites_table', favourites: @user_favourites
+  .panel-footer
+    = link_to 'Go Back', :back, class: 'btn btn-default'
