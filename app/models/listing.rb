@@ -54,7 +54,7 @@ class Listing < ApplicationRecord
     has_many_attached :images
 
     has_one :listing_delivery
-    has_one :delivery, through: listing_delivery
+    has_one :delivery, through: :listing_delivery
 
     has_many :user_favourites
     has_many :followers, class_name: "User", through: :user_favourites
