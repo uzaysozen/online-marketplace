@@ -21,6 +21,10 @@
 #  moderator_id         :bigint
 #  receiver_id          :bigint
 #
+# Indexes
+#
+#  index_listings_on_listing_category_id  (listing_category_id)
+#
 require 'rails_helper'
 
 RSpec.describe Listing, type: :model do

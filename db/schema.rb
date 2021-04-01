@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_31_201028) do
+ActiveRecord::Schema.define(version: 2021_04_01_111320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,10 +74,11 @@ ActiveRecord::Schema.define(version: 2021_03_31_201028) do
   end
 
   create_table "listing_categories", force: :cascade do |t|
-    t.bigint "parent_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name", limit: 50
+    t.bigint "parent_category_id"
+    t.index ["parent_category_id"], name: "index_listing_categories_on_parent_category_id"
   end
 
   create_table "listing_conditions", force: :cascade do |t|
@@ -144,11 +145,12 @@ ActiveRecord::Schema.define(version: 2021_03_31_201028) do
     t.bigint "receiver_id"
     t.bigint "listing_status_id"
     t.bigint "listing_condition_id"
-    t.bigint "listing_category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "delivery_id"
     t.boolean "swap"
+    t.bigint "listing_category_id"
+    t.index ["listing_category_id"], name: "index_listings_on_listing_category_id"
   end
 
   create_table "listings_delivery", force: :cascade do |t|
@@ -233,4 +235,5 @@ ActiveRecord::Schema.define(version: 2021_03_31_201028) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "listing_categories", "listing_categories", column: "parent_category_id"
 end

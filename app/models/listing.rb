@@ -21,6 +21,10 @@
 #  moderator_id         :bigint
 #  receiver_id          :bigint
 #
+# Indexes
+#
+#  index_listings_on_listing_category_id  (listing_category_id)
+#
 class Listing < ApplicationRecord
     belongs_to :creator, class_name: "User"
     belongs_to :moderator, class_name: "User"

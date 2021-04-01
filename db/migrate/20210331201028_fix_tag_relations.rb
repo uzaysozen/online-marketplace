@@ -1,4 +1,4 @@
-class TestMigration < ActiveRecord::Migration[6.0]
+class FixTagRelations < ActiveRecord::Migration[6.0]
   def change
     change_table :listing_tags do |t|
       t.remove :listing_id, :tag_id
