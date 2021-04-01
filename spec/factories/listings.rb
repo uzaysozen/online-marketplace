@@ -14,12 +14,29 @@
 #  created_at           :datetime         not null
 #  updated_at           :datetime         not null
 #  creator_id           :bigint
-#  delivery_id          :bigint
 #  listing_category_id  :bigint
 #  listing_condition_id :bigint
 #  listing_status_id    :bigint
 #  moderator_id         :bigint
 #  receiver_id          :bigint
+#
+# Indexes
+#
+#  index_listings_on_creator_id            (creator_id)
+#  index_listings_on_listing_category_id   (listing_category_id)
+#  index_listings_on_listing_condition_id  (listing_condition_id)
+#  index_listings_on_listing_status_id     (listing_status_id)
+#  index_listings_on_moderator_id          (moderator_id)
+#  index_listings_on_receiver_id           (receiver_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (creator_id => users.id)
+#  fk_rails_...  (listing_category_id => listing_categories.id)
+#  fk_rails_...  (listing_condition_id => listing_conditions.id)
+#  fk_rails_...  (listing_status_id => listing_statuses.id)
+#  fk_rails_...  (moderator_id => users.id)
+#  fk_rails_...  (receiver_id => users.id)
 #
 FactoryBot.define do
   factory :listing do
