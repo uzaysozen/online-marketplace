@@ -27,7 +27,8 @@ class ListingsController < ApplicationController
     # POST /listings
     def create
       params = listing_params
-      tags = params.delete(:listing_tags)
+      # take tags out of params, removing blank entries and duplicates
+      tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
 
       @listing = Listing.new(params)
       @listing.listing_status = ListingStatus.first
@@ -38,10 +39,9 @@ class ListingsController < ApplicationController
       @listing.moderator_id = current_user.id
 
       tags.each do |tag|
-        # Create new tags, add to listing
-        # TODO: normalise captialisation, get rid of blank tag
+        # create new tags, add to listing
         @listing.tags << Tag.where(name: tag).first_or_create
-      end
+      end 
   
       if @listing.save
         redirect_to listings_path, notice: 'Listing was successfully created.'

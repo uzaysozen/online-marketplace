@@ -12,10 +12,6 @@
     = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
     %p Swaps
     = f.input :swap, label: 'Open to swaps', class: 'hello'
-    -# TODO: Add to tag linker table
-    -# = f.simple_fields_for(@listing_tags) do |t|
-    -#   = t.input 
-    -#   = t.input 
     = f.input :listing_tags, label: 'Tags', hint: 'Add relevant keywords to ensure your listing appear on search (E.g. Education)', as: :select, options: nil, input_html: { class: 'select2', multiple: 'multiple' }
 
   .form-actions
