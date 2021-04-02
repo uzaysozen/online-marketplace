@@ -11,4 +11,4 @@
     %td= listing.listing_status.name
     %td
       = link_to(user_favourite, method: :delete, remote: true) do
-        %p Remove From Favourites
+        = icon 'fas', 'trash'

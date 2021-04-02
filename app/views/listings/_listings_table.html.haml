@@ -14,9 +14,9 @@
       - if user_favourite.present?
         %td
           = link_to(delete_favourite_listing_path(listing), method: :post, remote: true) do
-            %p Remove From Favourites
+            = icon 'fas', 'heart'
       - else
         %td
           = link_to(add_favourite_listing_path(listing), method: :post, remote: true) do
-            %p Add To Favourites
+            = icon 'far', 'heart'
 
