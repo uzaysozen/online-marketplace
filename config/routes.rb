@@ -23,25 +23,19 @@ Rails.application.routes.draw do
   resources :listing_views
 
   resources :listings do
-    scope :profile do
-      get :mylistings, on: :collection
-    end
     post :search, on: :collection
     post :add_favourite, on: :member
   end
 
   resources :reports
   
-  scope :profile do
-    resources :user_favourites
-  end
-  
   resources :users do
     post :search, on: :collection
   end
-
   
   scope :profile do
+    get :mylistings, to: 'listings#mylistings'
+    resources :user_favourites
     resources :conversations do
       resources :conversation_messages, except: :create do
         post :send_message, :as => 'send', on: :member
