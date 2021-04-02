@@ -1,5 +1,5 @@
 class ListingsController < ApplicationController
-    before_action :set_listing, only: [:show, :edit, :update, :destroy, :add_favourite, :start_conversation]
+    before_action :set_listing, only: [:show, :edit, :update, :destroy, :add_favourite, :delete_favourite, :start_conversation]
     
     # GET /listings
     def index
@@ -60,10 +60,19 @@ class ListingsController < ApplicationController
     
     def add_favourite
       @favourite = UserFavourite.new(listing: @listing, user: current_user)
+      @listings = Listing.all
       if @favourite.save
-        redirect_to listings_path, notice: 'Listing was successfully added to the favourites.'
+        render 'load_listings', notice: 'Listing was successfully added to the favourites.'
       end
     end
+
+    def delete_favourite
+      @favourite = @listing.user_favourites.find_by(user: current_user)
+      @listings = Listing.all
+      @favourite.destroy
+      render 'load_listings'
+    end
+
 
     def start_conversation
       @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)

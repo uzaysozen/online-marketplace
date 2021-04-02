@@ -3,11 +3,7 @@ class UserFavouritesController < ApplicationController
   
     # GET /user_favourites
     def index
-      user_favourites = current_user.user_favourites
-      @favourite_listings = []
-      user_favourites.each do |user_favourite|
-        @favourite_listings << user_favourite.listing
-      end
+      @favourite_listings = current_user.favourites
     end
   
     # GET /user_favourites/1
@@ -33,7 +29,8 @@ class UserFavouritesController < ApplicationController
     # DELETE /user_favourites/1
     def destroy
       @user_favourite.destroy
-      redirect_back fallback_location: user_favourites_path, notice: 'Listing removed succesfully from favourites.'
+      @favourite_listings = current_user.favourites
+      render 'remove_favourite'
     end
   
     private

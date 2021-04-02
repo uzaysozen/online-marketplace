@@ -12,7 +12,11 @@
     %td= link_to 'Enquire', start_conversation_listing_path(listing)
     - if listing.creator != current_user
       - if user_favourite.present?
-        %td= link_to 'Remove From Favourites', user_favourite, method: :delete
+        %td
+          = link_to(delete_favourite_listing_path(listing), method: :post, remote: true) do
+            %p Remove From Favourites
       - else
-        %td= link_to 'Add To Favourites', add_favourite_listing_path(listing), method: :post
+        %td
+          = link_to(add_favourite_listing_path(listing), method: :post, remote: true) do
+            %p Add To Favourites
 
