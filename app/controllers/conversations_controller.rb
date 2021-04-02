@@ -47,12 +47,8 @@ class ConversationsController < ApplicationController
   
     # DELETE /conversations/1
     def destroy
-      if @conversation.conversation_messages.empty?
-        @conversation.destroy
-        redirect_to listings_path
-      else
-        redirect_to conversations_path
-      end
+      @conversation.destroy
+      redirect_to listings_path
     end
   
     private
