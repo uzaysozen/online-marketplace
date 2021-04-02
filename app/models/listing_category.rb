@@ -20,4 +20,8 @@ class ListingCategory < ApplicationRecord
     has_many :subcategories, :class_name => "ListingCategory", foreign_key: :parent_category_id
     belongs_to :parent_category, :class_name => "ListingCategory", foreign_key: :parent_category_id, :optional => true
     has_many :listings
+
+    def explored
+        self.subcategories | self.subcategories.map(&:explored).flatten
+    end
 end
