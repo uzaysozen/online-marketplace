@@ -6,27 +6,19 @@ class ListingsController < ApplicationController
       @listings = Listing.all
 
       # Sorting Function
-      # Empty Parameter Checking
-      if params[:sort].nil? or params[:sort] == ""
+      table_col = Listing.column_names
+      sort_val = ['asc', 'desc']
+      
+      # Verifying Parameters
+      if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
+        sort_order = session[:sort_order] || 'asc'
+        @listings = Listing.order("#{params[:sort]} #{sort_order}")
+        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+      else
         params[:sort] = "title"
         sort_order = 'asc'
         @listings = Listing.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
-      else
-        table_col = Listing.column_names
-        sort_val = ['asc', 'desc']
-        
-        # Verifying Parameters
-        if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
-          sort_order = session[:sort_order] || 'asc'
-          @listings = Listing.order("#{params[:sort]} #{sort_order}")
-          session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
-        else
-          params[:sort] = "title"
-          sort_order = 'asc'
-          @listings = Listing.order("#{params[:sort]} #{sort_order}")
-          session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
-        end
       end
     end
 
