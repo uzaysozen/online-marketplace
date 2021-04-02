@@ -54,7 +54,7 @@ class ListingsController < ApplicationController
     # POST /products/search
     def search
       @listings = Listing.all
-      @listings = @listings.where("title like ?", "%#{params[:search][:search_title]}%") if params[:search][:search_title].present?
+      @listings = @listings.where("title ilike ?", "%#{params[:search][:search_title]}%") if params[:search][:search_title].present?
       render :index
     end
   
