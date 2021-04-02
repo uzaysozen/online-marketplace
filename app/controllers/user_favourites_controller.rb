@@ -3,7 +3,11 @@ class UserFavouritesController < ApplicationController
   
     # GET /user_favourites
     def index
-      @user_favourites = UserFavourite.profile(current_user)
+      user_favourites = current_user.user_favourites
+      @favourite_listings = []
+      user_favourites.each do |user_favourite|
+        @favourite_listings << user_favourite.listing
+      end
     end
   
     # GET /user_favourites/1

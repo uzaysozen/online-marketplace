@@ -21,5 +21,4 @@
 class UserFavourite < ApplicationRecord
     belongs_to :user
     belongs_to :listing
-    scope :profile, ->(current_user) { where(user_id: current_user.id) }
 end

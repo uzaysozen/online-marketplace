@@ -1,11 +1,12 @@
-- favourites.each do |favourite|
+- @favourite_listings.each do |listing|
+  - user_favourite = current_user.user_favourites.find_by(listing: listing)
   %tr
-    %td= favourite.listing.title
-    %td= favourite.listing.description
-    %td= favourite.listing.price
-    %td= favourite.listing.creator_id
-    %td= favourite.listing.receiver_id
-    %td= favourite.listing.listing_category.name
-    %td= favourite.listing.listing_condition.name
-    %td= favourite.listing.listing_status.name
-    %td= link_to 'Remove From Favourites', favourite, method: :delete
+    %td= listing.title
+    %td= listing.description
+    %td= listing.price
+    %td= listing.creator_id
+    %td= listing.receiver_id
+    %td= listing.listing_category.name
+    %td= listing.listing_condition.name
+    %td= listing.listing_status.name
+    %td= link_to 'Remove From Favorites', user_favourite, method: :delete
