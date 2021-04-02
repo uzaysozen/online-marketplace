@@ -4,12 +4,23 @@ class ListingsController < ApplicationController
     # GET /listings
     def index
       @listings = Listing.all
+
+      if params[:sort].nil? or params[:sort] == ""
+        params[:sort] = "title"
+        sort_order = 'asc'
+        @listings = Listing.order("#{params[:sort]} #{sort_order}")
+        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+      else
+        sort_order = session[:sort_order] || 'asc'
+        @listings = Listing.order("#{params[:sort]} #{sort_order}")
+        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+      end
     end
 
     def mylistings
       @listings = Listing.profile(current_user)
     end
-  
+
     # GET /listings/1
     def show
     end
