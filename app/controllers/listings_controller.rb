@@ -1,5 +1,5 @@
 class ListingsController < ApplicationController
-    before_action :set_listing, only: [:show, :edit, :update, :destroy, :add_favourite]
+    before_action :set_listing, only: [:show, :edit, :update, :destroy, :add_favourite, :start_conversation]
     
     # GET /listings
     def index
@@ -64,7 +64,12 @@ class ListingsController < ApplicationController
         redirect_to listings_path, notice: 'Listing was successfully added to the favourites.'
       end
     end
-    
+
+    def start_conversation
+      @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
+      @messages = @conversation.conversation_messages.where(is_deleted: nil)
+    end
+
     private
       # Callback functions to share common setup or constraints between actions.
       def set_listing

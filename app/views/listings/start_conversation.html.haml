@@ -12,4 +12,7 @@
           = render 'conversation_messages/conversation_message', message: message, current_user: current_user
       = render 'conversation_messages/send_form', conversation_message: ConversationMessage.new, conversation: @conversation
   .panel-footer
-    = link_to 'Back', :back
+    - if @conversation.conversation_messages.empty?
+      = link_to 'Back', @conversation, method: :delete
+    - else
+      = link_to 'Back', :back
