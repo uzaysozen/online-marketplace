@@ -6,7 +6,7 @@
   %table.table
     %thead
       %tr
-        %th Title
+      -#  %th Title
         %th Description
         %th Price
         %th Creator
@@ -16,8 +16,6 @@
         %th Status
 
     %tbody#listings-table
-      = render 'listed_item'
-      = render 'listed_item'
       = render 'listed_item'
   .panel-footer
     = link_to 'Go Back', listings_path, class: 'btn btn-default'

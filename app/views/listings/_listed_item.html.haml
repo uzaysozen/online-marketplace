@@ -1,55 +1,54 @@
 - content_for :title, 'My listings'
 
-
-.row.justify-content-left.flex-column-reverse.flex-md-row.listing-container
-  .col-12.col-md-12
-    .border-none.rounded.h-100
-      .row.p-2
-        
-        .col-12.col-sm-2.pl-0.text-left.listing-image-container
-          %p
-          =image_tag "/images/logos/su.png"
-
-        .col-12.col-sm-5.pl-0.text-left.listing-description-container
+- @listings.each do |listing|
+  .row.justify-content-left.flex-column-reverse.flex-md-row.listing-container
+    .col-12.col-md-12
+      .border-none.rounded.h-100
+        .row.p-2
           
-          .text-medium.text-red.text-left
+          .col-12.col-sm-2.pl-0.text-left.listing-image-container
             %p
-            Item Name          
-            %p
-               
-          .text-small.text-black.border-right-black
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.
-            Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique,
+            =image_tag "/images/logos/su.png"
 
-        .col-12.col-sm-3.pl-5.text-left.listing-price-container  
-          .text-small.text-black
-            %p
-            acc19pm  
-            %p
-          .text-small.text-darkgray 
-            Condition
-            %p
-
-          .text-small.text-darkgray 
-            Delivery Option
-            %p
-
-          .text-medium.text-black
-            £10.00
-
-        .col-12.col-sm-2.text-left    
-          
-          .text-small.text-center.btn-secondary.rounded
-            %p
-            Edit
-            %p
-
-          .text-small.text-center.text-blue.border-blue.rounded 
-            See Details
+          .col-12.col-sm-5.pl-0.text-left.listing-description-container
             
-          %p 
+            .text-medium.text-red.text-left
+              %p
+              = listing.title          
+              %p
+                
+            .text-small.text-black.border-right-black
+              = listing.description
 
-          .text-small.text-center.text-red.border-red.rounded
-            = icon('fas', 'trash') 
-            Delete
+          .col-12.col-sm-3.pl-5.text-left.listing-price-container  
+            .text-small.text-black
+              %p
+              acc19pm  
+              %p
+            .text-small.text-darkgray 
+              = listing.listing_condition.name
+              %p
+
+            .text-small.text-darkgray 
+              Delivery Option
+              %p
+
+            .text-medium.text-black
+              £10.00
+
+          .col-12.col-sm-2.text-left    
+            
+            .text-small.text-center.btn-secondary.rounded
+              %p
+              = link_to 'Edit', edit_listing_path(listing), class: 'ajax-modal'
+              %p
+
+            .text-small.text-center.text-blue.border-blue.rounded 
+              See Details
+              
+            %p 
+
+            .text-small.text-center.text-red.border-red.rounded
+              = icon('fas', 'trash') 
+              = link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' }
 
