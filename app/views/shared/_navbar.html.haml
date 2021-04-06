@@ -26,14 +26,14 @@
               = icon 'fas', 'user-circle', current_user.username
               %b.caret
             .dropdown-menu{ aria: { labelledby: '#navbar-user-link' } }
-              = link_to mylistings_listings_path,  class: 'dropdown-item', title: "User Profile Page" do
+              = link_to mylistings_path,  class: 'dropdown-item', title: "User Profile Page" do
                 User Profile
               .dropdown-divider
               - if current_user.administrator?
                 = link_to pages_admin_path, class: 'dropdown-item', title: "Admin's Page", identifier: :admin do
                   Admin Page
                 .dropdown-divider
-              = link_to mylistings_listing_path, class: 'dropdown-item', title: "My Listings" do
+              = link_to mylistings_path, class: 'dropdown-item', title: "My Listings" do
                 = icon 'fas', 'list', 'My Listings'
               = link_to destroy_user_session_path, class: 'dropdown-item', method: :delete, title: "Log out of the system" do
                 = icon 'fas', 'sign-out-alt', 'Log out'
