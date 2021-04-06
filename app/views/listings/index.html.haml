@@ -10,21 +10,26 @@
     = f.submit 'Search', class: 'btn btn-default', id: 'search-button'
     = link_to 'Reset', listings_path
   
+  = link_to "Sort By Title", sort: "title"
+  \|
+  = link_to "Sort By Price", sort: "price"
   %br
 
-  %table.table
-    %thead
-      %tr
-        %th= link_to "Title", sort: "title"
-        %th Description
-        %th= link_to "Price", sort: "price"
-        %th Creator
-        %th Receiver
-        %th Category
-        %th Condition
-        %th Status
+  -#%table.table
+    -#%thead
+      -#%tr
+        -#%th= link_to "Title", sort: "title"
+        -#%th Description
+        -#%th= link_to "Price", sort: "price"
+        -#%th Creator
+        -#%th Receiver
+        -#%th Category
+        -#%th Condition
+        -#%th Status
+        
 
-    %tbody#listings-table
-      = render 'listing'
+    -#%tbody#listings-table
+  #listings
+    = render 'listing'
   .panel-footer
     = link_to 'New Listing', new_listing_path, class: 'btn btn-default'
