@@ -47,10 +47,11 @@
           .col-12.col-sm-1.pl-5.text-medium.text-blue
             %p
             = icon('far', 'flag')
-            - if listing.creator != current_user
-              - if user_favourite.present?
-                = link_to(delete_favourite_listing_path(listing), method: :post, remote: true, class: 'heart-link') do
-                  = icon('fas', 'heart')
-              - else
-                = link_to(add_favourite_listing_path(listing), method: :post, remote: true, class: 'heart-link') do
-                  = icon('far', 'heart') 
+            .text-medium.action-container
+              - if listing.creator != current_user
+                - if user_favourite.present?
+                  = link_to(delete_favourite_listing_path(listing), method: :post, remote: true, class: 'heart-link') do
+                    = icon('fas', 'heart')
+                - else
+                  = link_to(add_favourite_listing_path(listing), method: :post, remote: true, class: 'heart-link') do
+                    = icon('far', 'heart') 
