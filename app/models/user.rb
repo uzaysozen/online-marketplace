@@ -38,5 +38,5 @@ class User < ApplicationRecord
   has_many :conversation_messages, foreign_key: "sender_id"
 
   has_many :user_favourites
-  has_many :favourites, class_name: "Listing", through: :user_favourites
+  has_many :favourites, source: :listing, through: :user_favourites
   end

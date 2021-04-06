@@ -85,6 +85,8 @@ qa:
 demo:
   <<: *defaults
   auth_method: :cas
+  app_logout_url:     'https://team01.demo1.hut.shefcompsci.org.uk/app_logout'
+  go_back_to_app_url: 'https://team01.demo1.hut.shefcompsci.org.uk/'
 
 production:
   <<: *defaults

@@ -27,9 +27,12 @@
           FAQ
         %li
           Login
-  .row.py-4.m-0
+  .row.py-4.m-0.align-items-center
     .col-8.text-small
       The official marketplace of The University of Sheffield and The University of Sheffield Student Union
       %br
       &copy; #{Date.today.year}
       = link_to 'epiGenesys', 'https://www.epigenesys.org.uk', target: '_blank', title: 'Go to the epiGenesys website'
+    .col-4.logo-image-container.justify-content-end.pt-3
+      =image_tag "/images/logos/su.png"
+      =image_tag "/images/logos/TUOS_PRIMARY_LOGO_REVERSED.png"

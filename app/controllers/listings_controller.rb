@@ -1,15 +1,31 @@
 class ListingsController < ApplicationController
-    before_action :set_listing, only: [:show, :edit, :update, :destroy]
+    before_action :set_listing, only: [:show, :edit, :update, :destroy, :add_favourite, :delete_favourite, :start_conversation]
     
     # GET /listings
     def index
       @listings = Listing.all
+
+      # Sorting Function
+      table_col = Listing.column_names
+      sort_val = ['asc', 'desc']
+      
+      # Verifying Parameters
+      if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
+        sort_order = session[:sort_order] || 'asc'
+        @listings = Listing.order("#{params[:sort]} #{sort_order}")
+        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+      else
+        params[:sort] = "title"
+        sort_order = 'asc'
+        @listings = Listing.order("#{params[:sort]} #{sort_order}")
+        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+      end
     end
 
     def mylistings
       @listings = Listing.profile(current_user)
     end
-  
+
     # GET /listings/1
     def show
     end
@@ -72,7 +88,28 @@ class ListingsController < ApplicationController
       @listings = @listings.where("title ilike ?", "%#{params[:search][:search_title]}%") if params[:search][:search_title].present?
       render :index
     end
-  
+    
+    def add_favourite
+      @favourite = UserFavourite.new(listing: @listing, user: current_user)
+      @listings = Listing.all
+      if @favourite.save
+        render 'load_listings', notice: 'Listing was successfully added to the favourites.'
+      end
+    end
+
+    def delete_favourite
+      @favourite = @listing.user_favourites.find_by(user: current_user)
+      @listings = Listing.all
+      @favourite.destroy
+      render 'load_listings'
+    end
+
+
+    def start_conversation
+      @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
+      @messages = @conversation.conversation_messages.where(is_deleted: nil)
+    end
+
     private
       # Callback functions to share common setup or constraints between actions.
       def set_listing
