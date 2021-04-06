@@ -9,6 +9,3 @@ conditions = ListingCondition.first_or_create([{name: 'New'}, {name: 'Used'}, {n
 
 # Listing status
 listing_status = ListingStatus.first_or_create([{name: 'Pending'}, {name: 'Active'}, {name: 'Complete'}, {name: 'Deleted'}])
-
-# Tags 
-listing_tags = Tag.first_or_create([{name: 'Books'}, {name: 'Clothing'}, {name: 'Electronics'}])
