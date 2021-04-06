@@ -93,7 +93,7 @@ class ListingsController < ApplicationController
       @favourite = UserFavourite.new(listing: @listing, user: current_user)
       @listings = Listing.all
       if @favourite.save
-        render 'load_listings', notice: 'Listing was successfully added to the favourites.'
+        render 'load_listings'
       end
     end
 
