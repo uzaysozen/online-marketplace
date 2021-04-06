@@ -51,13 +51,13 @@
 
           - if current_user.id == listing.creator_id 
 
-            .col-12.col-sm-2.text-left    
+            .col-12.col-sm-2.text-left  
+              %p  
           
-              .text-small.text-center.text-white.btn-secondary.rounded
+              .text-small.text-center.listing-blue.rounded.bg-blue
                 = link_to edit_listing_path(listing), class: 'ajax-modal listing-button white-button' do
-                  %p
                   Edit 
-                  %p
+              %p
 
               .text-small.text-center.text-blue.listing-blue.rounded 
                 = link_to listing, class: 'button-blue listing-button' do
@@ -73,13 +73,12 @@
           - else 
  
             .col-12.col-sm-2.text-left    
-          
-              .text-small.text-center.btn-secondary.rounded
+              %p
+              .text-small.text-center.listing-blue.rounded.bg-blue
                 = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do
-                  %p
                   Enquire
-                  %p
 
+              %p
               .text-small.text-center.text-blue.listing-blue.rounded 
                 = link_to listing, class: 'button-blue listing-button' do
                   See Details
