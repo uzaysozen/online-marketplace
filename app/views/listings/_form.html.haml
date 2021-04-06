@@ -11,19 +11,8 @@
     -# = f.association :listing_deliveries, label: 'Delivery', as: :check_boxes
     = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
     %p Swaps
-    = f.input :swap, label: 'Open to swaps'
-    -# TODO: Add to tag linker table
-    -# = f.association :listing_tags, label: 'Tags', hint: 'Add relevant keywords to ensure your listing appear on search (E.g. Education)'
-
-    -# Hidden metadata
-    -# TODO: find out how to make status hidden
-    = f.association :listing_status
-    = f.hidden_field :is_active, :value => false
-    = f.hidden_field :is_moderated, :value => false
-    = f.hidden_field :creator_id, :value => current_user.id
-    = f.hidden_field :receiver_id, :value => current_user.id
-    = f.hidden_field :moderator_id, :value => current_user.id
-    = f.hidden_field :discounted_price, :value => nil
+    = f.input :swap, label: 'Open to swaps', class: 'hello'
+    = f.input :listing_tags, label: 'Tags', hint: 'Add relevant keywords to ensure your listing appear on search (E.g. Education)', as: :select, collection: [], input_html: { class: 'select2', multiple: 'multiple' }
 
   .form-actions
     = f.button :submit, class: 'btn-secondary btn-lg'
