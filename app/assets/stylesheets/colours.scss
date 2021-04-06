@@ -28,14 +28,6 @@
   border-bottom: 0;
 }
 
-.border-red {
-  border: solid 2px $primary-color;
-}
-
-.border-blue {
-  border: solid 2px $secondary-color;
-}
-
 // Buttons
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
@@ -51,9 +43,26 @@
 .btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
   background-color: $secondary-color !important;
   border-color: $secondary-color !important;
+  box-shadow: 4px 4px;
 }
 
 .btn-outline-secondary, .btn-outline-secondary:hover, .btn-outline-secondary:active, .btn-outline-secondary:visited {
   border-color: $secondary-color !important;
   color: $secondary-color !important;
+}
+
+.listing-red{
+  border: solid 2px $primary-color;
+}
+
+.listing-blue{
+  border: solid 2px $secondary-color;
+}
+
+.listing-blue:hover, .listing-red:hover {
+  box-shadow: 2px 2px;
+}
+
+.heart-link, .heart-link:hover {
+  color: $primary-color;
 }

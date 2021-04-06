@@ -5,18 +5,8 @@
   .panel-body
 
   %table.table
-    %thead
-      %tr
-        %th Title
-        %th Description
-        %th Price
-        %th Creator
-        %th Receiver
-        %th Category
-        %th Condition
-        %th Status
 
     %tbody#favourites-table
-      = render 'favourites_table'
+      = render 'listings/listed_item', listings: @favourite_listings
   .panel-footer
     = link_to 'Go Back', :back, class: 'btn btn-default'

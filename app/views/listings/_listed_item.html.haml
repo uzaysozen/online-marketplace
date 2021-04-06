@@ -1,51 +1,90 @@
-.row.justify-content-left.flex-column-reverse.flex-md-row.listing-container
-  .col-12.col-md-12
-    .border-none.rounded.h-100
-      .row.p-2
+- content_for :title, 'My Listings'
+- listings.each do |listing|
+  - user_favourite = current_user.user_favourites.find_by(listing: listing)
+
+  .row.justify-content-left.flex-column-reverse.flex-md-row.listing-container
+    .col-12.col-md-12
+      .border-none.rounded.h-100
+        .row.p-2
         
-        .col-12.col-sm-2.pl-0.text-left.listing-image-container
-          %p
-          =image_tag "/images/logos/su.png"
+          .col-12.col-sm-2.pl-0.text-left.listing-image-container.text-red
+            %p
+            - if current_user.id == listing.creator_id
+              =image_tag "/images/logos/su.png"
 
-        .col-12.col-sm-5.pl-0.text-left.listing-description-container
+            - else
+              = link_to(user_favourite, method: :delete, remote: true, class: 'heart-link') do
+                = icon('fas', 'heart')
+              = image_tag "/images/logos/su.png"
+
+          .col-12.col-sm-5.pl-0.text-left.listing-description-container
           
-          .text-medium.text-red.text-left
-            %p
-            = listing.title
-            %p
+            .text-medium.text-red.text-left
+              %p
+              %p
+                =listing.title 
               
-          .text-small.text-black.border-right-black
-            = listing.description
+            .text-small.text-black.border-right-black
 
-        .col-12.col-sm-3.pl-5.text-left.listing-price-container  
-          .text-small.text-black
-            %p
-            acc19pm  
-            %p
-          .text-small.text-darkgray 
-            = listing.listing_condition.name
-            %p
+              =listing.description 
 
-          .text-small.text-darkgray 
-            Delivery Option
-            %p
 
-          .text-medium.text-black
-            £10.00
+          .col-12.col-sm-3.pl-5.text-left.listing-price-container  
+            .text-small.text-black
+              %p
+              =listing.creator.username
+              %p
 
-        .col-12.col-sm-2.text-left    
+            .text-small.text-darkgray 
+
+              = listing.listing_condition.name
+              %p
+
+            .text-small.text-darkgray 
+              Delivery Option
+              %p
+
+            .text-medium.text-black
+              £
+              = listing.price 
+
+
+          - if current_user.id == listing.creator_id 
+
+            .col-12.col-sm-2.text-left    
           
-          .text-small.text-center.btn-secondary.rounded
-            %p
-            = link_to 'Edit', edit_listing_path(listing), class: 'ajax-modal'
-            %p
+              .text-small.text-center.text-white.btn-secondary.rounded
+                = link_to edit_listing_path(listing), class: 'ajax-modal listing-button white-button' do
+                  %p
+                  Edit 
+                  %p
 
-          .text-small.text-center.text-blue.border-blue.rounded 
-            See Details
+              .text-small.text-center.text-blue.listing-blue.rounded 
+                = link_to listing, class: 'button-blue listing-button' do
+                  See Details
             
-          %p 
+              %p 
 
-          .text-small.text-center.text-red.border-red.rounded
-            = icon('fas', 'trash') 
-            = link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' }
+              .text-small.text-center.text-red.listing-red.rounded
+                = link_to listing, method: :delete, data: { confirm: 'Are you sure?' }, class: 'listing-button delete-button' do
+                  = icon('fas', 'trash') 
+                  Delete
 
+          - else 
+ 
+            .col-12.col-sm-2.text-left    
+          
+              .text-small.text-center.btn-secondary.rounded
+                = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do
+                  %p
+                  Enquire
+                  %p
+
+              .text-small.text-center.text-blue.listing-blue.rounded 
+                = link_to listing, class: 'button-blue listing-button' do
+                  See Details
+              %p 
+
+              .text-small.text-center.text-blue.listing-blue.rounded
+                = icon('far', 'flag') 
+                Report

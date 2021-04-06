@@ -29,14 +29,18 @@ body {
   color: $darkgray
 }
 
-.text-white {
+.text-white, .white-button, .white-button:hover  {
   color: $secondary-font;
 }
 
-.text-blue {
+.text-blue, .button-blue, .button-blue:hover {
   color: $secondary-color;
 }
 
-.text-red {
+.text-red, .delete-button, .delete-button:hover {
   color: $primary-color;
+}
+
+.listing-button:hover{
+  text-decoration: none !important;
 }
