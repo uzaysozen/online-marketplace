@@ -15,3 +15,8 @@
             = conversation.conversation_messages.last.content
           .time-label.text-right.font-italic.text-darkgray
             = conversation.conversation_messages.last.updated_at.to_s(:time)
+          .time-label.text-left.text-darkgray
+            - if sent
+              My enquiry
+            - else
+              Received enquiry
