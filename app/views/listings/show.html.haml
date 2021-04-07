@@ -1,7 +1,7 @@
 #category-history
   %nav{"aria-label" => "breadcrumb"}
     %ol.breadcrumb.p-0.bg-white.text-small
-      - @listing.category.path_to.reverse.each do |category|
+      - @listing.listing_category.path_to.reverse.each do |category|
         %li.breadcrumb-item
           %a{href: "#"}
             = category.name

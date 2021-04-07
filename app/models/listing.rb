@@ -44,7 +44,7 @@ class Listing < ApplicationRecord
     belongs_to :receiver, class_name: "User"
     belongs_to :listing_condition
     belongs_to :listing_status
-    belongs_to :category, class_name: "ListingCategory", foreign_key: "listing_category_id"
+    belongs_to :listing_category
 
     has_many :listing_views
     has_many :listing_questions
