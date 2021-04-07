@@ -1,0 +1,8 @@
+check process puma-<%= fetch(:application)%>-<%= fetch(:delayed_job_environment)%>
+  with pidfile "<%= fetch(:puma_pid) %>"
+  group "<%= fetch(:user)%>"
+  start program = "/bin/su - <%= fetch(:user)%> -c 'cd <%= current_path %> && <%= SSHKit.config.command_map[:puma] %> -C <%= fetch(:puma_conf) %> --daemon'"
+  stop program = "/bin/su - <%= fetch(:user)%> -c 'cd <%= current_path %> && <%= SSHKit.config.command_map[:pumactl] %> -S <%= fetch(:puma_state) %> stop'"
+  if does not exist then restart
+  alert systems@epigenesys.org.uk but not on { action }
+  if does not exist for 3 cycles then alert

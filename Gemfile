@@ -12,7 +12,7 @@ gem 'rails', '6.0.3.3'
 gem 'activerecord-session_store'
 gem 'bootsnap'
 gem 'responders'
-gem 'puma'
+gem 'puma', '< 5'
 
 gem 'pg'
 
@@ -63,6 +63,7 @@ group :development do
   gem 'capistrano-bundler', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-passenger', require: false
+  gem 'capistrano3-puma', github: "seuros/capistrano-puma"
 
   gem 'eventmachine'
   gem 'letter_opener'
