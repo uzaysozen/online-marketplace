@@ -1,17 +1,16 @@
 #conversation-id{"data-conversation-id" => "#{@conversation.try(:id)}"}
 
-.panel.panel-default
-  .panel-heading
-    %h3.panel-title 
-      User: 
-      = current_user.username
-  .panel-body
+.card
+  .card-header
+    = render 'conversations/conversation_listing'
+  .card-body
     .conversation
       #messages
-        - @messages.each do |message|
-          = render 'conversation_messages/conversation_message', message: message, current_user: current_user
+        - @conversation.conversation_messages.where(is_deleted: nil).each do |message|
+          = render 'conversation_messages/conversation_message', message: message
+  .card-footer
+    #send-form 
       = render 'conversation_messages/send_form', conversation_message: ConversationMessage.new, conversation: @conversation
-  .panel-footer
     - if @conversation.conversation_messages.empty?
       = link_to 'Back', @conversation, method: :delete
     - else
