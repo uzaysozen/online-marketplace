@@ -1,0 +1,53 @@
+- user_favourite = current_user.user_favourites.find_by(listing: listing)
+
+.row.justify-content-left.flex-column-reverse.flex-md-row.listing-container
+  .col-12.col-md-12
+    .border-none.rounded.h-100
+      .row.p-2
+            
+        .col-12.col-sm-3.pl-0.text-left.listing-image-container-lrg.text-huge
+          %p
+          =icon('far', 'image')
+
+        .col-12.col-sm-8.pl-0.text-left.details-container
+            
+          .text-medium.text-red.text-left
+            %p
+            =listing.title 
+            %p
+          .text-small.text-black.border-right-black
+            
+            =listing.creator.username 
+
+          .text-small.text-black
+            %p
+            =listing.description
+            %p
+
+          .text-small.text-darkgray 
+
+            = listing.listing_condition.name
+            %p
+
+          .text-small.text-darkgray 
+            Delivery Option
+            %p
+
+          .text-medium.text-black
+            £
+            = listing.price 
+            %p
+          .text-small.text-center.listing-blue.rounded.bg-blue
+            = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do 
+              Enquire
+        .col-12.col-sm-1.pl-5.text-medium.text-blue
+          %p
+          = icon('far', 'flag')
+          .text-medium.action-container
+            - if listing.creator != current_user
+              - if user_favourite.present?
+                = link_to(delete_favourite_listing_path(listing), method: :post, remote: true, class: 'heart-link') do
+                  = icon('fas', 'heart')
+              - else
+                = link_to(add_favourite_listing_path(listing), method: :post, remote: true, class: 'heart-link') do
+                  = icon('far', 'heart') 

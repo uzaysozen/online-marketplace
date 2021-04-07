@@ -1,1 +1,1 @@
-$("#favourites-table").html($('#{j render 'favourites_table'}'));
+$("#favourites").html($('#{j render partial: 'listings/listed_item', collection: @favourite_listings}'));

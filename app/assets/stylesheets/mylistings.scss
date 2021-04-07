@@ -6,9 +6,17 @@
 
 .listing-description-container {
   border-right: solid 1px $gray;
-  line-height: 1.2;
 }
 
-.listing-price-container {
+
+.listing-price-container, .details-container {
   line-height: 1.0;
+}
+
+.listing-price-container, .details-container, .action-container {
+  max-height: 210px;
+}
+
+.action-container {
+  line-height: 18.0;
 }
