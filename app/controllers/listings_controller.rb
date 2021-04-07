@@ -45,6 +45,8 @@ class ListingsController < ApplicationController
       params = listing_params
       # take tags out of params, removing blank entries and duplicates
       tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
+      # take delivery methods out of params
+      delivery_methods = params.delete(:listing_delivery).reject(&:blank?)
 
       @listing = Listing.new(params)
       @listing.listing_status = ListingStatus.first
@@ -59,6 +61,11 @@ class ListingsController < ApplicationController
         @listing.tags << Tag.where(name: tag).first_or_create
       end 
   
+      delivery_methods.each do |delivery|
+        # get delivery methods by id and add to listing
+        @listing.delivery << Delivery.where(id: delivery).first
+      end
+
       if @listing.save
         redirect_to listings_path, notice: 'Listing was successfully created.'
       else
@@ -119,6 +126,6 @@ class ListingsController < ApplicationController
       # Only allow a trusted parameter "white list" through.
       def listing_params
         params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id, 
-          :listing_category_id, :swap, :image, listing_tags: [])
+          :listing_category_id, :swap, :image, listing_tags: [], listing_delivery: [])
       end
   end
