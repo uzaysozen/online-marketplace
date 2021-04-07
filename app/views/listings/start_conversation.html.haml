@@ -12,6 +12,6 @@
     #send-form 
       = render 'conversation_messages/send_form', conversation_message: ConversationMessage.new, conversation: @conversation
     - if @conversation.conversation_messages.empty?
-      = link_to 'Back', @conversation, method: :delete
+      = link_to 'Back', delete_conversation_listing_path(@conversation.listing), method: :post
     - else
       = link_to 'Back', :back

@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
-    before_action :set_listing, only: [:show, :edit, :update, :destroy, :add_favourite, :delete_favourite, :start_conversation]
+    before_action :set_listing, only: [:show, :edit, :update, :destroy,
+       :add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
     
     # GET /listings
     def index
@@ -115,6 +116,16 @@ class ListingsController < ApplicationController
     def start_conversation
       @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
       @messages = @conversation.conversation_messages.where(is_deleted: nil)
+    end
+
+    def delete_conversation
+      @conversation = current_user.conversations.find_by(listing: @listing)
+      if @conversation.conversation_messages.empty?
+        @conversation.destroy
+        redirect_to listings_path
+      else
+        redirect_to listings_path
+      end
     end
 
     private
