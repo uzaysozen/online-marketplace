@@ -1,6 +1,8 @@
 #user-id{"data-user-id" => "#{current_user.try(:id)}"}
 %nav#main-nav.navbar.navbar-dark.navbar-expand-lg.position-sticky.bg-red
   .container
+    .navbar-brand
+      = image_tag '/images/logos/logo_white.svg'
     .navbar-header
       = link_to :root, class: 'navbar-brand hidden-sm' do
         Sheffield University Marketplace
