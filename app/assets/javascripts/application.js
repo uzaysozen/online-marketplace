@@ -9,6 +9,6 @@
 //= require select2
 //= require select2_init
 //= require rails-ujs
-// //= require cable
+//= require cable
 //= require reload_toast_init
 //= require turbolinks
