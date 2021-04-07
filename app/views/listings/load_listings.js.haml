@@ -1,1 +1,1 @@
-$("#listings").html($('#{j render 'listing'}'));
+$("#listings").html($('#{j render partial: 'listing', collection: @listings}'));
