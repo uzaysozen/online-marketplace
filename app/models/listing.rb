@@ -53,8 +53,8 @@ class Listing < ApplicationRecord
     has_many :conversations
     has_many_attached :images
 
-    has_many :listing_delivery
-    has_many :delivery, through: :listing_delivery
+    has_many :listing_deliveries
+    has_many :deliveries, through: :listing_deliveries
 
     has_many :user_favourites
     has_many :followers, class_name: "User", through: :user_favourites
