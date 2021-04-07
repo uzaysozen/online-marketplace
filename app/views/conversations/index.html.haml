@@ -6,7 +6,7 @@
       .card
         .card-header.text-center
           .conversation-header 
-            %h3 Conversations
+            %h4 Conversations
         .list-group.list-group-flush
           = render partial: 'conversation', collection: @received, locals: {sent: false}
           = render partial: 'conversation', collection: @sent, locals: {sent: true}

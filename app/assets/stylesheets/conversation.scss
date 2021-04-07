@@ -73,8 +73,13 @@
 }
 
 .conversation-header {
-  padding-bottom: 54px;
-  padding-top: 54px;
+  padding-bottom: 56px;
+  padding-top: 56px;
   padding-right: 10px;
+}
+
+.conversations-sidebar {
+  max-height: 655px;
+  overflow-y: auto;
 }
 
