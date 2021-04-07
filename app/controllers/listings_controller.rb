@@ -28,6 +28,7 @@ class ListingsController < ApplicationController
 
     # GET /listings/1
     def show
+      @listing = Listing.find(params[:id])
     end
   
     # GET /listings/new
