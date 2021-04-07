@@ -30,6 +30,6 @@
 
     -#%tbody#listings-table
   #listings
-    = render 'listing'
+    = render partial: 'listing', collection: @listings
   .panel-footer
     = link_to 'New Listing', new_listing_path, class: 'btn btn-default'

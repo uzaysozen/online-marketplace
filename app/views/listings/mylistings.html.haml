@@ -16,6 +16,6 @@
       -#  %th Status
 
     %tbody#listings-table
-      = render 'listed_item', listings: @listings
+      = render partial: 'listed_item', collection: @listings
   .panel-footer
     = link_to 'Go Back', listings_path, class: 'btn btn-default'

@@ -1,89 +1,82 @@
-- content_for :title, 'My Listings'
-- listings.each do |listing|
-  - user_favourite = current_user.user_favourites.find_by(listing: listing)
+- user_favourite = current_user.user_favourites.find_by(listing: listed_item)
 
-  .row.justify-content-left.flex-column-reverse.flex-md-row.listing-container
-    .col-12.col-md-12
-      .border-none.rounded.h-100
-        .row.p-2
+.row.justify-content-left.flex-column-reverse.flex-md-row.listing-container
+  .col-12.col-md-12
+    .border-none.rounded.h-100
+      .row.p-2
         
-          .col-12.col-sm-2.pl-0.text-left.listing-image-container.text-red
+        .col-12.col-sm-2.pl-0.text-left.listing-image-container.text-red
+          %p
+          - if current_user.id != listed_item.creator_id
+            = link_to(user_favourite, method: :delete, remote: true, class: 'heart-link') do
+              = icon('fas', 'heart')
+
+          = image_tag "/images/logos/su.png"
+
+        .col-12.col-sm-5.pl-0.text-left.listing-description-container
+          
+          .text-medium.text-red.text-left
             %p
-            - if current_user.id == listing.creator_id
-              =image_tag "/images/logos/su.png"
-
-            - else
-              = link_to(user_favourite, method: :delete, remote: true, class: 'heart-link') do
-                = icon('fas', 'heart')
-              = image_tag "/images/logos/su.png"
-
-          .col-12.col-sm-5.pl-0.text-left.listing-description-container
-          
-            .text-medium.text-red.text-left
-              %p
-              %p
-                =listing.title 
+            %p
+            =listed_item.title 
               
-            .text-small.text-black.border-right-black
-
-              =listing.description 
-
-
-          .col-12.col-sm-3.pl-5.text-left.listing-price-container  
-            .text-small.text-black
-              %p
-              =listing.creator.username
-              %p
-
-            .text-small.text-darkgray 
-
-              = listing.listing_condition.name
-              %p
-
-            .text-small.text-darkgray 
-              Delivery Option
-              %p
-
-            .text-medium.text-black
-              £
-              = listing.price 
+          .text-small.text-black.border-right-black
+            =listed_item.description 
 
 
-          - if current_user.id == listing.creator_id 
+        .col-12.col-sm-3.pl-5.text-left.listing-price-container  
+          .text-small.text-black
+            %p
+            =listed_item.creator.username
+            %p
 
-            .col-12.col-sm-2.text-left  
-              %p  
+          .text-small.text-darkgray 
+            = listed_item.listing_condition.name
+            %p
+
+          .text-small.text-darkgray 
+            Delivery Option
+            %p
+
+          .text-medium.text-black
+            £
+            = listed_item.price 
+
+
+        - if current_user.id == listed_item.creator_id 
+
+          .col-12.col-sm-2.text-left  
+            %p  
           
-              .text-small.text-center.listing-blue.rounded.bg-blue
-                = link_to edit_listing_path(listing), class: 'ajax-modal listing-button white-button' do
-                  Edit 
-              %p
+            .text-small.text-center.listing-blue.rounded.bg-blue
+              = link_to edit_listing_path(listed_item), class: 'ajax-modal listing-button white-button' do
+                Edit 
+            %p
 
-              .text-small.text-center.text-blue.listing-blue.rounded 
-                = link_to listing, class: 'button-blue listing-button' do
-                  See Details
+            .text-small.text-center.text-blue.listing-blue.rounded 
+              = link_to listed_item, class: 'button-blue listing-button' do
+                See Details
             
-              %p 
+            %p 
 
-              .text-small.text-center.text-red.listing-red.rounded
-                = link_to listing, method: :delete, data: { confirm: 'Are you sure?' }, class: 'listing-button delete-button' do
-                  = icon('fas', 'trash') 
-                  Delete
+            .text-small.text-center.text-red.listing-red.rounded
+              = link_to listed_item, method: :delete, data: { confirm: 'Are you sure?' }, class: 'listing-button delete-button' do
+                = icon('fas', 'trash') 
+                Delete
 
-          - else 
+        - else 
  
-            .col-12.col-sm-2.text-left    
-              %p
-              .text-small.text-center.listing-blue.rounded.bg-blue
-                = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do
-                  Enquire
+          .col-12.col-sm-2.text-left    
+            %p
+            .text-small.text-center.listing-blue.rounded.bg-blue
+              = link_to start_conversation_listing_path(listed_item), class: 'listing-button white-button' do
+                Enquire
+            %p
+            .text-small.text-center.text-blue.listing-blue.rounded 
+              = link_to listed_item, class: 'button-blue listing-button' do
+                See Details
+            %p 
 
-              %p
-              .text-small.text-center.text-blue.listing-blue.rounded 
-                = link_to listing, class: 'button-blue listing-button' do
-                  See Details
-              %p 
-
-              .text-small.text-center.text-blue.listing-blue.rounded
-                = icon('far', 'flag') 
-                Report
+            .text-small.text-center.text-blue.listing-blue.rounded
+              = icon('far', 'flag') 
+              Report

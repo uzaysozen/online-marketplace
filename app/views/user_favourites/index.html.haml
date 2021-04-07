@@ -5,7 +5,7 @@
   .panel-body
   
   #favourites
-    = render 'listings/listed_item', listings: @favourite_listings
+    = render partial: 'listings/listed_item', collection: @favourite_listings
     //= render 'favourites_table'
   .panel-footer
     = link_to 'Go Back', :back, class: 'btn btn-default'
