@@ -1,10 +1,27 @@
-.panel.panel-default
-  .panel-heading
-    %h3.panel-title Active conversations
-  .panel-body
+#conversation-id{"data-conversation-id" => "#{@conversation.try(:id)}"}
 
-  = render "conversation_table", conversations: @sent, title: "My enquiries"
-  = render "conversation_table", conversations: @received, title: "Received enquiries"
-
-  .panel-footer
-    = link_to 'Go Back', :back, class: 'btn btn-default'
+.container-fluid
+  .row
+    .col-3.conversations-sidebar.p-0
+      .card
+        .card-header.text-center
+          .conversation-header 
+            %h3 Conversations
+        .list-group.list-group-flush
+          = render partial: 'conversation', collection: @received, locals: {sent: false}
+          = render partial: 'conversation', collection: @sent, locals: {sent: true}
+    .col-9.conversation-box.p-0  
+      - if @conversation.present?
+        .card.pl-0
+          .card-header
+            = render 'conversation_listing'
+          .card-body
+            .conversation
+              #messages
+                - @conversation.conversation_messages.where(is_deleted: nil).each do |message|
+                  = render 'conversation_messages/conversation_message', message: message
+          .card-footer
+            #send-form 
+              = render 'conversation_messages/send_form', conversation_message: ConversationMessage.new, conversation: @conversation
+      - else 
+        = render 'landing'

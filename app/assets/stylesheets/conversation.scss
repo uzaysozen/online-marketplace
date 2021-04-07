@@ -1,9 +1,9 @@
 .conversation {
-    height: 60vh;
+    height: 30vh;
   
     #messages {
-      height: 70%;
-      overflow-y: scroll;
+      height: 100%;
+      overflow-y: auto;
       padding-bottom: 200px;
       padding-top: 10px;
     }
@@ -32,3 +32,49 @@
         }
       }
 }
+
+.active-conversation {
+  background-color: #cccccc;
+}
+
+.conversation-link:hover {
+  text-decoration: none;
+}
+
+.conversation-link {
+  background-color: #f7f6f6;
+}
+
+.conversation-button:hover {
+  color: white;
+}
+
+.conversation-listing-image {
+  font-size: 150px;
+  margin-left: 10px;
+}
+
+.conversation-card-image {
+  font-size: 70px;
+  padding-top: 5px;
+}
+
+.time-label {
+  font-size: 12px;
+}
+
+.empty-conversation-container {
+  background-color: rgba(0, 0, 0, 0.03);
+  .empty-conversation-header {
+    font-size: medium;
+    margin-top: 8rem;
+    color: #808080;
+  }
+}
+
+.conversation-header {
+  padding-bottom: 54px;
+  padding-top: 54px;
+  padding-right: 10px;
+}
+

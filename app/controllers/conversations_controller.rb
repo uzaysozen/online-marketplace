@@ -13,7 +13,13 @@ class ConversationsController < ApplicationController
   
     # GET /conversations/1
     def show
-      @messages = @conversation.conversation_messages.where(is_deleted: nil)
+      @sent = Conversation.profile(current_user)
+      listings = Listing.profile(current_user)
+      @received = []
+      listings.each do |listing|
+        @received += listing.conversations
+      end
+      render :index
     end
   
     # GET /conversations/new

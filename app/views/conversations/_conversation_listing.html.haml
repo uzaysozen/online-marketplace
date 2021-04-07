@@ -1,0 +1,27 @@
+- listing = @conversation.listing
+.row
+  .col-3.pl-0
+    .row.conversation-listing-image.text-center
+      =icon('far', 'image')  
+  
+  .col-9
+    .row.text-medium.text-black.text-left
+      = listing.title 
+
+    .row.text-small.text-black.text-left
+      = listing.creator.username
+    %p
+
+    .row.text-medium.text-black.text-left
+      £
+      = listing.price 
+
+    .row   
+      .col-6.text-small.text-center.text-darkgray.rounded.pr-2.pl-0
+        = link_to listing , class: 'conversation-link btn btn-outline-dark btn-block' do
+          See Details
+      .col-6.text-small.text-center.text-darkgray.rounded.btn.btn-outline-dark.btn-block.conversation-link
+        = icon('far', 'flag') 
+        Report
+          
+
