@@ -1,24 +1,13 @@
 class ConversationsController < ApplicationController
     before_action :set_conversation, only: [:show, :edit, :update, :destroy]
+    before_action :set_sent_and_received, only: [:index, :show]
   
     # GET /conversations
     def index
-      @sent = Conversation.profile(current_user)
-      listings = Listing.profile(current_user)
-      @received = []
-      listings.each do |listing|
-        @received += listing.conversations
-      end
     end
   
     # GET /conversations/1
     def show
-      @sent = Conversation.profile(current_user)
-      listings = Listing.profile(current_user)
-      @received = []
-      listings.each do |listing|
-        @received += listing.conversations
-      end
       render :index
     end
   
@@ -53,6 +42,7 @@ class ConversationsController < ApplicationController
   
     # DELETE /conversations/1
     def destroy
+      @conversation.conversation_messages.delete_all
       @conversation.destroy
       redirect_to listings_path
     end
@@ -66,5 +56,14 @@ class ConversationsController < ApplicationController
       # Only allow a trusted parameter "white list" through.
       def conversation_params
         params.require(:listing_id, :participant_id)
+      end
+
+      def set_sent_and_received
+        @sent = Conversation.profile(current_user)
+        listings = Listing.profile(current_user)
+        @received = []
+        listings.each do |listing|
+          @received += listing.conversations
+        end
       end
   end
