@@ -2,12 +2,12 @@
 
 .container-fluid
   .row
-    .col-3.conversations-sidebar.p-0
+    .col-3.p-0
       .card
         .card-header.text-center
           .conversation-header 
             %h4 Conversations
-        .list-group.list-group-flush
+        .list-group.list-group-flush.conversations-sidebar
           = render partial: 'conversation', collection: @received, locals: {sent: false}
           = render partial: 'conversation', collection: @sent, locals: {sent: true}
     .col-9.conversation-box.p-0  
