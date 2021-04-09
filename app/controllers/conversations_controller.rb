@@ -65,5 +65,10 @@ class ConversationsController < ApplicationController
         listings.each do |listing|
           @received += listing.conversations
         end
+        @received.each do |conversation|
+          if conversation.conversation_messages.empty?
+            @received -= [conversation]
+          end
+        end
       end
   end
