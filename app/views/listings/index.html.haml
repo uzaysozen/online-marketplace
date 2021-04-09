@@ -10,9 +10,9 @@
 
   .row.m-0
     .col-3
-      = link_to "Sort By Title", sort: "title"
+      = link_to "Sort By Title", '/listings?sort=title', sort: "title"
       \|
-      = link_to "Sort By Price", sort: "price"
+      = link_to "Sort By Price", '/listings?sort=price', sort: "price"
 
       -#%table.table
         -#%thead
