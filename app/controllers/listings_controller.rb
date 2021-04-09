@@ -108,6 +108,16 @@ class ListingsController < ApplicationController
         end
       end
 
+      #Filter by Minimum Price
+      if params[:filter][:filter_minprice].present?
+        @listings = @listings.where("price >= ?", params[:filter][:filter_minprice])
+      end
+
+      #Filter by Maximum Price
+      if params[:filter][:filter_maxprice].present?
+        @listings = @listings.where("price <= ?", params[:filter][:filter_maxprice])
+      end
+
       #Filter by Condition
       if params[:filter][:filter_condition].present?
         current_condition = ListingCondition.where(id: params[:filter][:filter_condition]).first
@@ -118,9 +128,12 @@ class ListingsController < ApplicationController
 
       #Filter by Delivery
       if params[:filter][:filter_delivery].present?
-        current_delivery = Delivery.where(id: params[:filter][:filter_delivery]).second
+        delivery_ids = params[:filter][:filter_delivery]
+        new_delivery_ids = delivery_ids.drop(1)
+
+        current_delivery = Delivery.where(id: new_delivery_ids)
         unless current_delivery.nil?
-          @listings = @listings.where(delivery_id: current_delivery.id)
+          @listings = @listings.where(listing_deliveries: current_delivery.ids)
         end
       end
       render :index
