@@ -3,7 +3,10 @@
     .border-none.rounded.h-100
       .row.p-2
 
-        = simple_form_for :filter, url: filter_listings_path, method: :post do |f|
+        = simple_form_for :search_and_filter, url: search_and_filter_listings_path, method: :post do |f|
+          %p Search Bar
+          = f.input :search_title, label: false, required: false
+
           %p Filter Menu
           = f.input :filter_category, label: 'Categories', collection: ListingCategory.all, required: false
           

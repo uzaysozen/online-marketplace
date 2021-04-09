@@ -10,16 +10,9 @@
 
   .row.m-0
     .col-3
-      = simple_form_for :search, url: search_listings_path, method: :post do |f|
-        = f.input :search_title
-
-        = f.submit 'Search', class: 'btn btn-default', id: 'search-button'
-        = link_to 'Reset', listings_path
-      
       = link_to "Sort By Title", sort: "title"
       \|
       = link_to "Sort By Price", sort: "price"
-      %br
 
       -#%table.table
         -#%thead
