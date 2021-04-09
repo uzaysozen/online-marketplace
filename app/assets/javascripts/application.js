@@ -12,3 +12,4 @@
 //= require cable
 //= require reload_toast_init
 //= require turbolinks
+//= require file-upload
