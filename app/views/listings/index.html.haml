@@ -2,7 +2,11 @@
   .panel-heading
     %h3.panel-title Listings
   .panel-body
-    %p There are #{@listings.size} listings available.
+    - if @listings.size == 0
+      %p No listings were found
+    - else
+      %p There are #{@listings.size} listings available.
+    
 
   .row.m-0
     .col-3
