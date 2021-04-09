@@ -115,7 +115,7 @@ class ListingsController < ApplicationController
 
     def start_conversation
       @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
-      @messages = @conversation.conversation_messages.where(is_deleted: nil)
+      redirect_to @conversation
     end
 
     def delete_conversation
