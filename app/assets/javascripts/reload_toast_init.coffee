@@ -1,5 +1,5 @@
 $ ->
-  $(document).on 'ready', ->
+  $(document).on 'ready turbolinks:load', ->
     $('.toast').each( (_) ->
       $(this).toast('show');
     )

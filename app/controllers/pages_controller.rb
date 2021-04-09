@@ -4,7 +4,10 @@ class PagesController < ApplicationController
 
   def home
     @current_nav_identifier = :home
-    @message = Message.new
+  end
+
+  def admin
+    @current_nav_identifier = :admin
   end
 
 end

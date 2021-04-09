@@ -1,1 +1,10 @@
-= render @conversations
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title Active conversations
+  .panel-body
+
+  = render "conversation_table", conversations: @sent, title: "My enquiries"
+  = render "conversation_table", conversations: @received, title: "Received enquiries"
+
+  .panel-footer
+    = link_to 'Go Back', :back, class: 'btn btn-default'

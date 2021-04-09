@@ -10,10 +10,24 @@
 #  conversation_message_id :bigint
 #  listing_id              :bigint
 #  moderator_id            :bigint
-#  user_id                 :bigint
+#  reporter_id             :bigint
+#
+# Indexes
+#
+#  index_reports_on_conversation_message_id  (conversation_message_id)
+#  index_reports_on_listing_id               (listing_id)
+#  index_reports_on_moderator_id             (moderator_id)
+#  index_reports_on_reporter_id              (reporter_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (conversation_message_id => conversation_messages.id)
+#  fk_rails_...  (listing_id => listings.id)
+#  fk_rails_...  (moderator_id => users.id)
+#  fk_rails_...  (reporter_id => users.id)
 #
 class Report < ApplicationRecord
-    belongs_to :user
+    belongs_to :reporter, class_name: "User"
     belongs_to :moderator, class_name: "User"
     belongs_to :listing
     belongs_to :conversation_message

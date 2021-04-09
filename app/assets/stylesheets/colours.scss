@@ -1,5 +1,7 @@
 @import 'variables';
 
+// Backgrounds
+
 .bg-white {
   background-color: $primary-background;
 }
@@ -16,6 +18,10 @@
   background-color: $primary-color;
 }
 
+.bg-blue {
+  background-color: $secondary-color;
+}
+
 .border-gray {
   border: 1px solid $gray;
 }
@@ -24,4 +30,48 @@
   border: 1px solid $gray;
   border-top: 0;
   border-bottom: 0;
+}
+
+// Buttons
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+  background-color: $primary-color !important;
+  border-color: $primary-color !important;
+}
+
+.btn-outline-primary, .btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited {
+  border-color: $primary-color !important;
+  color: $primary-color !important;
+}
+
+.btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
+  background-color: $secondary-color !important;
+  border-color: $secondary-color !important;
+  box-shadow: 4px 4px;
+}
+
+.btn-outline-secondary, .btn-outline-secondary:hover, .btn-outline-secondary:active, .btn-outline-secondary:visited {
+  border-color: $secondary-color !important;
+  color: $secondary-color !important;
+}
+
+.listing-red{
+  border: solid 2px $primary-color;
+}
+
+.listing-blue{
+  border: solid 2px $secondary-color;
+}
+
+.listing-blue, .listing-red {
+  max-width: 137px;
+  max-height: 25px;
+}
+
+.listing-blue:hover, .listing-red:hover {
+  box-shadow: 2px 2px;
+}
+
+.heart-link, .heart-link:hover {
+  color: $primary-color;
 }

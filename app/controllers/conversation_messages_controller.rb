@@ -1,5 +1,5 @@
 class ConversationMessagesController < ApplicationController
-    before_action :set_conversation_message, only: [:show, :edit, :update, :destroy]
+    before_action :set_conversation_message, only: [:show, :edit, :update, :destroy, :delete_message]
   
     # GET /conversation_messages
     def index
@@ -20,15 +20,20 @@ class ConversationMessagesController < ApplicationController
     end
   
     # POST /conversation_messages
-    def create
+    def send_message
       @conversation_message = ConversationMessage.new(conversation_message_params)
-  
-      if @conversation_message.save
-        redirect_to conversation_messages_path, notice: 'Conversation message was successfully created.'
-      else
-        render :new
-      end
-    end
+      @conversation_message.sender = current_user
+      @conversation_message.save
+      SendConversationMessageJob.perform_later(@conversation_message, current_user)
+      head :ok
+    end 
+
+    def delete_message
+      @conversation_message.is_deleted = true
+      @conversation_message.save
+      DeleteConversationMessageJob.perform_later(@conversation_message.conversation, @conversation_message.id)
+      head :ok
+    end 
   
     # PATCH/PUT /conversation_messages/1
     def update
@@ -60,6 +65,6 @@ class ConversationMessagesController < ApplicationController
   
       # Only allow a trusted parameter "white list" through.
       def conversation_message_params
-        params.require(:conversation_message).permit(:content)
+        params.require(:conversation_message).permit(:content, :conversation_id)
       end
   end

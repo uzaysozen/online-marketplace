@@ -9,6 +9,7 @@
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "content-type"}
     = stylesheet_link_tag    "application", media: :all
     = javascript_include_tag "application"
+    = action_cable_meta_tag
     = favicon_link_tag '/favicon.ico'
     = csrf_meta_tags
 
@@ -19,13 +20,13 @@
 
     = render 'shared/navbar'
 
-    %main.bg-gray.row.m-0
-      #main-container.container.my-auto
+    %main.bg-gray.row.mx-0.py-6.align-items-center
+      #main-container.container
         - if path_starts_with?('/profile')
           = render 'shared/profile_navbar'
         - if path_starts_with?('/admin')
           %h1 admin
-        .bg-white.rounded.py-6.px-5
+        .bg-white.rounded.p-5
           = yield
 
     = render 'shared/footer'

@@ -3,3 +3,17 @@
     max-height: 80px;
   }
 }
+
+.listing-image-container {
+  img {
+    height: 110px;
+    width: 125px
+  }
+}
+
+.listing-image-container-lrg {
+  img {
+    max-height: 225px;
+    max-width: 250px
+  }
+}

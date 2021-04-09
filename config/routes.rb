@@ -19,21 +19,31 @@ Rails.application.routes.draw do
   resources :listing_ratings do
     post :search, on: :collection
   end
-  resources :conversation_messages do
+  
+  resources :listing_views
+
+  resources :listings do
     post :search, on: :collection
+    post :add_favourite, on: :member
+    post :delete_favourite, on: :member
+    get :start_conversation, on: :member
   end
 
-  resources :listing_images
-  resources :listing_views
-  resources :listings
   resources :reports
-  resources :user_favourites
+  
   resources :users do
     post :search, on: :collection
   end
-
+  
   scope :profile do
-    resources :conversations
+    get :mylistings, to: 'listings#mylistings'
+    resources :user_favourites
+    resources :conversations do
+      resources :conversation_messages, except: :create do
+        post :send_message, :as => 'send', on: :member
+        patch :delete_message, :as => 'delete', on: :member
+      end
+    end
   end
 
   match "/403", to: "errors#error_403", via: :all
@@ -45,6 +55,7 @@ Rails.application.routes.draw do
   get :javascript_warning, to: 'errors#javascript_warning'
 
   root to: "pages#home"
+  get "pages/admin" => "pages#admin"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -3,11 +3,17 @@ class ConversationsController < ApplicationController
   
     # GET /conversations
     def index
-      @conversations = Conversation.all
+      @sent = Conversation.profile(current_user)
+      listings = Listing.profile(current_user)
+      @received = []
+      listings.each do |listing|
+        @received += listing.conversations
+      end
     end
   
     # GET /conversations/1
     def show
+      @messages = @conversation.conversation_messages.where(is_deleted: nil)
     end
   
     # GET /conversations/new
@@ -42,7 +48,7 @@ class ConversationsController < ApplicationController
     # DELETE /conversations/1
     def destroy
       @conversation.destroy
-      redirect_to conversations_url, notice: 'Conversation was successfully deleted.'
+      redirect_to listings_path
     end
   
     private
@@ -53,6 +59,6 @@ class ConversationsController < ApplicationController
   
       # Only allow a trusted parameter "white list" through.
       def conversation_params
-        params.require(:conversation)
+        params.require(:listing_id, :participant_id)
       end
   end

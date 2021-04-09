@@ -153,3 +153,42 @@ before 'deploy:finished', 'delayed_job:start'
 
 ## Tell Airbrake deployment has completed
 after 'deploy:finished', 'airbrake:deploy'
+
+## Puma configuration
+set :puma_conf,               -> { File.join(shared_path, 'config', 'puma.rb') }
+set :puma_rackup,             -> { File.join(current_path, 'cable', 'config.ru') }
+set :puma_bind,               -> { "unix://#{File.join(shared_path, 'tmp', 'pids', 'puma.sock')}" }
+set :puma_threads,            [0, 4]
+set :puma_workers,            1
+set :monit_processes, %w(puma)
+namespace :monit do
+  task :config do
+    on roles(:all) do
+      if !fetch(:monit_processes).empty?
+        execute :mkdir, '-p', shared_path.join('monit')
+        fetch(:monit_processes).each do |process_name|
+          filename = File.expand_path("../deploy/monit_templates/#{process_name}.monitrc.erb", __FILE__)
+          erb = File.read(filename)
+          upload! StringIO.new(ERB.new(erb, nil, '-').result(binding)), File.join(shared_path, 'monit', "#{process_name}.monitrc")
+        end
+        sudo 'monit', 'reload'
+      end
+    end
+  end
+  task :monitor do
+    on roles(:all) do
+      sudo('monit', '-g', fetch(:user), 'monitor') if !fetch(:monit_processes).empty?
+    end
+  end
+  task :unmonitor do
+    on roles(:all) do
+      begin
+        sudo('monit', '-g', fetch(:user), 'unmonitor') if !fetch(:monit_processes).empty?
+      rescue
+      end
+    end
+  end
+end
+before 'deploy:updating', 'monit:unmonitor'
+after  "deploy:updated", 'monit:config'
+after 'deploy:finished', 'monit:monitor'

@@ -1,5 +1,7 @@
 class ListingViewsController < ApplicationController
     before_action :set_listing_view, only: [:show, :edit, :update, :destroy]
+
+    authorize_resource
   
     # GET /listing_views
     def index

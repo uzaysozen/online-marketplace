@@ -1,8 +1,9 @@
+#user-id{"data-user-id" => "#{current_user.try(:id)}"}
 %nav#main-nav.navbar.navbar-dark.navbar-expand-lg.position-sticky.bg-red
   .container
     .navbar-header
       = link_to :root, class: 'navbar-brand hidden-sm' do
-        Project
+        Sheffield University Marketplace
     %button.navbar-toggler{ aria: { controls: "navbar-content", expanded: false, label: "Toggle navigation" }, data: { target: "#navbar-content", toggle: "collapse" }, type: "button" }
       %span.navbar-toggler-icon
 
@@ -11,9 +12,12 @@
         = navbar_link_to :root, title: "Go to the home page", identifier: :home do
           = icon 'fas', 'home'
           Home
-        = navbar_link_to '#', title: "Go to an unavailable page", class: 'disabled', identifier: :unavailable_page do
-          = icon 'fas', 'ban'
-          Unavailable Page
+        = navbar_link_to listings_path, title: "Go to listings", identifier: :listings do
+          = icon 'fas', 'folder-open'
+          Listings
+        = navbar_link_to new_listing_path, title: "Go to new listing", identifier: :new_listing do
+          = icon 'fas', 'plus-square'
+          Create Listing
 
       %ul.nav.navbar-nav.ml-auto
         - if user_signed_in?
@@ -22,6 +26,15 @@
               = icon 'fas', 'user-circle', current_user.username
               %b.caret
             .dropdown-menu{ aria: { labelledby: '#navbar-user-link' } }
+              = link_to mylistings_path,  class: 'dropdown-item', title: "User Profile Page" do
+                User Profile
+              .dropdown-divider
+              - if current_user.administrator?
+                = link_to pages_admin_path, class: 'dropdown-item', title: "Admin's Page", identifier: :admin do
+                  Admin Page
+                .dropdown-divider
+              = link_to mylistings_path, class: 'dropdown-item', title: "My Listings" do
+                = icon 'fas', 'list', 'My Listings'
               = link_to destroy_user_session_path, class: 'dropdown-item', method: :delete, title: "Log out of the system" do
                 = icon 'fas', 'sign-out-alt', 'Log out'
         - else

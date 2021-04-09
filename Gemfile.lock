@@ -28,9 +28,9 @@ GIT
 
 GIT
   remote: https://github.com/epigenesys/epi_deploy.git
-  revision: ebd6b2e48e61cbec18e35b1537b8cf03f88d6cd3
+  revision: 5aea3810487bec1f5e287303df32f152a9b135e3
   specs:
-    epi_deploy (2.0.11)
+    epi_deploy (2.1.0)
       git (~> 1.5)
       slop (~> 3.6)
 
@@ -41,6 +41,15 @@ GIT
     capybara-select2 (1.0.1)
       capybara
       rspec
+
+GIT
+  remote: https://github.com/seuros/capistrano-puma.git
+  revision: 285b45f51d0662e760cc5e75f15614589a2be170
+  specs:
+    capistrano3-puma (5.0.4)
+      capistrano (~> 3.7)
+      capistrano-bundler
+      puma (>= 4.0, < 6.0)
 
 GEM
   remote: https://rubygems.org/
@@ -93,12 +102,12 @@ GEM
     activerecord (6.0.3.3)
       activemodel (= 6.0.3.3)
       activesupport (= 6.0.3.3)
-    activerecord-session_store (1.1.3)
-      actionpack (>= 4.0)
-      activerecord (>= 4.0)
+    activerecord-session_store (2.0.0)
+      actionpack (>= 5.2.4.1)
+      activerecord (>= 5.2.4.1)
       multi_json (~> 1.11, >= 1.11.2)
-      rack (>= 1.5.2, < 3)
-      railties (>= 4.0)
+      rack (>= 2.0.8, < 3)
+      railties (>= 5.2.4.1)
     activestorage (6.0.3.3)
       actionpack (= 6.0.3.3)
       activejob (= 6.0.3.3)
@@ -117,29 +126,32 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
-    autoprefixer-rails (10.0.1.0)
+    autoprefixer-rails (10.2.4.0)
       execjs
-    bcrypt (3.1.15)
+    bcrypt (3.1.16)
     bindex (0.8.1)
-    bootsnap (1.4.8)
+    bootsnap (1.7.3)
       msgpack (~> 1.0)
-    bootstrap (4.5.2)
+    bootstrap (4.6.0)
       autoprefixer-rails (>= 9.1.0)
       popper_js (>= 1.14.3, < 2)
       sassc-rails (>= 2.0.0)
     bootstrap-will_paginate (1.0.0)
       will_paginate
     builder (3.2.4)
+    bullet (6.1.3)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.11)
     byebug (11.1.3)
-    cancancan (3.1.0)
-    capistrano (3.14.1)
+    cancancan (3.2.1)
+    capistrano (3.16.0)
       airbrussh (>= 1.0.0)
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
     capistrano-bundler (2.0.1)
       capistrano (~> 3.1)
-    capistrano-passenger (0.2.0)
+    capistrano-passenger (0.2.1)
       capistrano (~> 3.0)
     capistrano-rails (1.6.1)
       capistrano (~> 3.1)
@@ -147,13 +159,13 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
-    capybara (3.33.0)
+    capybara (3.35.3)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
-      regexp_parser (~> 1.5)
+      regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     childprocess (3.0.0)
     chronic (0.10.2)
@@ -164,19 +176,24 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.7)
+    concurrent-ruby (1.1.8)
     crass (1.0.6)
     daemons (1.1.9)
-    database_cleaner (1.8.5)
+    database_cleaner (2.0.1)
+      database_cleaner-active_record (~> 2.0.0)
+    database_cleaner-active_record (2.0.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     delayed-plugins-airbrake (1.1.0)
       airbrake
       delayed_job
-    delayed_job (4.1.8)
-      activesupport (>= 3.0, < 6.1)
-    delayed_job_active_record (4.1.4)
-      activerecord (>= 3.0, < 6.1)
+    delayed_job (4.1.9)
+      activesupport (>= 3.0, < 6.2)
+    delayed_job_active_record (4.1.6)
+      activerecord (>= 3.0, < 6.2)
       delayed_job (>= 3.0, < 5)
-    devise (4.7.2)
+    devise (4.7.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0)
@@ -189,7 +206,7 @@ GEM
       devise (>= 3.4.1)
       net-ldap (>= 0.16.0)
     diff-lcs (1.4.4)
-    docile (1.3.2)
+    docile (1.3.5)
     draper (4.0.1)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -200,7 +217,7 @@ GEM
       coffee-rails (>= 3.2)
       railties (>= 3.0)
       sass-rails (>= 3.2)
-    erubi (1.9.0)
+    erubi (1.10.0)
     erubis (2.7.0)
     eventmachine (1.2.7)
     execjs (2.7.0)
@@ -209,14 +226,14 @@ GEM
     factory_bot_rails (6.1.0)
       factory_bot (~> 6.1.0)
       railties (>= 5.0.0)
-    ffi (1.13.1)
-    font-awesome-sass (5.13.0)
+    ffi (1.15.0)
+    font-awesome-sass (5.15.1)
       sassc (>= 1.11)
-    git (1.7.0)
+    git (1.8.1)
       rchardet (~> 1.8)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    haml (5.1.2)
+    haml (5.2.1)
       temple (>= 0.8.0)
       tilt
     haml-rails (2.0.1)
@@ -230,7 +247,7 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
-    i18n (1.8.5)
+    i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     jquery-rails (4.4.0)
       rails-dom-testing (>= 1, < 3)
@@ -240,10 +257,10 @@ GEM
       addressable (~> 2.7)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    listen (3.2.1)
+    listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.7.0)
+    loofah (2.9.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.1)
@@ -251,27 +268,29 @@ GEM
     marcel (0.3.3)
       mimemagic (~> 0.3.2)
     method_source (1.0.0)
-    mimemagic (0.3.5)
-    mini_mime (1.0.2)
-    mini_portile2 (2.4.0)
-    minitest (5.14.2)
-    msgpack (1.3.3)
+    mimemagic (0.3.10)
+      nokogiri (~> 1)
+      rake
+    mini_mime (1.1.0)
+    mini_portile2 (2.5.0)
+    minitest (5.14.4)
+    msgpack (1.4.2)
     multi_json (1.15.0)
-    net-ldap (0.16.3)
+    net-ldap (0.17.0)
     net-scp (3.0.0)
       net-ssh (>= 2.6.5, < 7.0.0)
     net-ssh (6.1.0)
-    nio4r (2.5.4)
-    nokogiri (1.10.10)
-      mini_portile2 (~> 2.4.0)
+    nio4r (2.5.7)
+    nokogiri (1.11.2)
+      mini_portile2 (~> 2.5.0)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
     pg (1.2.3)
-    polyamorous (2.3.2)
-      activerecord (>= 5.2.1)
     popper_js (1.16.0)
     public_suffix (4.0.6)
-    puma (5.2.1)
+    puma (4.3.7)
       nio4r (~> 2.0)
+    racc (1.5.2)
     rack (2.2.3)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
@@ -301,46 +320,45 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.20.3, < 2.0)
-    rake (13.0.1)
-    ransack (2.3.2)
-      activerecord (>= 5.2.1)
-      activesupport (>= 5.2.1)
+    rake (13.0.3)
+    ransack (2.4.2)
+      activerecord (>= 5.2.4)
+      activesupport (>= 5.2.4)
       i18n
-      polyamorous (= 2.3.2)
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rchardet (1.8.0)
-    regexp_parser (1.7.1)
+    regexp_parser (2.1.1)
     request_store (1.5.0)
       rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
-    rspec (3.9.0)
-      rspec-core (~> 3.9.0)
-      rspec-expectations (~> 3.9.0)
-      rspec-mocks (~> 3.9.0)
-    rspec-core (3.9.2)
-      rspec-support (~> 3.9.3)
-    rspec-expectations (3.9.2)
+    rspec (3.10.0)
+      rspec-core (~> 3.10.0)
+      rspec-expectations (~> 3.10.0)
+      rspec-mocks (~> 3.10.0)
+    rspec-core (3.10.1)
+      rspec-support (~> 3.10.0)
+    rspec-expectations (3.10.1)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
+      rspec-support (~> 3.10.0)
     rspec-instafail (1.0.0)
       rspec
-    rspec-mocks (3.9.1)
+    rspec-mocks (3.10.2)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.9.0)
-    rspec-rails (4.0.1)
-      actionpack (>= 4.2)
-      activesupport (>= 4.2)
-      railties (>= 4.2)
-      rspec-core (~> 3.9)
-      rspec-expectations (~> 3.9)
-      rspec-mocks (~> 3.9)
-      rspec-support (~> 3.9)
-    rspec-support (3.9.3)
-    ruby_parser (3.15.0)
+      rspec-support (~> 3.10.0)
+    rspec-rails (5.0.1)
+      actionpack (>= 5.2)
+      activesupport (>= 5.2)
+      railties (>= 5.2)
+      rspec-core (~> 3.10)
+      rspec-expectations (~> 3.10)
+      rspec-mocks (~> 3.10)
+      rspec-support (~> 3.10)
+    rspec-support (3.10.2)
+    ruby_parser (3.15.1)
       sexp_processor (~> 4.9)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
@@ -357,18 +375,20 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     settingslogic (2.0.9)
-    sexp_processor (4.15.1)
+    sexp_processor (4.15.2)
     sheffield_ldap_lookup (0.0.5)
       net-ldap
-    shoulda-matchers (4.4.1)
+    shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
-    simple_form (5.0.2)
-      actionpack (>= 5.0)
-      activemodel (>= 5.0)
-    simplecov (0.19.0)
+    simple_form (5.1.0)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
+    simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
-    simplecov-html (0.12.2)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.2)
     slop (3.6.0)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -378,28 +398,26 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.4.2)
-    sshkit (1.21.0)
+    sshkit (1.21.2)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     temple (0.8.2)
-    thor (1.0.1)
+    thor (1.1.0)
     thread_safe (0.3.6)
     tilt (2.0.10)
-    turbolinks (5.2.1)
-      turbolinks-source (~> 5.2)
-    turbolinks-source (5.2.0)
-    tzinfo (1.2.7)
+    tzinfo (1.2.9)
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    uniform_notifier (1.14.2)
     warden (1.2.9)
       rack (>= 2.0.9)
-    web-console (4.0.4)
+    web-console (4.1.0)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webdrivers (4.4.1)
+    webdrivers (4.6.0)
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
       selenium-webdriver (>= 3.0, < 4.0)
@@ -411,7 +429,7 @@ GEM
     will_paginate (3.3.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.4.0)
+    zeitwerk (2.4.2)
 
 PLATFORMS
   ruby
@@ -423,6 +441,7 @@ DEPENDENCIES
   bootsnap
   bootstrap
   bootstrap-will_paginate
+  bullet (= 6.1.3)
   byebug
   cancancan
   capistrano
@@ -430,6 +449,7 @@ DEPENDENCIES
   capistrano-passenger
   capistrano-rails
   capistrano-rvm
+  capistrano3-puma!
   capybara
   capybara-select2!
   coffee-rails
@@ -454,7 +474,7 @@ DEPENDENCIES
   letter_opener
   listen
   pg
-  puma
+  puma (< 5)
   rails (= 6.0.3.3)
   ransack
   responders
@@ -467,7 +487,6 @@ DEPENDENCIES
   simple_form
   simplecov
   sqlite3
-  turbolinks (~> 5.2.0)
   uglifier
   web-console
   webdrivers
@@ -478,4 +497,5 @@ RUBY VERSION
    ruby 2.6.6p146
 
 BUNDLED WITH
-   2.2.9
+   2.2.14
+
