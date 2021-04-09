@@ -25,3 +25,4 @@ class ListingCategory < ApplicationRecord
         self.subcategories | self.subcategories.map(&:explored).flatten
     end
 end
+

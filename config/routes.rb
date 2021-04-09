@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   resources :listings do
     post :search, on: :collection
+    post :filter, on: :collection
     post :add_favourite, on: :member
     post :delete_favourite, on: :member
     get :start_conversation, on: :member

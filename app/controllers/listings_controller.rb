@@ -95,6 +95,36 @@ class ListingsController < ApplicationController
       @listings = @listings.where("title ilike ?", "%#{params[:search][:search_title]}%") if params[:search][:search_title].present?
       render :index
     end
+
+    def filter
+      @listings = Listing.all
+
+      #Filter by Category
+      if params[:filter][:filter_category].present?
+        current_category = ListingCategory.where(id: params[:filter][:filter_category]).first
+        unless current_category.nil?
+          subcategory_ids = current_category.explored.map(&:id)
+          @listings = @listings.where(listing_category_id: subcategory_ids << current_category.id)
+        end
+      end
+
+      #Filter by Condition
+      if params[:filter][:filter_condition].present?
+        current_condition = ListingCondition.where(id: params[:filter][:filter_condition]).first
+        unless current_condition.nil?
+          @listings = @listings.where(listing_condition_id: current_condition.id)
+        end
+      end
+
+      #Filter by Delivery
+      if params[:filter][:filter_delivery].present?
+        current_delivery = Delivery.where(id: params[:filter][:filter_delivery]).second
+        unless current_delivery.nil?
+          @listings = @listings.where(delivery_id: current_delivery.id)
+        end
+      end
+      render :index
+    end
     
     def add_favourite
       @favourite = UserFavourite.new(listing: @listing, user: current_user)

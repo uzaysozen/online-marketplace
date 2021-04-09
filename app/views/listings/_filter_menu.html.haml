@@ -1,0 +1,15 @@
+.row.justify-content-left.flex-column-reverse.flex-md-row.listing-container
+  .col-12.col-md-12
+    .border-none.rounded.h-100
+      .row.p-2
+
+        = simple_form_for :filter, url: filter_listings_path, method: :post do |f|
+          %p Filter Menu
+          = f.input :filter_category, label: 'Categories', collection: ListingCategory.all
+
+          = f.input :filter_condition, label: 'Condition', collection: ListingCondition.all
+
+          = f.input :filter_delivery, label: 'Delivery', as: :check_boxes, collection: Delivery.all
+
+          = f.submit 'Confirm', class: 'btn btn-default', id: 'search-button'
+          = link_to 'Reset', listings_path

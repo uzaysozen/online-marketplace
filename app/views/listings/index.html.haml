@@ -4,32 +4,36 @@
   .panel-body
     %p There are #{@listings.size} listings available.
 
-  = simple_form_for :search, url: search_listings_path, method: :post do |f|
-    = f.input :search_title
+  .row.m-0
+    .col-3
+      = simple_form_for :search, url: search_listings_path, method: :post do |f|
+        = f.input :search_title
 
-    = f.submit 'Search', class: 'btn btn-default', id: 'search-button'
-    = link_to 'Reset', listings_path
-  
-  = link_to "Sort By Title", sort: "title"
-  \|
-  = link_to "Sort By Price", sort: "price"
-  %br
+        = f.submit 'Search', class: 'btn btn-default', id: 'search-button'
+        = link_to 'Reset', listings_path
+      
+      = link_to "Sort By Title", sort: "title"
+      \|
+      = link_to "Sort By Price", sort: "price"
+      %br
 
-  -#%table.table
-    -#%thead
-      -#%tr
-        -#%th= link_to "Title", sort: "title"
-        -#%th Description
-        -#%th= link_to "Price", sort: "price"
-        -#%th Creator
-        -#%th Receiver
-        -#%th Category
-        -#%th Condition
-        -#%th Status
-        
+      -#%table.table
+        -#%thead
+          -#%tr
+            -#%th= link_to "Title", sort: "title"
+            -#%th Description
+            -#%th= link_to "Price", sort: "price"
+            -#%th Creator
+            -#%th Receiver
+            -#%th Category
+            -#%th Condition
+            -#%th Status
+            
 
-    -#%tbody#listings-table
-  #listings
-    = render partial: 'listing', collection: @listings
-  .panel-footer
-    = link_to 'New Listing', new_listing_path, class: 'btn btn-default'
+        -#%tbody#listings-table
+      
+      = render partial: 'filter_menu'
+    
+    .col-8.offset-1
+      #listings
+        = render partial: 'listing', collection: @listings
