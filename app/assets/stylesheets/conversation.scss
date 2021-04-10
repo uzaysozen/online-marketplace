@@ -43,6 +43,8 @@
 
 .conversation-link {
   background-color: #f7f6f6;
+  max-width: 100%;
+  height: auto;
 }
 
 .conversation-button:hover {
@@ -50,8 +52,9 @@
 }
 
 .conversation-listing-image {
-  font-size: 150px;
   margin-left: 10px;
+  max-width: 100%;
+  height: auto;
 }
 
 .conversation-card-image {
@@ -73,13 +76,12 @@
 }
 
 .conversation-header {
-  padding-bottom: 56px;
-  padding-top: 56px;
+  padding-bottom: 58px;
+  padding-top: 58px;
   padding-right: 10px;
 }
 
 .conversations-sidebar {
-  max-height: 480px;
+  max-height: 478px;
   overflow-y: auto;
 }
-

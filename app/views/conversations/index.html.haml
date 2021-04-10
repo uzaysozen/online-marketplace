@@ -24,4 +24,6 @@
             #send-form 
               = render 'conversation_messages/send_form', conversation_message: ConversationMessage.new, conversation: @conversation
       - else 
-        = render 'landing'
+        .empty-conversation-container.card.h-100
+          .text-center
+            %h3.empty-conversation-header You Do Not Have Any Active Conversations    
