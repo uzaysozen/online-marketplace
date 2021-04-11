@@ -60,11 +60,7 @@ class ConversationsController < ApplicationController
 
       def set_sent_and_received
         @sent = Conversation.profile(current_user)
-        listings = Listing.profile(current_user)
-        @received = []
-        listings.each do |listing|
-          @received += listing.conversations
-        end
+        @received = current_user.received_conversations
         @received.each do |conversation|
           if conversation.conversation_messages.empty?
             @received -= [conversation]
