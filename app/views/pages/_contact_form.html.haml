@@ -1,0 +1,12 @@
+= simple_form_for(:contact, url: pages_contact_path) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name, as: :string
+    = f.input :email, as: :string
+    = f.input :message, as: :text
+    
+  .form-actions
+    = f.button :button, class: 'btn-primary btn-md' do
+      Submit
+      = icon('fas', 'paper-plane')
