@@ -50,7 +50,7 @@ class ConversationsController < ApplicationController
     private
       # Callback functions to share common setup or constraints between actions.
       def set_conversation
-        @conversation = Conversation.find(params[:id])
+        @conversation = Conversation.includes(conversation_messages: [:sender]).find(params[:id])
       end
   
       # Only allow a trusted parameter "white list" through.
@@ -59,8 +59,8 @@ class ConversationsController < ApplicationController
       end
 
       def set_sent_and_received
-        @sent = Conversation.profile(current_user)
-        @received = current_user.received_conversations
+        @sent = Conversation.includes(:conversation_messages, listing: [:creator]).profile(current_user)
+        @received = current_user.received_conversations.includes(:conversation_messages, listing: [:creator])
         @received.each do |conversation|
           if conversation.conversation_messages.empty?
             @received -= [conversation]
