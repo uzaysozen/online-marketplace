@@ -1,12 +1,14 @@
 - content_for :title, "Server Error"
 
 .page-header
+  .image-404.d-flex.justify-content-center.pb-3
+    = image_tag '/images/logos/404.svg'
   %h1 
     Server Error
     %sup#error-code 500
   
-%p Sorry, there was a problem, please try again.
+%p.text-center Sorry, there was a problem, please try again.
 
-%p 
+%p.text-center
   If you continue to experience this problem please contact
   = mail_to "support@epigenesys.co.uk"
