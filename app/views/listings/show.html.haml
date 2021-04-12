@@ -1,3 +1,13 @@
+#category-history
+  %nav{"aria-label" => "breadcrumb"}
+    %ol.breadcrumb.p-0.bg-white.text-small
+      - @listing.listing_category.path_to.reverse.each do |category|
+        %li.breadcrumb-item
+          %a{href: "#"}
+            = category.name
+      %li.breadcrumb-item.active
+        = @listing.title
+        
 .row
   .col-3
     .row.conversation-listing-image.text-center

@@ -2,8 +2,6 @@ Rails.application.routes.draw do
 
   mount EpiCas::Engine, at: "/"
   devise_for :users
-  resources :notifications
-  resources :messages
   resources :listing_conditions do
     post :search, on: :collection
   end

@@ -1,5 +1,5 @@
 - user_conversations = current_user.all_conversations
-%ul.nav.nav-tabs.nav-justified.text-medium
+%ul#profile-nav.nav.nav-tabs.nav-justified.text-medium
   %li.nav-item
     = link_to mylistings_path, class: "nav-link #{'active' if path_contains? 'listings'}" do
       = icon 'fas', 'tag', 'Listings'
