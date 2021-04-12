@@ -19,6 +19,9 @@
       = navbar_link_to new_listing_path, title: "Go to new listing", identifier: :new_listing do
         = icon 'fas', 'plus-square'
         Create Listing
+      = navbar_link_to pages_contact_path, title: "Go to Contact", identifier: :contact  do
+        = icon 'far', 'envelope'
+        Contact
 
     %ul.nav.navbar-nav.ml-auto
       - if user_signed_in?

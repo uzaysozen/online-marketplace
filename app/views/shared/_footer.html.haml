@@ -21,10 +21,10 @@
           Home
         %li
           About
-        %li
-          Contact
-        %li
-          FAQ
+          = navbar_link_to pages_contact_path, title: "Go to Contact", identifier: :contact, class: 'white-button'  do
+            Contact
+          = navbar_link_to pages_faq_path, title: "Go to FAQ", identifier: :faq, class: 'white-button'  do
+            FAQ
         %li
           Login
   .row.py-4.m-0.align-items-center
