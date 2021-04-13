@@ -21,7 +21,7 @@
 class Conversation < ApplicationRecord
     belongs_to :listing
     belongs_to :participant , class_name: "User"
-    has_many :conversation_messages
+    has_many :conversation_messages, dependent: :delete_all
 
     scope :profile, ->(current_user) { where(participant_id: current_user.id) }
 end
