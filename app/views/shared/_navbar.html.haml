@@ -28,6 +28,8 @@
       = navbar_link_to pages_faq_path, title: "Go to FAQ", identifier: :faq  do
         = icon 'fas', 'question-circle'
         FAQ
+      = navbar_link_to pages_about_path, title: "Go to About", identifier: :about  do
+        About
 
     %ul.nav.navbar-nav.ml-auto
       - if user_signed_in?

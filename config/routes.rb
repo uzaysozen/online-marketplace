@@ -59,6 +59,7 @@ Rails.application.routes.draw do
   get "pages/terms" => "pages#terms"
   post "pages/contact" => "pages#contact_mail"
   get "pages/faq" => "pages#faq"
+  get "pages/about" => "pages#about"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
