@@ -1,10 +1,12 @@
 .page-header
-  %h1 
+  .image-404.d-flex.justify-content-center.pb-3
+    = image_tag '/images/logos/404.svg'
+  %h1.text-center
     Not Found
     %sup#error-code 404
   
-%p The requested page could not be found. Please check the address and try again. If you are unsure you may #{link_to 'return to the home page', '/'}.
+%p.text-center This is not the page you are looking for... Please check the address and try again. If you are unsure you may #{link_to 'return to the home page', '/'}.
 
-%p 
+%p.text-center
   If you continue to see this message please send a description of the problem to:
   = mail_to "support@epigenesys.org.uk"

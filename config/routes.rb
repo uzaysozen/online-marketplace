@@ -2,8 +2,6 @@ Rails.application.routes.draw do
 
   mount EpiCas::Engine, at: "/"
   devise_for :users
-  resources :notifications
-  resources :messages
   resources :listing_conditions do
     post :search, on: :collection
   end
@@ -27,6 +25,7 @@ Rails.application.routes.draw do
     post :add_favourite, on: :member
     post :delete_favourite, on: :member
     get :start_conversation, on: :member
+    post :delete_conversation, on: :member
   end
 
   resources :reports

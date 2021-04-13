@@ -1,42 +1,51 @@
 #user-id{"data-user-id" => "#{current_user.try(:id)}"}
 %nav#main-nav.navbar.navbar-dark.navbar-expand-lg.position-sticky.bg-red
-  .container
+  = link_to :root, class: 'navbar-brand hidden-sm d-flex align-items-center' do
+    .navbar-brand
+      = image_tag '/images/logos/logo_white.svg'
     .navbar-header
-      = link_to :root, class: 'navbar-brand hidden-sm' do
-        Sheffield University Marketplace
-    %button.navbar-toggler{ aria: { controls: "navbar-content", expanded: false, label: "Toggle navigation" }, data: { target: "#navbar-content", toggle: "collapse" }, type: "button" }
-      %span.navbar-toggler-icon
+      Sheffield University Marketplace
+  %button.navbar-toggler{ aria: { controls: "navbar-content", expanded: false, label: "Toggle navigation" }, data: { target: "#navbar-content", toggle: "collapse" }, type: "button" }
+    %span.navbar-toggler-icon
 
-    .collapse.navbar-collapse#navbar-content
-      %ul.nav.navbar-nav
-        = navbar_link_to :root, title: "Go to the home page", identifier: :home do
-          = icon 'fas', 'home'
-          Home
-        = navbar_link_to listings_path, title: "Go to listings", identifier: :listings do
-          = icon 'fas', 'folder-open'
-          Listings
-        = navbar_link_to new_listing_path, title: "Go to new listing", identifier: :new_listing do
-          = icon 'fas', 'plus-square'
-          Create Listing
+  .collapse.navbar-collapse#navbar-content
+    %ul.nav.navbar-nav
+      = navbar_link_to :root, title: "Go to the home page", identifier: :home do
+        = icon 'fas', 'home'
+        Home
+      = navbar_link_to listings_path, title: "Go to listings", identifier: :listings do
+        = icon 'fas', 'folder-open'
+        Listings
+      = navbar_link_to new_listing_path, title: "Go to new listing", identifier: :new_listing do
+        = icon 'fas', 'plus-square'
+        Create Listing
 
-      %ul.nav.navbar-nav.ml-auto
-        - if user_signed_in?
-          %li.nav-item.dropdown
-            = link_to '#', aria: { haspopup: true, expanded: false }, data: { toggle: :dropdown }, id: 'navbar-user-link', class: 'nav-link dropdown-toggle', role: 'button' do
-              = icon 'fas', 'user-circle', current_user.username
-              %b.caret
-            .dropdown-menu{ aria: { labelledby: '#navbar-user-link' } }
-              = link_to mylistings_path,  class: 'dropdown-item', title: "User Profile Page" do
-                User Profile
+    %ul.nav.navbar-nav.ml-auto
+      - if user_signed_in?
+        %li.nav-item.dropdown
+          = link_to '#', aria: { haspopup: true, expanded: false }, data: { toggle: :dropdown }, id: 'navbar-user-link', class: 'nav-link dropdown-toggle', role: 'button' do
+            = icon 'fas', 'user-circle', current_user.username
+            %b.caret
+          .dropdown-menu.dropdown-menu-right{ aria: { labelledby: '#navbar-user-link' } }
+
+            = link_to mylistings_path,  class: 'dropdown-item', title: "User Listings Page" do
+              = icon 'fas', 'tag', 'My Listings'
+            = link_to conversations_path,  class: 'dropdown-item', title: "User Conversations Page" do
+              = icon 'fas', 'envelope', 'Conversations'
+            = link_to user_favourites_path,  class: 'dropdown-item', title: "User Favourites Page" do
+              = icon 'fas', 'heart', 'Favourites'
+            = link_to mylistings_path,  class: 'dropdown-item', title: "User Favourites Page" do
+              = icon 'fas', 'star', 'Reviews'
+            = link_to mylistings_path,  class: 'dropdown-item', title: "User Favourites Page" do
+              = icon 'fas', 'cog', 'Settings'
+
+            .dropdown-divider
+            - if current_user.administrator?
+              = link_to pages_admin_path, class: 'dropdown-item', title: "Admin's Page", identifier: :admin do
+                Admin Page
               .dropdown-divider
-              - if current_user.administrator?
-                = link_to pages_admin_path, class: 'dropdown-item', title: "Admin's Page", identifier: :admin do
-                  Admin Page
-                .dropdown-divider
-              = link_to mylistings_path, class: 'dropdown-item', title: "My Listings" do
-                = icon 'fas', 'list', 'My Listings'
-              = link_to destroy_user_session_path, class: 'dropdown-item', method: :delete, title: "Log out of the system" do
-                = icon 'fas', 'sign-out-alt', 'Log out'
-        - else
-          = navbar_link_to new_user_session_path, identifier: :login do
-            Login
+            = link_to destroy_user_session_path, class: 'dropdown-item', method: :delete, title: "Log out of the system" do
+              = icon 'fas', 'sign-out-alt', 'Log out'
+      - else
+        = navbar_link_to new_user_session_path, identifier: :login do
+          Login

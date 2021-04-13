@@ -19,9 +19,17 @@
 class ListingCategory < ApplicationRecord
     has_many :subcategories, :class_name => "ListingCategory", foreign_key: :parent_category_id
     belongs_to :parent_category, :class_name => "ListingCategory", foreign_key: :parent_category_id, :optional => true
-    has_many :listings
 
     def explored
         self.subcategories | self.subcategories.map(&:explored).flatten
+    end
+
+    def path_to
+        parent_path = self.parent_category.path_to unless self.parent_category.nil?
+        if parent_path
+            ([self] << parent_path).flatten
+        else
+            [self]
+        end
     end
 end

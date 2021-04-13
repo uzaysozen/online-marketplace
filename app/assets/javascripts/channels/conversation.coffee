@@ -26,6 +26,7 @@ load = ->
         else
           messageContainer = document.getElementById('messages')
           messageContainer.innerHTML = messageContainer.innerHTML + data.html
+          messageContainer.scrollTo(0, messageContainer.scrollHeight)
 
 document.addEventListener 'turbolinks:load', load
 

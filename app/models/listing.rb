@@ -50,7 +50,7 @@ class Listing < ApplicationRecord
     has_many :listing_questions
     has_many :listing_ratings
     has_many :reports
-    has_many :conversations
+    has_many :conversations, dependent: :destroy
     has_many_attached :images
 
     has_many :listing_deliveries
