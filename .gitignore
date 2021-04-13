@@ -5,6 +5,7 @@ config/settings.yml
 config/setup_load_paths.rb
 log/*.log
 tmp/
+storage/
 
 .DS_Store
 coverage

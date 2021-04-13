@@ -12,4 +12,5 @@
 //= require cable
 //= require reload_toast_init
 //= require turbolinks
+//= require activestorage
 //= require file-upload

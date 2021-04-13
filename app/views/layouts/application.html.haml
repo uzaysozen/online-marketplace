@@ -1,12 +1,17 @@
 !!!
 %html
   %head
-    %title Project - #{content_for(:title)}
+    %title #{content_for(:title)} - Sheffield University Marketplace
     %link{ rel: "preconnect", href: "https://fonts.gstatic.com"}
     %link{ href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap", rel: "stylesheet"}
     %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0" }
     %meta{ :'http-equiv' => 'X-UA-Compatible', content: 'IE=edge' }
     %meta{:content => "text/html; charset=utf-8", "http-equiv" => "content-type"}
+
+    / External Scripts
+
+    %script{:src => "https://unpkg.com/file-upload-with-preview@4.1.0/dist/file-upload-with-preview.min.js"}
+    %link{:href => "https://unpkg.com/file-upload-with-preview@4.1.0/dist/file-upload-with-preview.min.css", :rel => "stylesheet", :type => "text/css"}
     = stylesheet_link_tag    "application", media: :all
     = javascript_include_tag "application"
     = action_cable_meta_tag

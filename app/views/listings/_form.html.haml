@@ -1,25 +1,26 @@
-= simple_form_for(@listing) do |f|
+= simple_form_for @listing, html: {enctype: "multipart/form-data"} do |f|
   = f.error_notification
 
   .form-inputs
     = f.input :title, hint: 'Use a descriptive title to promote your item'
-    = f.input :price, hint: 'Leaving the price empty will set the price as \'Free\''  
-    %label
-      Add a photo 
-      %a.custom-file-container__image-clear{:href => "javascript:void(0)", :title => "Clear Image"} x
-    %label.custom-file-container__custom-file
-    = f.input :image, as: :file, input_html: { class: 'custom-file-container__custom-file__custom-file-input', multiple: true }
+    = f.input :price, hint: 'Leaving the price empty will set the price as \'Free\''
+    %label.file-input
+      Upload New Image
+      %span.input
+        = f.file_field :images, multiple: true, direct_upload: true
 
-    -# haml converted code:
-    .custom-file-container{"data-upload-id" => "myUniqueUploadId"}
-      %label
-        Upload File
-        %a.custom-file-container__image-clear{:href => "javascript:void(0)", :title => "Clear Image"} ×
-      %label.custom-file-container__custom-file
-        %input.custom-file-container__custom-file__custom-file-input{:accept => "*", "aria-label" => "Choose File", :multiple => "multiple", :type => "file"}/
-        %input{:name => "MAX_FILE_SIZE", :type => "hidden", :value => "10485760"}/
-        %span.custom-file-container__custom-file__custom-file-control
-      .custom-file-container__image-preview
+    #images-preview.row
+    -#-# haml converted code:
+    -#.custom-file-container{"data-upload-id" => "myUniqueUploadId"}
+    -#  %label
+    -#    Upload File
+    -#    %a.custom-file-container__image-clear{:href => "javascript:void(0)", :title => "Clear Image"} ×
+    -#  %label.custom-file-container__custom-file
+    -#    %input.custom-file-container__custom-file__custom-file-input{:accept => "*", "aria-label" => "Choose File", :multiple => "multiple", :type => "file"}/
+    -#    %input{name: "files", type: "hidden"}
+    -#    %input{:name => "MAX_FILE_SIZE", :type => "hidden", :value => "10485760"}/
+    -#    %span.custom-file-container__custom-file__custom-file-control
+    -#  .custom-file-container__image-preview
 
     = f.input :description, hint: '(Max 200 words)'
     = f.association :listing_condition, label: 'Condition'
@@ -32,3 +33,8 @@
 
   .form-actions
     = f.button :submit, class: 'btn-secondary btn-lg'
+
+-#:javascript
+-#  var fileUpload = new FileUploadWithPreview("myUniqueUploadId", {
+-#    maxFileCount: 6
+-#  });
