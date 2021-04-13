@@ -1,10 +1,80 @@
 #category-history
   %nav{"aria-label" => "breadcrumb"}
-    %ol.breadcrumb.p-0.bg-white.text-small
+  .row
+    %ol.col.breadcrumb.p-0.bg-white.text-small
       - @listing.listing_category.path_to.reverse.each do |category|
         %li.breadcrumb-item
           %a{href: "#"}
             = category.name
       %li.breadcrumb-item.active
         = @listing.title
+      
+    .col-2.pl-5.text-medium.text-blue
+      %p
+      = icon('far', 'flag')
+      .text-medium.action-container
+        - if @listing.creator != current_user
+          - if user_favourite.present?
+            = link_to(delete_favourite_listing_path(@listing), method: :post, remote: true, class: 'heart-link') do
+              = icon('fas', 'heart')
+          - else
+            = link_to(add_favourite_listing_path(@listing), method: :post, remote: true, class: 'heart-link') do
+              = icon('far', 'heart') 
+  
+  .row
+    .col.text-left.listing-image-container-lrg.text-huge
+      %p
+      =icon('far', 'image')
 
+    .col-7.text-left.details-container
+        
+      .text-large.text-black.text-left
+        %p
+        = @listing.title 
+        %p
+
+      .row
+        .col.text-medium.text-black.border-right-black
+          = @listing.creator.username 
+        .col-4.text-large.text-black
+          £
+          = sprintf '%.2f', @listing.price
+          %p
+
+      %hr
+
+      .row.h-25
+        .col-7.mr-4.text-medium.text-center.rounded.bg-blue
+          = link_to start_conversation_listing_path(@listing), class: 'listing-button white-button' do 
+            Send Message
+        .col.mr-2.text-medium.text-center.rounded.bg-red
+          -# TODO: add in swapping
+          = link_to start_conversation_listing_path(@listing), class: 'listing-button white-button' do 
+            Swap
+
+      .row.pt-3
+        .col-8.text-small.text-darkgray 
+          Condition
+          = @listing.listing_condition.name
+          %p
+        .text-small.text-darkgray 
+          Location
+          = @listing.location
+          %p
+      
+      .row
+        .col-8.text-small.text-darkgray 
+          Delivery
+          = @listing.deliveries.name
+          %p
+        .text-small.text-darkgray 
+          Date Listed
+          = @listing.created_at.strftime('%m/%d/%Y')
+          %p
+
+      %hr
+
+      .text-small.text-black
+        %p
+        = @listing.description
+        %p
