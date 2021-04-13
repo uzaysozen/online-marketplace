@@ -56,6 +56,7 @@ Rails.application.routes.draw do
   root to: "pages#home"
   get "pages/admin" => "pages#admin"
   get "pages/contact" => "pages#contact"
+  get "pages/terms" => "pages#terms"
   post "pages/contact" => "pages#contact_mail"
   get "pages/faq" => "pages#faq"
 

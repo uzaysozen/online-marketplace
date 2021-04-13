@@ -22,6 +22,12 @@
       = navbar_link_to pages_contact_path, title: "Go to Contact", identifier: :contact  do
         = icon 'far', 'envelope'
         Contact
+      = navbar_link_to pages_terms_path, title: "Go to terms of service", identifier: :terms  do
+        = icon 'fas', 'book'
+        Terms of Service
+      = navbar_link_to pages_faq_path, title: "Go to FAQ", identifier: :faq  do
+        = icon 'fas', 'question-circle'
+        FAQ
 
     %ul.nav.navbar-nav.ml-auto
       - if user_signed_in?
