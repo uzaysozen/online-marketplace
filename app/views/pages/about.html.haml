@@ -19,6 +19,34 @@
 .row.justify-content-left.flex-column-reverse.flex-md-row
   .col-12.col-md-12
     The team
-
-.row.justify-content-left.flex-column-reverse.flex-md-row
+%br
+.row.justify-content-center.flex-column-reverse.flex-md-row
   .col-12.col-md-12
+    #slider.carousel.slide{"data-ride" => "carousel"}
+      / Indicators
+      %ul.carousel-indicators
+        %li.active{"data-slide-to" => "0", "data-target" => "#slider"}
+        %li{"data-slide-to" => "1", "data-target" => "#slider"}
+        %li{"data-slide-to" => "2", "data-target" => "#slider"}
+      / The slideshow
+      .carousel-inner
+        .carousel-item.active.text-center
+          = image_tag("/images/logos/user.png", size: "350x400")
+          .carousel-caption.text-black
+            %h4 John Smith
+            %p Manager
+        .carousel-item.text-center
+          = image_tag("/images/logos/user.png", size: "350x400")
+          .carousel-caption.text-black
+            %h4 John Smith
+            %p Manager
+        .carousel-item.text-center
+          = image_tag("/images/logos/user.png", size: "350x400")
+          .carousel-caption.text-black
+            %h4 John Smith
+            %p Manager
+      / Left and right controls
+      %a.carousel-control-prev{"data-slide" => "prev", href: "#slider"}
+        %span.carousel-control-prev-icon.text-black
+      %a.carousel-control-next{"data-slide" => "next", href: "#slider"}
+        %span.carousel-control-next-icon.text-black

@@ -18,14 +18,16 @@
     .col-4.text-center
       %ul
         %li
-          Home
+          = link_to root_path, class: 'white-button'  do
+            Home
         %li
-          About
+          = link_to pages_about_path, class: 'white-button'  do
+            About
         %li
-          = link_to pages_contact_path, title: "Go to Contact", identifier: :contact, class: 'white-button'  do
+          = link_to pages_contact_path, class: 'white-button'  do
             Contact
         %li
-          = link_to pages_faq_path, title: "Go to FAQ", identifier: :faq, class: 'white-button'  do
+          = link_to pages_faq_path, class: 'white-button'  do
             FAQ
         %li
           Login
