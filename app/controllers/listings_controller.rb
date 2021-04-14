@@ -22,6 +22,52 @@ class ListingsController < ApplicationController
       end
     end
 
+    def search_and_filter
+      @listings = Listing.all
+
+      # Search through Listings
+      @listings = @listings.where("title ilike ?", "%#{params[:search_and_filter][:search_title]}%") if params[:search_and_filter][:search_title].present?
+
+      #Filter by Category
+      if params[:search_and_filter][:filter_category].present?
+        current_category = ListingCategory.where(id: params[:search_and_filter][:filter_category]).first
+        unless current_category.nil?
+          subcategory_ids = current_category.explored.map(&:id)
+          @listings = @listings.where(listing_category_id: subcategory_ids << current_category.id)
+        end
+      end
+
+      #Filter by Minimum Price
+      if params[:search_and_filter][:filter_minprice].present?
+        @listings = @listings.where("price >= ?", params[:search_and_filter][:filter_minprice])
+      end
+
+      #Filter by Maximum Price
+      if params[:search_and_filter][:filter_maxprice].present?
+        @listings = @listings.where("price <= ?", params[:search_and_filter][:filter_maxprice])
+      end
+
+      #Filter by Condition
+      if params[:search_and_filter][:filter_condition].present?
+        current_condition = ListingCondition.where(id: params[:search_and_filter][:filter_condition]).first
+        unless current_condition.nil?
+          @listings = @listings.where(listing_condition_id: current_condition.id)
+        end
+      end
+
+      #Filter by Delivery
+      if params[:search_and_filter][:filter_delivery].present?
+        delivery_ids = params[:search_and_filter][:filter_delivery]
+        new_delivery_ids = delivery_ids.drop(1)
+
+        current_delivery = Delivery.where(id: new_delivery_ids)
+        unless current_delivery.nil?
+          @listings = @listings.where(listing_deliveries: current_delivery.ids)
+        end
+      end
+      render :index
+    end
+
     def mylistings
       @listings = Listing.profile(current_user)
     end
@@ -87,52 +133,6 @@ class ListingsController < ApplicationController
     def destroy
       @listing.destroy
       redirect_to listings_url, notice: 'Listing was successfully deleted.'
-    end
-
-    def search_and_filter
-      @listings = Listing.all
-
-      # Search through Listings
-      @listings = @listings.where("title ilike ?", "%#{params[:search_and_filter][:search_title]}%") if params[:search_and_filter][:search_title].present?
-
-      #Filter by Category
-      if params[:search_and_filter][:filter_category].present?
-        current_category = ListingCategory.where(id: params[:search_and_filter][:filter_category]).first
-        unless current_category.nil?
-          subcategory_ids = current_category.explored.map(&:id)
-          @listings = @listings.where(listing_category_id: subcategory_ids << current_category.id)
-        end
-      end
-
-      #Filter by Minimum Price
-      if params[:search_and_filter][:filter_minprice].present?
-        @listings = @listings.where("price >= ?", params[:search_and_filter][:filter_minprice])
-      end
-
-      #Filter by Maximum Price
-      if params[:search_and_filter][:filter_maxprice].present?
-        @listings = @listings.where("price <= ?", params[:search_and_filter][:filter_maxprice])
-      end
-
-      #Filter by Condition
-      if params[:search_and_filter][:filter_condition].present?
-        current_condition = ListingCondition.where(id: params[:search_and_filter][:filter_condition]).first
-        unless current_condition.nil?
-          @listings = @listings.where(listing_condition_id: current_condition.id)
-        end
-      end
-
-      #Filter by Delivery
-      if params[:search_and_filter][:filter_delivery].present?
-        delivery_ids = params[:search_and_filter][:filter_delivery]
-        new_delivery_ids = delivery_ids.drop(1)
-
-        current_delivery = Delivery.where(id: new_delivery_ids)
-        unless current_delivery.nil?
-          @listings = @listings.where(listing_deliveries: current_delivery.ids)
-        end
-      end
-      render :index
     end
     
     def add_favourite
