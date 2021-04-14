@@ -1,90 +1,101 @@
 require 'rails_helper'
 
 describe 'End to end test' do
-  # user = FactoryBot.create(:user)
-  # login_as(user, scope: :user)
-  # context 'As a logged in user' do
 
 
   specify 'I cannot access the blog without logging in' do
     visit '/'
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
-  # user = FactoryBot.create(:user)
-  # login_as(user, scope: :user)
-  # context 'As a logged in user' do
+  
+  context 'As a logged in user' do
 
-  #   before do
-  #     @public_post  = Post.create(title: 'A title for a post',        content: 'Some public content',  author: user1, private_post: false)
-  #     @private_post = Post.create(title: 'A title for a secret post', content: 'Some private content', author: user1, private_post: true)
-  #     login_as user2
-  #   end
+    before do
+      user = FactoryBot.create(:user)
+      login_as(user, scope: :user)
+    end
 
-  #   specify "I cannot see another user's private posts" do
-  #     visit "/"
-  #     expect(page).to have_content 'A title for a post'
-  #     expect(page).not_to have_content 'A title for a secret post'
-  #   end
+    specify "I could create a new listing" do
+      condition_new = FactoryBot.create :listing_condition, name: 'New'
+      # condition_new = ListingCondition.create(name: "New")
+      category_books = ListingCategory.create(name: "Books")
+      # category_books = FactoryBot.create :listing_category, name: 'Books'
+      visit '/'
+      click_link 'Create Listing'
+      fill_in 'Title', with: 'My Title'
+      fill_in 'Price', with: '123'
+      fill_in 'Description', with: 'My description'
+      select 'New', from: 'Condition'
+      select 'Books', from: 'Category'
+      # check 'Collection'
+      fill_in 'Location', with: 'My Location'
+      # fill_in 'Tags', with: 'Education'
+      click_button 'Create Listing'
+      # visit '/listings'
+      expect(page).to have_content 'Listing was successfully created.'
+      
+      # within(:css, 'container') { expect(page).to have_content 'My Title' }
+    end
 
-  #   specify "I cannot perform an SQL injection attack" do
-  #     # Check search works correctly
-  #     page.driver.submit :post, search_result_posts_path(search: { title: "A title for a post" }), {}
-  #     expect(page).to have_content 'A title for a post'
-  #     expect(page).not_to have_content 'A title for a secret post'
+    # specify "I cannot perform an SQL injection attack" do
+    #   # Check search works correctly
+    #   page.driver.submit :post, search_result_posts_path(search: { title: "A title for a post" }), {}
+    #   expect(page).to have_content 'A title for a post'
+    #   expect(page).not_to have_content 'A title for a secret post'
 
-  #     # Check search is not vulnerable to SQL injection
-  #     page.driver.submit :post, search_result_posts_path(search: { title: "A title for a post') OR '1'--" }), {}
-  #     expect(page).not_to have_content 'A title for a post'
-  #     expect(page).not_to have_content 'A title for a secret post'
-  #   end
+    #   # Check search is not vulnerable to SQL injection
+    #   page.driver.submit :post, search_result_posts_path(search: { title: "A title for a post') OR '1'--" }), {}
+    #   expect(page).not_to have_content 'A title for a post'
+    #   expect(page).not_to have_content 'A title for a secret post'
+    # end
 
-  #   specify "I cannot access the admin only management section" do
-  #     visit "/categories"
-  #     expect(page.status_code).to eq 403
-  #     expect(page).not_to have_content 'Manage categories'
-  #   end
+    # specify "I cannot access the admin only management section" do
+    #   visit "/categories"
+    #   expect(page.status_code).to eq 403
+    #   expect(page).not_to have_content 'Manage categories'
+    # end
 
-  #   specify "My html in sanitised to avoid XSS attacks", js: true do
-  #     visit new_post_path
-  #     fill_in 'Title', with: 'My title'
-  #     fill_in 'Content', with: "<h1>Hello</h1>
-  #                               <script>
-  #                                 $(function() {
-  #                                   window.location.replace('http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html');
-  #                                 });
-  #                               </script>"
-  #     click_button 'Create Post'
-  #     sleep(2)
-  #     expect(current_url).not_to eq 'http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html'
-  #     expect(page).to have_css 'h1'
-  #     within(:css, 'h1') { expect(page).to have_content 'Hello' }
-  #   end
+    # specify "My html in sanitised to avoid XSS attacks", js: true do
+    #   visit new_post_path
+    #   fill_in 'Title', with: 'My title'
+    #   fill_in 'Content', with: "<h1>Hello</h1>
+    #                             <script>
+    #                               $(function() {
+    #                                 window.location.replace('http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html');
+    #                               });
+    #                             </script>"
+    #   click_button 'Create Post'
+    #   sleep(2)
+    #   expect(current_url).not_to eq 'http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html'
+    #   expect(page).to have_css 'h1'
+    #   within(:css, 'h1') { expect(page).to have_content 'Hello' }
+    # end
 
-  #   specify "I cannot make myself an administrator through abuse of mass assignment", js: true do
-  #     visit '/'
-  #     click_link 'Edit my details'
-  #     page.execute_script "$('#user-form').append(\"<input value='t' name='user[admin]'>\")"
-  #     sleep 1
-  #     click_button 'Update User'
-  #     expect(user2.reload.admin).to be false
-  #   end
+    # specify "I cannot make myself an administrator through abuse of mass assignment", js: true do
+    #   visit '/'
+    #   click_link 'Edit my details'
+    #   page.execute_script "$('#user-form').append(\"<input value='t' name='user[admin]'>\")"
+    #   sleep 1
+    #   click_button 'Update User'
+    #   expect(user2.reload.admin).to be false
+    # end
 
-  #   specify "I cannot create a post as another user through abuse of mass assignment", js: true do
-  #     visit new_post_path
-  #     fill_in 'Title', with: 'A controversial title'
-  #     fill_in 'Content', with: 'Some inflammatory context'
-  #     page.execute_script "$('#posts-form').append(\"<input value='#{user1.id}' name='post[author_id]'>\")"
-  #     sleep 1
-  #     click_button 'Create Post'
-  #     expect(Post.last.author).not_to eq user1
-  #   end
+    # specify "I cannot create a post as another user through abuse of mass assignment", js: true do
+    #   visit new_post_path
+    #   fill_in 'Title', with: 'A controversial title'
+    #   fill_in 'Content', with: 'Some inflammatory context'
+    #   page.execute_script "$('#posts-form').append(\"<input value='#{user1.id}' name='post[author_id]'>\")"
+    #   sleep 1
+    #   click_button 'Create Post'
+    #   expect(Post.last.author).not_to eq user1
+    # end
 
-  #   specify "I cannot edit the details of another user" do
-  #     visit edit_user_path(user1)
-  #     expect(page.status_code).to eq 403
-  #   end
+    # specify "I cannot edit the details of another user" do
+    #   visit edit_user_path(user1)
+    #   expect(page.status_code).to eq 403
+    # end
 
-  # end
+  end
 
   # context 'As a non signed in user' do
 
