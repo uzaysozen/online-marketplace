@@ -1,10 +1,12 @@
 class ListingsController < ApplicationController
     before_action :set_listing, only: [:show, :edit, :update, :destroy,
        :add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
-    
+
+    load_and_authorize_resource
+
     # GET /listings
     def index
-      @listings = Listing.all
+      @listings = Listing.accessible_by(current_ability)
 
       # Sorting Function
       table_col = Listing.column_names
@@ -13,18 +15,18 @@ class ListingsController < ApplicationController
       # Verifying Parameters
       if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
         sort_order = session[:sort_order] || 'asc'
-        @listings = Listing.order("#{params[:sort]} #{sort_order}")
+        @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       else
         params[:sort] = "title"
         sort_order = 'asc'
-        @listings = Listing.order("#{params[:sort]} #{sort_order}")
+        @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       end
     end
 
     def mylistings
-      @listings = Listing.profile(current_user)
+      @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update)
     end
 
     # GET /listings/1
@@ -39,6 +41,7 @@ class ListingsController < ApplicationController
   
     # GET /listings/1/edit
     def edit
+      authorize! :update, @listing
       render layout: false
     end
   
