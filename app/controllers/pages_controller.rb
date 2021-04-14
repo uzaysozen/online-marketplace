@@ -10,6 +10,11 @@ class PagesController < ApplicationController
     @current_nav_identifier = :admin
   end
 
+  # GET pages/about
+  def about
+    @current_nav_identifier = :about
+  end
+
   # GET pages/terms
   def terms
     @current_nav_identifier = :terms
