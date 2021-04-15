@@ -4,23 +4,14 @@
   .form-inputs
     = f.input :title, hint: 'Use a descriptive title to promote your item'
     = f.input :price, hint: 'Leaving the price empty will set the price as \'Free\''
-    %label.file-input
-      Upload New Image
+    %p.mb-0 Add A Photo
+    %p.text-small.text-darkgray Using clear photos will help sell your item
+    %label.file-input.bg-blue.text-white
+      Upload
       %span.input
         = f.file_field :images, multiple: true, direct_upload: true
 
     #images-preview.row
-    -#-# haml converted code:
-    -#.custom-file-container{"data-upload-id" => "myUniqueUploadId"}
-    -#  %label
-    -#    Upload File
-    -#    %a.custom-file-container__image-clear{:href => "javascript:void(0)", :title => "Clear Image"} ×
-    -#  %label.custom-file-container__custom-file
-    -#    %input.custom-file-container__custom-file__custom-file-input{:accept => "*", "aria-label" => "Choose File", :multiple => "multiple", :type => "file"}/
-    -#    %input{name: "files", type: "hidden"}
-    -#    %input{:name => "MAX_FILE_SIZE", :type => "hidden", :value => "10485760"}/
-    -#    %span.custom-file-container__custom-file__custom-file-control
-    -#  .custom-file-container__image-preview
 
     = f.input :description, hint: '(Max 200 words)'
     = f.association :listing_condition, label: 'Condition'

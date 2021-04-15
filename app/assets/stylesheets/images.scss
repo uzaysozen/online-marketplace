@@ -35,7 +35,7 @@
 
 #images-preview {
   .preview {
-    max-width: 100%;
+    max-width: 21%;
     margin: 15px 0;
 
     align-self: center;
@@ -59,10 +59,13 @@
     }
 
     .image-container {
+      width: 15vw;
+      height: width;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: contain;
       position: relative;
-
-      width: 100%;
-      border: 1px solid $darkgray;
+      border: 1px solid $gray;
       border-radius: 2%;
       padding: 2%;
 

@@ -1,7 +1,14 @@
 function FileListItems (files) {
     let b = new ClipboardEvent("").clipboardData || new DataTransfer();
-    for (let i = 0, len = files.length; i < len; i++) b.items.add(files[i]);
-    return b.files;
+    let len = files.length
+    if (len <= 8) {
+        console.log("test " + len)
+        for (let i = 0; i < len; i++) b.items.add(files[i]);
+        return b.files;
+    }
+    else {
+        alert("Maximum 8 images");
+    }
 }
 
 addImagePreview = (file) => {
@@ -14,11 +21,12 @@ addImagePreview = (file) => {
 
         let image_container = document.createElement('div');
         image_container.classList.add('image-container');
-        preview.append(image_container);
+        
 
         let image = document.createElement('img');
         image.src = URL.createObjectURL(file);
-        image_container.append(image);
+        image_container.style.backgroundImage = "url(" + image.src + ")";
+        preview.append(image_container);
 
         let delete_button = document.createElement('span');
         delete_button.classList.add('delete-btn');
