@@ -1,7 +1,8 @@
 class ListingsController < ApplicationController
-    load_and_authorize_resource only: [:show, :edit, :update, :destroy]
 
-    # :add_favourite, :delete_favourite, :start_conversation, :delete_conversation
+    load_and_authorize_resource only: [:show, :edit, :update, :destroy]
+    load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+
     # GET /listings
     def index
       @listings = Listing.accessible_by(current_ability)
@@ -134,11 +135,6 @@ class ListingsController < ApplicationController
     end
 
     private
-      # Callback functions to share common setup or constraints between actions.
-      def set_listing
-        @listing = Listing.find(params[:id])
-      end
-  
       # Only allow a trusted parameter "white list" through.
       def listing_params
         params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id, 
