@@ -27,49 +27,14 @@
       .carousel-inner
         .carousel-item.active.text-center
           .row.justify-content-center.flex-column-reverse.flex-md-row
-            .col-12.col-sm-2
-              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
-              %h5= 'James Smith'
-              %p{:class => 'text-darkgray text-small'}= 'Manager'
-            .col-12.col-sm-2
-              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
-              %h5= 'James Smith'
-              %p{:class => 'text-darkgray text-small'}= 'Manager'
-            .col-12.col-sm-2
-              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
-              %h5= 'James Smith'
-              %p{:class => 'text-darkgray text-small'}= 'Manager'
-            .col-12.col-sm-2
-              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
-              %h5= 'James Smith'
-              %p{:class => 'text-darkgray text-small'}= 'Manager'
-            .col-12.col-sm-2
-              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
-              %h5= 'James Smith'
-              %p{:class => 'text-darkgray text-small'}= 'Manager'
-
+            - 5.times do
+              =render 'user_image', image_loc: '/images/logos/user.png', name: 'James Smith', role: 'Manager'
+           
         .carousel-item.text-center 
           .row.justify-content-center.flex-column-reverse.flex-md-row
-            .col-12.col-sm-2
-              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
-              %h5= 'Peter Parker'
-              %p{:class => 'text-darkgray text-small'}= 'Manager'
-            .col-12.col-sm-2
-              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
-              %h5= 'Peter Parker'
-              %p{:class => 'text-darkgray text-small'}= 'Manager'
-            .col-12.col-sm-2
-              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
-              %h5= 'Peter Parker'
-              %p{:class => 'text-darkgray text-small'}= 'Manager'
-            .col-12.col-sm-2
-              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
-              %h5= 'Peter Parker'
-              %p{:class => 'text-darkgray text-small'}= 'Manager'
-            .col-12.col-sm-2
-              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
-              %h5= 'Peter Parker'
-              %p{:class => 'text-darkgray text-small'}= 'Manager'
+            - 5.times do
+              =render 'user_image', image_loc: '/images/logos/user.png', name: 'Peter Parker', role: 'Manager'
+            
       / Left and right controls
       %a.carousel-control-prev.pb-5{"data-slide" => "prev", href: "#slider"}
         =icon('fas', 'chevron-left', class: 'text-black')
