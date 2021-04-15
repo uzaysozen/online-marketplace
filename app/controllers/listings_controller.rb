@@ -1,9 +1,7 @@
 class ListingsController < ApplicationController
-    before_action :set_listing, only: [:show, :edit, :update, :destroy,
-       :add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+    load_and_authorize_resource only: [:show, :edit, :update, :destroy]
 
-    load_and_authorize_resource
-
+    # :add_favourite, :delete_favourite, :start_conversation, :delete_conversation
     # GET /listings
     def index
       @listings = Listing.accessible_by(current_ability)
@@ -47,6 +45,7 @@ class ListingsController < ApplicationController
   
     # POST /listings
     def create
+      authorize! :create, Listing
       params = listing_params
       # take tags out of params, removing blank entries and duplicates
       tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
@@ -118,12 +117,14 @@ class ListingsController < ApplicationController
 
 
     def start_conversation
+      authorize! :create, Conversation.new(listing: @listing)
       @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
       redirect_to @conversation
     end
 
     def delete_conversation
       @conversation = current_user.conversations.find_by(listing: @listing)
+      authorize! :delete, @conversation
       if @conversation.conversation_messages.empty?
         @conversation.destroy
         redirect_to listings_path

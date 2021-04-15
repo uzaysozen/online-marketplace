@@ -22,6 +22,16 @@ class Ability
         # Listing Delivery
         can :read, ListingDelivery
 
+        # Conversation
+        can :create, Conversation
+        cannot :create, Conversation, listing: {creator_id: user.id}
+
+        can :delete, Conversation, listing: {creator_id: user.id}
+        can :delete, Conversation, participant_id: user.id
+
+        # Favourites
+        can :create, UserFavourite
+        cannot :create, UserFavourite, listing: {creator_id: user.id}
       end
     end
     # Define abilities for the passed in user here. For example:
