@@ -5,7 +5,7 @@ class ListingsController < ApplicationController
 
     # GET /listings
     def index
-      @listings = Listing.accessible_by(current_ability)
+      @listings = accessible_listings
 
       # Sorting Function
       table_col = Listing.column_names
@@ -81,7 +81,7 @@ class ListingsController < ApplicationController
     # PATCH/PUT /listings/1
     def update
       if @listing.update(listing_params)
-        @listings = Listing.all
+        @listings = active_listings
         render 'update_success'
       else
         render 'update_failure'
@@ -96,14 +96,14 @@ class ListingsController < ApplicationController
 
     # POST /products/search
     def search
-      @listings = Listing.all
+      @listings = accessible_listings
       @listings = @listings.where("title ilike ?", "%#{params[:search][:search_title]}%") if params[:search][:search_title].present?
       render :index
     end
     
     def add_favourite
       @favourite = UserFavourite.new(listing: @listing, user: current_user)
-      @listings = Listing.all
+      @listings = accessible_listings
       if @favourite.save
         render 'load_listings'
       end
@@ -111,7 +111,7 @@ class ListingsController < ApplicationController
 
     def delete_favourite
       @favourite = @listing.user_favourites.find_by(user: current_user)
-      @listings = Listing.all
+      @listings = accessible_listings
       @favourite.destroy
       render 'load_listings'
     end
@@ -135,6 +135,9 @@ class ListingsController < ApplicationController
     end
 
     private
+      def accessible_listings
+        Listing.accessible_by(current_ability)
+      end
       # Only allow a trusted parameter "white list" through.
       def listing_params
         params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id, 
