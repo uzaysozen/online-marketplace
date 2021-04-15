@@ -61,6 +61,4 @@ class Listing < ApplicationRecord
 
     has_many :listing_tags
     has_many :tags, through: :listing_tags
-
-    scope :profile, ->(current_user) { where(creator_id: current_user.id) }
 end

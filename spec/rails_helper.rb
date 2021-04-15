@@ -41,7 +41,11 @@ RSpec.configure do |config|
   config.mock_with :rspec
 
   config.before(:suite) do
+<<<<<<< HEAD
     DatabaseCleaner.clean_with(:truncation, { pre_count: true, except: %w(ar_internal_metadata)} )
+=======
+    DatabaseCleaner.clean_with(:truncation, { pre_count: true, except: %w(ar_internal_metadata) })
+>>>>>>> 14d69b69bb8e7c4e40140609583a4f7b1fe4e921
   end
 
   config.before(:each) do
