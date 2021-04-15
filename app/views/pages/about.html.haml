@@ -26,19 +26,52 @@
       / The slideshow
       .carousel-inner
         .carousel-item.active.text-center
-          = image_tag("/images/logos/user.png", size: "150x150", style: 'margin: 5px;')
-          = image_tag("/images/logos/user.png", size: "150x150", style: 'margin: 5px;')
-          = image_tag("/images/logos/user.png", size: "150x150", style: 'margin: 5px;')
-          = image_tag("/images/logos/user.png", size: "150x150", style: 'margin: 5px;')
-          = image_tag("/images/logos/user.png", size: "150x150", style: 'margin: 5px;')
+          .row.justify-content-center.flex-column-reverse.flex-md-row
+            .col-12.col-sm-2
+              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
+              %h5= 'James Smith'
+              %p{:class => 'text-darkgray text-small'}= 'Manager'
+            .col-12.col-sm-2
+              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
+              %h5= 'James Smith'
+              %p{:class => 'text-darkgray text-small'}= 'Manager'
+            .col-12.col-sm-2
+              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
+              %h5= 'James Smith'
+              %p{:class => 'text-darkgray text-small'}= 'Manager'
+            .col-12.col-sm-2
+              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
+              %h5= 'James Smith'
+              %p{:class => 'text-darkgray text-small'}= 'Manager'
+            .col-12.col-sm-2
+              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
+              %h5= 'James Smith'
+              %p{:class => 'text-darkgray text-small'}= 'Manager'
+
         .carousel-item.text-center 
-          = image_tag("/images/logos/user.png", size: "150x150", style: 'margin: 5px;')
-          = image_tag("/images/logos/user.png", size: "150x150", style: 'margin: 5px;')
-          = image_tag("/images/logos/user.png", size: "150x150", style: 'margin: 5px;')
-          = image_tag("/images/logos/user.png", size: "150x150", style: 'margin: 5px;')
-          = image_tag("/images/logos/user.png", size: "150x150", style: 'margin: 5px;')
+          .row.justify-content-center.flex-column-reverse.flex-md-row
+            .col-12.col-sm-2
+              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
+              %h5= 'Peter Parker'
+              %p{:class => 'text-darkgray text-small'}= 'Manager'
+            .col-12.col-sm-2
+              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
+              %h5= 'Peter Parker'
+              %p{:class => 'text-darkgray text-small'}= 'Manager'
+            .col-12.col-sm-2
+              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
+              %h5= 'Peter Parker'
+              %p{:class => 'text-darkgray text-small'}= 'Manager'
+            .col-12.col-sm-2
+              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
+              %h5= 'Peter Parker'
+              %p{:class => 'text-darkgray text-small'}= 'Manager'
+            .col-12.col-sm-2
+              = image_tag("/images/logos/user.png", size: "135x135", style: 'margin: 5px;') 
+              %h5= 'Peter Parker'
+              %p{:class => 'text-darkgray text-small'}= 'Manager'
       / Left and right controls
-      %a.carousel-control-prev{"data-slide" => "prev", href: "#slider"}
+      %a.carousel-control-prev.pb-5{"data-slide" => "prev", href: "#slider"}
         =icon('fas', 'chevron-left', class: 'text-black')
-      %a.carousel-control-next{"data-slide" => "next", href: "#slider"}
+      %a.carousel-control-next.pb-5{"data-slide" => "next", href: "#slider"}
         =icon('fas', 'chevron-right', class: 'text-black')
