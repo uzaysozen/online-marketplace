@@ -1,0 +1,30 @@
+#category-history
+  %nav{"aria-label" => "breadcrumb"}
+    %ol.breadcrumb.p-0.bg-white.text-small
+      - @listing.listing_category.path_to.reverse.each do |category|
+        %li.breadcrumb-item
+          %a{href: "#"}
+            = category.name
+      %li.breadcrumb-item.active
+        = @listing.title
+        
+.row
+  .col-3
+    .row.conversation-listing-image.text-center
+      =icon('far', 'image')  
+  
+  .col-9
+    .row.text-medium.text-black.text-left
+      = @listing.title 
+    
+    .row.text-small.text-black.text-left
+      = @listing.description
+
+    .row.text-small.text-black.text-left
+      = @listing.creator.username
+
+    .row.text-medium.text-black.text-left
+      £
+      = @listing.price 
+
+= link_to 'Back', :back

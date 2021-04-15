@@ -26,7 +26,7 @@
 #  index_users_on_username  (username)
 #
 FactoryBot.define do
-  factory :user do
+  factory :user, aliases: [:creator, :moderator, :receiver] do
     
   end
 end

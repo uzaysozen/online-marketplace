@@ -14,3 +14,4 @@
 //= require turbolinks
 //= require activestorage
 //= require file-upload
+//= require autoscroll
