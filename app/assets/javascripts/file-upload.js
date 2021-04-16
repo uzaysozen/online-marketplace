@@ -5,7 +5,6 @@ function FileListItems (files) {
 }
 
 addImagePreview = (file, imageNumber) => {
-    console.log(imageNumber);
     let container = document.getElementById('images-preview');
     if(container) {
         let preview = document.getElementById('preview_' + imageNumber);
@@ -16,12 +15,14 @@ addImagePreview = (file, imageNumber) => {
         let image = document.createElement('img');
         image.src = URL.createObjectURL(file);
         image_container.style.backgroundImage = "url(" + image.src + ")";
+        image_icon = image_container.children[0];
+        image_icon.remove();
 
         let delete_button = document.createElement('span');
         delete_button.classList.add('delete-btn');
         delete_button.setAttribute('del-btn-name', file.name);
         delete_button.addEventListener('click', e => removeImagePreview(file.name));
-        preview.append(delete_button)
+        preview.append(delete_button);
     }
 }
 
@@ -31,8 +32,32 @@ removeImagePreview = (fileName) => {
     el.remove();
     fileStore = fileStore.filter(f => f.name !== fileName);
 
-    // Add a default image square back
+    // Create default image square
+    let preview = document.createElement('div');
+    preview.className = 'col-4 preview';
+    let image_container = document.createElement('div');
+    image_container.className = 'image-container';
+    image_container.id = 'image_8';
+    let image_icon = document.createElement('div');
+    image_icon.className = 'far fa-image placeholder';
+    image_container.append(image_icon);
+    preview.append(image_container);
 
+    // Add to container
+    let container = document.getElementById('images-preview');
+    container.append(preview);
+
+    // Change id
+    let counter = 1
+    for (let child of container.children) {
+        // Find current id number
+        current_id = child.id.split("_").pop();
+        // Update id number
+        child.id = 'preview_' + counter;
+        image = document.getElementById('image_' + current_id);
+        if (image) image.id = 'image_' + counter;
+        counter++;
+    }
 }
 
 

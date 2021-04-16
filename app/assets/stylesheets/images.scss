@@ -61,7 +61,6 @@
 
     .image-container {
       width: 100%;
-      height: width;
       background-position: 50% 50%;
       background-repeat: no-repeat;
       background-size: contain;
@@ -85,6 +84,17 @@
       img {
         max-width: 100%;
         object-fit: contain;
+      }
+
+      .placeholder {
+        display:inline-block;
+        font-size: 7rem;
+        line-height: 200%;
+        color: $gray;
+        width: 100%;
+        height: width;
+        text-align: center;
+        vertical-align: bottom;
       }
     }
 
