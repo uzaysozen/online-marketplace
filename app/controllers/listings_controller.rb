@@ -5,8 +5,8 @@ class ListingsController < ApplicationController
 
     # GET /listings
     def index
-      @listings = Listing.includes(:creator, :listing_condition).all
-      session[:g_listings] = Listing.includes(:creator, :listing_condition).all
+      @listings = accessible_listings
+      session[:g_listings] = accessible_listings
 
       # Sorting Function
       table_col = Listing.column_names
@@ -29,7 +29,7 @@ class ListingsController < ApplicationController
 
     # POST /listings/search_and_filter
     def search_and_filter
-      @listings = session[:g_listings] ||= Listing.includes(:creator, :listing_condition).all
+      @listings = session[:g_listings] ||= accessible_listings
 
       # Search through Listings
       @listings = @listings.where("title ilike ?", "%#{params[:search_and_filter][:search_title]}%") if params[:search_and_filter][:search_title].present?
@@ -39,7 +39,7 @@ class ListingsController < ApplicationController
         current_category = ListingCategory.where(id: params[:search_and_filter][:filter_category]).first
         unless current_category.nil?
           subcategory_ids = current_category.explored.map(&:id)
-          @listings = Listing.includes(:creator, :listing_condition).all
+          @listings = accessible_listings
           @listings = @listings.where(listing_category_id: subcategory_ids << current_category.id)
           session[:g_listings] = @listings
         end
@@ -75,7 +75,7 @@ class ListingsController < ApplicationController
       end
 
       if params[:clear_button]
-        session[:sort_listings] = Listing.includes(:creator, :listing_condition).all
+        session[:sort_listings] = accessible_listings
         redirect_to listings_path
       else
         session[:sort_listings] = @listings
@@ -188,7 +188,7 @@ class ListingsController < ApplicationController
 
     private
       def accessible_listings
-        Listing.accessible_by(current_ability)
+        Listing.includes(:creator, :listing_condition).accessible_by(current_ability)
       end
       # Only allow a trusted parameter "white list" through.
       def listing_params
