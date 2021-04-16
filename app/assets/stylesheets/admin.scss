@@ -1,3 +1,28 @@
 // Place all the styles related to the admin controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.stat-value {
+  color: #929292;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.stat-text {
+  color: #606060;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.table tbody {
+  overflow: auto;
+  max-height: 600px;
+  display: block;
+}
+
+.table thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+

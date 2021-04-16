@@ -1,0 +1,88 @@
+%h3
+  %strong Website Statistics
+%br
+.container-fluid
+  .row.rows-cols-2.justify-content-center.flex-column-reverse.flex-md-row
+    .col.text-left.border-right.border-dark
+      .row.justify-content-left.flex-column-reverse.flex-md-row
+      %br
+        %h5 
+          %strong Site Traffic
+      .row.rows-cols-4.justify-content-center.flex-column-reverse.flex-md-row.border-bottom.pb-4.mr-2
+        .col.text-center.border-right
+          %p.stat-text Weekly 
+          %p.stat-value 500
+        .col.text-center.border-right
+          %p.stat-text Monthly
+          %p.stat-value 2,500
+        .col.text-center
+          %p.stat-text All time
+          %p.stat-value 10,000
+        .col.text-center
+          = icon 'fas', 'user-circle', style: 'color: #00c8f8; font-size: 75px;'
+      .row.justify-content-left.flex-column-reverse.flex-md-row
+      %br
+        %h5 
+          %strong Items sold
+      .row.rows-cols-4.justify-content-center.flex-column-reverse.flex-md-row.border-bottom.pb-4.mr-2
+        .col.text-center.border-right
+          %p.stat-text Weekly 
+          %p.stat-value 500
+        .col.text-center.border-right
+          %p.stat-text Monthly
+          %p.stat-value 2,500
+        .col.text-center
+          %p.stat-text All time
+          %p.stat-value 10,000
+        .col.text-center
+          = icon 'fas', 'shopping-cart', style: 'color: #92d36e; font-size: 75px;'
+      .row.justify-content-left.flex-column-reverse.flex-md-row
+      %br
+        %h5 
+          %strong Items swapped
+      .row.rows-cols-4.justify-content-center.flex-column-reverse.flex-md-row.border-bottom.pb-4.mr-2
+        .col.text-center.border-right
+          %p.stat-text Weekly 
+          %p.stat-value 500
+        .col.text-center.border-right
+          %p.stat-text Monthly
+          %p.stat-value 2,500
+        .col.text-center
+          %p.stat-text All time
+          %p.stat-value 10,000
+        .col.text-center
+          = icon 'fas', 'sync', style: 'color: #ff6e69; font-size: 75px;'
+      .row.justify-content-left.flex-column-reverse.flex-md-row
+      %br
+        %h5 
+          %strong Overall item value sold
+      .row.rows-cols-4.justify-content-center.flex-column-reverse.flex-md-row.pb-4.mr-2
+        .col.text-center.border-right
+          %p.stat-text Weekly 
+          %p.stat-value 500
+        .col.text-center.border-right
+          %p.stat-text Monthly
+          %p.stat-value 2,500
+        .col.text-center
+          %p.stat-text All time
+          %p.stat-value 10,000
+        .col.text-center
+          = icon 'fas', 'cash-register', style: 'color: #ffa834; font-size: 75px;'
+    .col.text-left
+      .row.justify-content-left.flex-column-reverse.flex-md-row
+      %br
+        %h5 
+          %strong Top Categories
+      .row.justify-content-left.flex-column-reverse.flex-md-row.ml-2
+        %table.table.table-striped.table-sm
+          %thead.thead-light
+            %tr
+              %th.text-center{scope: "col"} Category
+              %th.text-center{scope: "col"} Weekly
+              %th.text-center{scope: "col"} Monthly
+              %th.text-center{scope: "col"} All time
+          %tbody
+            - 2.times do
+              = render 'stat_row', category: 'Books', weekly: 18, monthly: 67, all_time: 233
+              = render 'stat_row', category: 'Sports Equipment', weekly: 18, monthly: 67, all_time: 233
+              = render 'stat_row', category: 'Electronics', weekly: 18, monthly: 67, all_time: 233
