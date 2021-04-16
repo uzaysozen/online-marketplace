@@ -5,7 +5,7 @@ class ListingsController < ApplicationController
 
     # GET /listings
     def index
-      @listings = accessible_listings
+      @listings = Listing.includes(:creator, :listing_condition).all
 
       # Sorting Function
       table_col = Listing.column_names
@@ -139,16 +139,6 @@ class ListingsController < ApplicationController
       @listing.destroy
       redirect_to listings_url, notice: 'Listing was successfully deleted.'
     end
-<<<<<<< HEAD
-=======
-
-    # POST /products/search
-    def search
-      @listings = accessible_listings
-      @listings = @listings.where("title ilike ?", "%#{params[:search][:search_title]}%") if params[:search][:search_title].present?
-      render :index
-    end
->>>>>>> 14d69b69bb8e7c4e40140609583a4f7b1fe4e921
     
     def add_favourite
       @favourite = UserFavourite.new(listing: @listing, user: current_user)
