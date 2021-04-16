@@ -11,10 +11,10 @@
           
           .row
             .col-6
-              = f.input :filter_minprice, label: 'Min Price', as: :text, required: false, input_html: {rows: 1}
+              = f.input :filter_minprice, label: 'Min Price', as: :decimal, required: false
 
             .col-6
-              = f.input :filter_maxprice, label: 'Max Price', as: :text, required: false, input_html: {rows: 1}
+              = f.input :filter_maxprice, label: 'Max Price', as: :decimal, required: false
 
           = f.input :filter_condition, label: 'Condition', collection: ListingCondition.all, required: false #, input_html: { name: 'condition' }
 

@@ -6,7 +6,7 @@ class ListingsController < ApplicationController
     # GET /listings
     def index
       @listings = accessible_listings
-      session[:g_listings] = accessible_listings
+      session[:g_listings] = @listings
 
       # Sorting Function
       table_col = Listing.column_names
