@@ -12,6 +12,9 @@
         = f.file_field :images, multiple: true, direct_upload: true
 
     #images-preview.row
+      - (1..8).each do |i|
+        %div.preview.col-4{:id => "preview_#{i}"}
+          %div.image-container{:id => "image_#{i}"}
 
     = f.input :description, hint: '(Max 200 words)'
     = f.association :listing_condition, label: 'Condition'

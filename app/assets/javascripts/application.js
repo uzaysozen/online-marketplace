@@ -15,3 +15,4 @@
 //= require activestorage
 //= require file-upload
 //= require autoscroll
+//= require notifications

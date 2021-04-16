@@ -35,7 +35,7 @@
 
 #images-preview {
   .preview {
-    max-width: 21%;
+    max-width: 25%;
     margin: 15px 0;
 
     align-self: center;
@@ -48,6 +48,7 @@
       height: 25px;
       background-color: white;
       border: 2px solid $primary-color;
+      color: $primary-color;
       border-radius: 50%;
 
       line-height: 23px;
@@ -59,7 +60,7 @@
     }
 
     .image-container {
-      width: 15vw;
+      width: 100%;
       height: width;
       background-position: 50% 50%;
       background-repeat: no-repeat;
