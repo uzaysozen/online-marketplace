@@ -57,6 +57,10 @@ Rails.application.routes.draw do
     get :moderation, to: 'admin#moderation'
     get :statistics, to: 'admin#statistics'
     get :other, to: 'admin#other'
+    post :other, to: 'admin#update_site'
+    get :promote_user, to: 'admin#get_admin'
+    post :promote_user, to: 'admin#promote'
+    get :demote_user, to: 'admin#demote'
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

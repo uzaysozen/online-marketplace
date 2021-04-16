@@ -16,8 +16,8 @@
           %tbody{style: 'max-height: 250px'}
             - @admins.each do |admin| 
               = render 'user_row', admin: admin
-      .row.justify-content-left.flex-column-reverse.flex-md-row
-        %button.btn.btn-sm.btn-secondary
+      .row.justify-content-left.flex-column-reverse.flex-md-row.mb-4
+        = link_to promote_user_path, class: 'ajax-modal btn btn-sm btn-secondary' do
           Add a new admin
     .col.text-left
       .row.justify-content-left.flex-column-reverse.flex-md-row

@@ -1,6 +1,11 @@
 %tr
   %td.text-center #{admin.username}
   %td.text-center #{admin.givenname}
-  %td.text-center 
-    %button.btn.btn-sm.btn-outline-primary
-      Remove
+  %td.text-center
+    = simple_form_for :admin, url: demote_user_path, method: :get do |f|
+      = f.error_notification
+      .form-inputs
+        = f.input :username, as: :hidden, input_html: { value: admin.username }
+        = f.input :email, as: :hidden, input_html: { value: admin.email }
+      .form-actions
+        = f.submit 'Remove', class: 'btn btn-sm btn-outline-primary'
