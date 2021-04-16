@@ -6,6 +6,7 @@ class ListingsController < ApplicationController
     # GET /listings
     def index
       @listings = Listing.includes(:creator, :listing_condition).all
+      session[:g_listings] = Listing.includes(:creator, :listing_condition).all
 
       # Sorting Function
       table_col = Listing.column_names
@@ -14,18 +15,21 @@ class ListingsController < ApplicationController
       # Verifying Parameters
       if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
         sort_order = session[:sort_order] || 'asc'
+        @listings = session[:sort_listings] ||= @listings
         @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       else
         params[:sort] = "title"
         sort_order = 'asc'
+        @listings = session[:sort_listings] ||= @listings
         @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       end
     end
 
+    # POST /listings/search_and_filter
     def search_and_filter
-      @listings = Listing.all
+      @listings = session[:g_listings] ||= Listing.includes(:creator, :listing_condition).all
 
       # Search through Listings
       @listings = @listings.where("title ilike ?", "%#{params[:search_and_filter][:search_title]}%") if params[:search_and_filter][:search_title].present?
@@ -35,7 +39,9 @@ class ListingsController < ApplicationController
         current_category = ListingCategory.where(id: params[:search_and_filter][:filter_category]).first
         unless current_category.nil?
           subcategory_ids = current_category.explored.map(&:id)
+          @listings = Listing.includes(:creator, :listing_condition).all
           @listings = @listings.where(listing_category_id: subcategory_ids << current_category.id)
+          session[:g_listings] = @listings
         end
       end
 
@@ -67,7 +73,14 @@ class ListingsController < ApplicationController
           @listings = @listings.where(listing_deliveries: current_delivery.ids)
         end
       end
-      render :index
+
+      if params[:clear_button]
+        session[:sort_listings] = Listing.includes(:creator, :listing_condition).all
+        redirect_to listings_path
+      else
+        session[:sort_listings] = @listings
+        render :index
+      end
     end
 
     def mylistings
