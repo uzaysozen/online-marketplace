@@ -1,30 +1,7 @@
 .modal-dialog
-    .modal-content
-        = simple_form_for @listing, remote: true do |f|
-            .modal-header
-                %h4.modal-title Editing Listing
-                %button.close{ type: :button, data: { dismiss: :modal } }
-                    %span &times;
-            .modal-body
-                = f.input :title, hint: 'Use a descriptive title to promote your item'
-                = f.input :price, hint: 'Leaving the price empty will set the price as \'Free\''   
-                = f.input :image, as: :file, label: 'Add a photo'
-                = f.input :description, hint: '(Max 200 words)'
-                = f.association :listing_condition, label: 'Condition'
-                = f.association :listing_category, label: 'Category'
-                = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
-                %p Swaps
-                = f.input :swap, label: 'Open to swaps'
+  .modal-content
+    = render 'form'
 
-                = f.association :listing_status
-                = f.hidden_field :is_active, :value => false
-                = f.hidden_field :is_moderated, :value => false
-                = f.hidden_field :creator_id, :value => current_user.id
-                = f.hidden_field :receiver_id, :value => current_user.id
-                = f.hidden_field :moderator_id, :value => current_user.id
-                = f.hidden_field :discounted_price, :value => nil
-
-            .modal-footer
-                .pull-left
-                    = dismiss_modal_button
-                = f.button :submit, class: 'btn btn-outline-dark'
+  .modal-footer
+    .pull-left
+      = dismiss_modal_button

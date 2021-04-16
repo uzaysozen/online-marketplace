@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :tag do
+  factory :tag, aliases: ["tags"] do
     name { "MyString" }
   end
 end

@@ -1,9 +1,11 @@
 class ListingsController < ApplicationController
-    before_action :set_listing, only: [:show, :edit, :update, :destroy, :add_favourite, :delete_favourite, :start_conversation]
-    
+
+    load_and_authorize_resource only: [:show, :edit, :update, :destroy]
+    load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+
     # GET /listings
     def index
-      @listings = Listing.all
+      @listings = accessible_listings
 
       # Sorting Function
       table_col = Listing.column_names
@@ -12,12 +14,12 @@ class ListingsController < ApplicationController
       # Verifying Parameters
       if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
         sort_order = session[:sort_order] || 'asc'
-        @listings = Listing.order("#{params[:sort]} #{sort_order}")
+        @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       else
         params[:sort] = "title"
         sort_order = 'asc'
-        @listings = Listing.order("#{params[:sort]} #{sort_order}")
+        @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       end
     end
@@ -69,11 +71,12 @@ class ListingsController < ApplicationController
     end
 
     def mylistings
-      @listings = Listing.profile(current_user)
+      @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update)
     end
 
     # GET /listings/1
     def show
+      @listing = Listing.find(params[:id])
     end
   
     # GET /listings/new
@@ -83,11 +86,13 @@ class ListingsController < ApplicationController
   
     # GET /listings/1/edit
     def edit
+      authorize! :update, @listing
       render layout: false
     end
   
     # POST /listings
     def create
+      authorize! :create, Listing
       params = listing_params
       # take tags out of params, removing blank entries and duplicates
       tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
@@ -122,7 +127,7 @@ class ListingsController < ApplicationController
     # PATCH/PUT /listings/1
     def update
       if @listing.update(listing_params)
-        @listings = Listing.all
+        @listings = active_listings
         render 'update_success'
       else
         render 'update_failure'
@@ -134,10 +139,20 @@ class ListingsController < ApplicationController
       @listing.destroy
       redirect_to listings_url, notice: 'Listing was successfully deleted.'
     end
+<<<<<<< HEAD
+=======
+
+    # POST /products/search
+    def search
+      @listings = accessible_listings
+      @listings = @listings.where("title ilike ?", "%#{params[:search][:search_title]}%") if params[:search][:search_title].present?
+      render :index
+    end
+>>>>>>> 14d69b69bb8e7c4e40140609583a4f7b1fe4e921
     
     def add_favourite
       @favourite = UserFavourite.new(listing: @listing, user: current_user)
-      @listings = Listing.all
+      @listings = accessible_listings
       if @favourite.save
         render 'load_listings'
       end
@@ -145,23 +160,33 @@ class ListingsController < ApplicationController
 
     def delete_favourite
       @favourite = @listing.user_favourites.find_by(user: current_user)
-      @listings = Listing.all
+      @listings = accessible_listings
       @favourite.destroy
       render 'load_listings'
     end
 
 
     def start_conversation
+      authorize! :create, Conversation.new(listing: @listing)
       @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
-      @messages = @conversation.conversation_messages.where(is_deleted: nil)
+      redirect_to @conversation
+    end
+
+    def delete_conversation
+      @conversation = current_user.conversations.find_by(listing: @listing)
+      authorize! :delete, @conversation
+      if @conversation.conversation_messages.empty?
+        @conversation.destroy
+        redirect_to listings_path
+      else
+        redirect_to listings_path
+      end
     end
 
     private
-      # Callback functions to share common setup or constraints between actions.
-      def set_listing
-        @listing = Listing.find(params[:id])
+      def accessible_listings
+        Listing.accessible_by(current_ability)
       end
-  
       # Only allow a trusted parameter "white list" through.
       def listing_params
         params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id, 

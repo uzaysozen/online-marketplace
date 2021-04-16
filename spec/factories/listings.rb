@@ -40,6 +40,16 @@
 #
 FactoryBot.define do
   factory :listing do
-    
+    creator
+    listing_category
+    listing_status
+    listing_condition
+    moderator
+    receiver
+    title { "Some Listing" }
+    price { 12.34 }
+    description { "A description for a listing" }
+    location { "Sheffield" }
+    swap { false }
   end
 end

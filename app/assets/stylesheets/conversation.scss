@@ -1,9 +1,9 @@
 .conversation {
-    height: 60vh;
+    height: 30vh;
   
     #messages {
-      height: 70%;
-      overflow-y: scroll;
+      height: 100%;
+      overflow-y: auto;
       padding-bottom: 200px;
       padding-top: 10px;
     }
@@ -31,4 +31,57 @@
           }
         }
       }
+}
+
+.active-conversation {
+  background-color: #cccccc;
+}
+
+.conversation-link:hover {
+  text-decoration: none;
+}
+
+.conversation-link {
+  background-color: #f7f6f6;
+  max-width: 100%;
+  height: auto;
+}
+
+.conversation-button:hover {
+  color: white;
+}
+
+.conversation-listing-image {
+  margin-left: 10px;
+  max-width: 100%;
+  height: auto;
+}
+
+.conversation-card-image {
+  font-size: 70px;
+  padding-top: 5px;
+}
+
+.time-label {
+  font-size: 12px;
+}
+
+.empty-conversation-container {
+  background-color: rgba(0, 0, 0, 0.03);
+  .empty-conversation-header {
+    font-size: medium;
+    margin-top: 8rem;
+    color: #808080;
+  }
+}
+
+.conversation-header {
+  padding-bottom: 58px;
+  padding-top: 58px;
+  padding-right: 10px;
+}
+
+.conversations-sidebar {
+  max-height: 478px;
+  overflow-y: auto;
 }
