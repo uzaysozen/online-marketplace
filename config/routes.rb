@@ -27,8 +27,6 @@ Rails.application.routes.draw do
     get :start_conversation, on: :member
     post :delete_conversation, on: :member
   end
-
-  resources :reports
   
   resources :users do
     post :search, on: :collection
@@ -54,7 +52,12 @@ Rails.application.routes.draw do
   get :javascript_warning, to: 'errors#javascript_warning'
 
   root to: "pages#home"
-  get "pages/admin" => "pages#admin"
+  scope :admin do
+    resources :reports
+    get :moderation, to: 'admin#moderation'
+    get :statistics, to: 'admin#statistics'
+    get :other, to: 'admin#other'
+  end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
