@@ -10,6 +10,7 @@ class AdminController < ApplicationController
   
   # GET admin/other
   def other 
+    @admins = User.where(administrator: true)
   end
 
 end

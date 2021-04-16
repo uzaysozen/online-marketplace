@@ -1,0 +1,64 @@
+.container-fluid.no-gutters
+  .row.rows-cols-2.justify-content-center.flex-column-reverse.flex-md-row
+    .col.text-left.border-right
+      .row.rows-cols-2.justify-content-left.flex-column-reverse.flex-md-row
+      %br
+        %h5 
+          %strong Admin permissions
+        %p.mod-info Demote/promote users administrator privileges
+      .row.justify-content-left.flex-column-reverse.flex-md-row.mr-2
+        %table.table.table-bordered
+          %thead.thead-light
+            %tr
+              %th.text-center{scope: "col"} Username
+              %th.text-center{scope: "col"} Name
+              %th.text-center{scope: "col"} 
+          %tbody{style: 'max-height: 250px'}
+            - @admins.each do |admin| 
+              = render 'user_row', admin: admin
+      .row.justify-content-left.flex-column-reverse.flex-md-row
+        %button.btn.btn-sm.btn-secondary
+          Add a new admin
+    .col.text-left
+      .row.justify-content-left.flex-column-reverse.flex-md-row
+      %br
+        %h5 
+          %strong Send an email...
+        %p.mod-info Send a message to all users of the site via email
+      .row.justify-content-center.flex-column-reverse.flex-md-row.ml-2
+        = render 'email_form'
+  .row.justify-content-left.flex-column-reverse.flex-md-row
+    %br
+      %h5 
+        %strong Banned words
+  
+  .row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
+    = render 'banned_words_form'
+
+  .row.justify-content-elft.flex-column-reverse.flex-md-row
+    %br
+      %h5 
+        %strong Edit the site...
+  %br
+  .row.justify-content-elft.flex-column-reverse.flex-md-row
+    %p COVID Guidance
+  
+  .row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
+    = render 'covid_form'
+  
+  .row.justify-content-elft.flex-column-reverse.flex-md-row
+    %p FAQs
+  
+  .row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
+    %table.table.table-bordered
+      %thead.thead-light
+        %tr
+          %th.text-center{scope: "col"} Question
+          %th.text-center{scope: "col"} Answer
+          %th.text-center{scope: "col"} 
+      %tbody{style: 'max-height: 400px'}
+        - 5.times do
+          = render 'faq_row', question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla q...', answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis...'
+  .row.justify-content-center.flex-column-reverse.flex-md-row
+    %button.btn.btn-md.btn-primary
+      Add a new question

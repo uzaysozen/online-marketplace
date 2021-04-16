@@ -1,0 +1,9 @@
+#admin-form
+  = simple_form_for(:bulk_email, url: other_path) do |f|
+    = f.error_notification
+
+    .form-inputs
+      = f.input :content, label: false, placeholder: 'Type a message here...', as: :text, input_html: { rows: 5 }
+    .form-actions.text-center
+      = f.button :button, class: 'btn-secondary btn-md email-btn' do
+        Send
