@@ -1,3 +1,5 @@
+@import 'variables';
+
 .logo-image-container {
   img {
     max-height: 80px;
@@ -15,6 +17,88 @@
   img {
     max-height: 225px;
     max-width: 250px
+  }
+}
+
+// Listing image input
+
+.file-input {
+  .input {
+    display: none;
+  }
+
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#images-preview {
+  .preview {
+    max-width: 25%;
+    margin: 15px 0;
+
+    align-self: center;
+
+    .delete-btn {
+      cursor: pointer;
+      position: absolute;
+      top: -8px;
+      right: 0;
+      width: 25px;
+      height: 25px;
+      background-color: white;
+      border: 2px solid $primary-color;
+      color: $primary-color;
+      border-radius: 50%;
+
+      line-height: 23px;
+      font-size: 15px;
+      text-align: center;
+      &::after {
+        content: "✖"
+      }
+    }
+
+    .image-container {
+      width: 100%;
+      background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: contain;
+      position: relative;
+      border: 1px solid $gray;
+      border-radius: 2%;
+      padding: 2%;
+
+      &::before {
+        content: '';
+        float: left;
+        padding-top: 100%;
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        clear: both;
+      }
+
+      img {
+        max-width: 100%;
+        object-fit: contain;
+      }
+
+      .placeholder {
+        display:inline-block;
+        font-size: 8vw;
+        line-height: 200%;
+        color: $gray;
+        width: 100%;
+        height: width;
+        text-align: center;
+        vertical-align: bottom;
+      }
+    }
+
   }
 }
 
