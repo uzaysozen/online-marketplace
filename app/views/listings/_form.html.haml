@@ -8,9 +8,9 @@
       .col 
         %p.mb-0 Add A Photo
         %p.text-small.text-darkgray Using clear photos will help sell your item
-      %label.col-4.file-input.btn-secondary.btn-lg.text-center
+      %label.col-4.file-input.btn-secondary.btn-lg.text-center.d-inline-flex.justify-content-center.align-items-center
         Upload
-        .fas.fa-file-upload.h5.ml-2
+        .fas.fa-file-upload.ml-2
         %span.input
           = f.file_field :images, multiple: true, direct_upload: true
 

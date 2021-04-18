@@ -41,6 +41,7 @@
     align-self: center;
 
     .delete-btn {
+      cursor: pointer;
       position: absolute;
       top: -8px;
       right: 0;
@@ -88,7 +89,7 @@
 
       .placeholder {
         display:inline-block;
-        font-size: 7rem;
+        font-size: 8vw;
         line-height: 200%;
         color: $gray;
         width: 100%;
