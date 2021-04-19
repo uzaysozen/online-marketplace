@@ -33,3 +33,4 @@ class ListingCategory < ApplicationRecord
         end
     end
 end
+
