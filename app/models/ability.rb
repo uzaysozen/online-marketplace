@@ -4,11 +4,35 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new
-    if user.adminstrator?
-      can :manage, :all
-    else
-      can :read, :all
+    if user.present?
+      if user.administrator?
+        can :manage, :all
+      else
+        # Listing Restrictions
+        can :create, Listing
+        can :read, Listing, listing_status: {name: 'Active'}
+        can [:show, :update, :delete], Listing, creator_id: user.id
+
+        # Listing Category
+        can :read, ListingCategory
+
+        # Listing Condition
+        can :read, ListingCondition
+
+        # Listing Delivery
+        can :read, ListingDelivery
+
+        # Conversation
+        can :create, Conversation
+        cannot :create, Conversation, listing: {creator_id: user.id}
+
+        can :delete, Conversation, listing: {creator_id: user.id}
+        can :delete, Conversation, participant_id: user.id
+
+        # Favourites
+        can :create, UserFavourite
+        cannot :create, UserFavourite, listing: {creator_id: user.id}
+      end
     end
     # Define abilities for the passed in user here. For example:
     #
