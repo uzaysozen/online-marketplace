@@ -12,8 +12,8 @@
       .text-small.pt-3
         One of our admin team will be happy to help!
 
-      = link_to(pages_contact_path, class: 'btn btn-light btn-lg my-3') do
-        Contact Us
+      = link_to(contact_path, class: 'btn btn-light btn-lg my-3') do
+        Talk to us!
 
     .col-4.text-center
       %ul
@@ -21,16 +21,21 @@
           = link_to root_path, class: 'white-button'  do
             Home
         %li
-          = link_to pages_about_path, class: 'white-button'  do
+          = link_to about_path, class: 'white-button'  do
             About
         %li
-          = link_to pages_contact_path, class: 'white-button'  do
+          = link_to contact_path, class: 'white-button'  do
             Contact
         %li
-          = link_to pages_faq_path, class: 'white-button'  do
+          = link_to faq_path, class: 'white-button'  do
             FAQ
         %li
-          Login
+          = link_to terms_path, class: 'white-button'  do
+            Terms
+        %li 
+          = link_to new_user_session_path, class: 'white-button' do
+            Login
+
   .row.py-4.m-0.align-items-center
     .col-8.text-small
       The official marketplace of The University of Sheffield and The University of Sheffield Student Union
