@@ -1,5 +1,8 @@
 - content_for :title, 'Home'
 
+- if @covid_guidance.present?
+  = render 'covid_alert'
+
 .jumbotron.mb-3
   %h1.display-5 You're good to go!
   %p.lead Your new Rails application is working.

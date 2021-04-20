@@ -4,6 +4,12 @@ class PagesController < ApplicationController
 
   def home
     @current_nav_identifier = :home
+    covid_content = PageContent.find_by(key: 'Covid Guidance')
+    if covid_content.present?
+      @covid_guidance = covid_content.content
+    else
+      @covid_guidance = nil
+    end
   end
 
   def admin

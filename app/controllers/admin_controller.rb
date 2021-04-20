@@ -12,6 +12,12 @@ class AdminController < ApplicationController
   # GET admin/other
   def other 
     @admins = User.where(administrator: true)
+    covid_guidance = PageContent.find_by(key: 'Covid Guidance')
+    if covid_guidance.present?
+      @covid_message = covid_guidance.content
+    else
+      @covid_message = nil
+    end
   end
 
   def site_settings
@@ -28,7 +34,9 @@ class AdminController < ApplicationController
     elsif banned_words.present?
       redirect_to moderation_path
     elsif covid_guidance.present?
-      redirect_to moderation_path
+      page_content = PageContent.all.find_or_create_by(key: "Covid Guidance")
+      page_content.update(content: covid_guidance[:content])
+      redirect_to other_path
     end
   end
 
