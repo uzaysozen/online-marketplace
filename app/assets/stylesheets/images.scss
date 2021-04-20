@@ -41,6 +41,20 @@
   cursor: pointer;
 }
 
+@media(max-width: 992px) {
+  .icon-button {
+    i {
+      font-size: 25px;
+    }
+  }
+}
+
+.icon-button {
+  i {
+    font-size: 20px;
+  }
+}
+
 #images-preview {
   .preview {
     max-width: 25%;
