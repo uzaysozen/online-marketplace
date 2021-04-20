@@ -57,10 +57,10 @@ Rails.application.routes.draw do
     get :moderation, to: 'admin#moderation'
     get :statistics, to: 'admin#statistics'
     get :other, to: 'admin#other'
-    post :other, to: 'admin#update_site'
+    post :other, to: 'admin#site_settings'
     get :promote_user, to: 'admin#get_admin'
     post :promote_user, to: 'admin#promote'
-    get :demote_user, to: 'admin#demote'
+    post :demote_user, to: 'admin#demote'
   end
   get :contact, to: "pages#contact"
   post :contact, to: "pages#contact_mail"

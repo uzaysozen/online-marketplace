@@ -14,7 +14,7 @@ class AdminController < ApplicationController
     @admins = User.where(administrator: true)
   end
 
-  def update_site
+  def site_settings
     bulk_email = params[:bulk_email]
     banned_words = params[:banned_words]
     covid_guidance = params[:covid_guidance]
@@ -52,7 +52,7 @@ class AdminController < ApplicationController
     email = params[:admin][:email]
     admin = User.find_by(username: username, email: email)
     admin.update(administrator: false)
-    redirect_to other_path
+    redirect_to other_path, notice: 'Admin succesfully removed.'
   end
 
 end
