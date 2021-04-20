@@ -32,6 +32,10 @@
   border-bottom: 0;
 }
 
+.border-black {
+  border: 1px solid $primary-font;
+}
+
 // Buttons
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {

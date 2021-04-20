@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :listing_views
 
   resources :listings do
-    post :search, on: :collection
+    post :search_and_filter, on: :collection
     post :add_favourite, on: :member
     post :delete_favourite, on: :member
     get :start_conversation, on: :member
@@ -55,6 +55,11 @@ Rails.application.routes.draw do
 
   root to: "pages#home"
   get "pages/admin" => "pages#admin"
+  get :contact, to: "pages#contact"
+  post :contact, to: "pages#contact_mail"
+  get :terms, to: "pages#terms"
+  get :faq, to: "pages#faq"
+  get :about, to: "pages#about"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
