@@ -75,8 +75,7 @@
         .col.text-medium.text-black.border-right-black
           = @listing.creator.username 
         .col-4.text-large.text-black
-          £
-          = sprintf '%.2f', @listing.price
+          = number_to_currency @listing.price, unit: "£"
           %p
 
       %hr
