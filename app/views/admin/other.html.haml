@@ -57,8 +57,8 @@
           %th.text-center{scope: "col"} Answer
           %th.text-center{scope: "col"} 
       %tbody{style: 'max-height: 400px'}
-        - 5.times do
-          = render 'faq_row', question: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla q...', answer: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis...'
+        - @questions.each do |content|
+          = render 'faq_row', page_content: content
   .row.justify-content-center.flex-column-reverse.flex-md-row
-    %button.btn.btn-md.btn-primary
+    = link_to add_question_path, class: 'ajax-modal btn btn-md btn-primary' do
       Add a new question

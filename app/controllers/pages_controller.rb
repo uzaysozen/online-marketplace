@@ -29,6 +29,7 @@ class PagesController < ApplicationController
   # GET pages/faq
   def faq
     @current_nav_identifier = :faq
+    @questions = PageContent.where(key: 'Question')
   end
   
   # GET pages/contact

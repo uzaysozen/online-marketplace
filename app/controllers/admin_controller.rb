@@ -12,6 +12,7 @@ class AdminController < ApplicationController
   # GET admin/other
   def other 
     @admins = User.where(administrator: true)
+    @questions = PageContent.where(key: 'Question')
     covid_guidance = PageContent.find_by(key: 'Covid Guidance')
     if covid_guidance.present?
       @covid_message = covid_guidance.content
@@ -44,6 +45,10 @@ class AdminController < ApplicationController
     render layout: false
   end
 
+  def get_question
+    render layout: false
+  end
+
   def promote
     username = params[:new_admin][:username]
     email = params[:new_admin][:email]
@@ -66,6 +71,20 @@ class AdminController < ApplicationController
     admin = User.find_by(username: username, email: email)
     admin.update(administrator: false)
     redirect_to other_path, notice: 'Admin succesfully removed.'
+  end
+
+  def add_question
+    question = params[:new_question][:question]
+    answer = params[:new_question][:answer]
+    PageContent.create(key: 'Question', content: question + ";;;" + answer)
+    redirect_to other_path, notice: 'Question and answer succesfully added.'
+  end
+
+  def remove_question
+    question_content = params[:question][:content]
+    page_content = PageContent.find_by(key: 'Question', content: question_content)
+    page_content.destroy
+    redirect_to other_path, notice: 'Question and answer succesfully removed.'
   end
 
 end

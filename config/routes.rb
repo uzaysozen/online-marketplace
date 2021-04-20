@@ -61,6 +61,9 @@ Rails.application.routes.draw do
     get :promote_user, to: 'admin#get_admin'
     post :promote_user, to: 'admin#promote'
     post :demote_user, to: 'admin#demote'
+    get :add_question, to: 'admin#get_question'
+    post :add_question, to: 'admin#add_question'
+    post :remove_question, to: 'admin#remove_question'
   end
   get :contact, to: "pages#contact"
   post :contact, to: "pages#contact_mail"

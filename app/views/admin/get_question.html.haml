@@ -1,0 +1,10 @@
+.modal-dialog.modal-lg
+  .modal-content.p-5
+    = simple_form_for :new_question, url: add_question_path, method: :post do |f|
+      = f.error_notification
+      .form-inputs
+        = f.input :question, as: :text
+        = f.input :answer, as: :text
+      .form-actions
+        = f.submit 'Add question', class: 'btn btn-secondary'
+        = dismiss_modal_button 
