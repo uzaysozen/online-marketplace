@@ -214,4 +214,5 @@ class ListingsController < ApplicationController
         params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id, 
           :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
       end
+    end
   end
