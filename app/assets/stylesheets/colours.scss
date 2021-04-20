@@ -51,9 +51,14 @@
   border-color: $primary-color !important;
 }
 
-.btn-outline-primary, .btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited {
+.btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary:visited {
   border-color: $primary-color !important;
   color: $primary-color !important;
+}
+
+.btn-outline-primary:hover {
+  background: $primary-color;
+  color: white !important;
 }
 
 .btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
