@@ -83,12 +83,25 @@
 .listing-blue, .listing-red {
   max-width: 137px;
   max-height: 25px;
+
+  transition: 0.2s ease-in-out;
 }
 
 .listing-blue:hover, .listing-red:hover {
-  box-shadow: 2px 2px;
+  transform: scale(1.02);
 }
 
-.heart-link, .heart-link:hover {
+.heart-link {
   color: $primary-color;
+
+  i {
+    transition: 0.5s ease-in-out;
+  }
+}
+// Fas full, far empty
+.heart-link:hover {
+  color: $primary-color;
+  i {
+    transform: scale(1.2);
+  }
 }
