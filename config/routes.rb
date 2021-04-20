@@ -62,7 +62,6 @@ Rails.application.routes.draw do
     post :promote_user, to: 'admin#promote'
     get :demote_user, to: 'admin#demote'
   end
-  get "pages/admin" => "pages#admin"
   get :contact, to: "pages#contact"
   post :contact, to: "pages#contact_mail"
   get :terms, to: "pages#terms"
