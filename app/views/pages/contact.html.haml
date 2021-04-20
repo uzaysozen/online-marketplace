@@ -1,0 +1,41 @@
+- content_for :title, 'Contact'
+
+.row.justify-content-center.flex-column-reverse.flex-md-row
+  .col-12.col-md-12
+    .text-large.text-darkgray.text-center 
+      %strong Get in touch
+    .text-medium.text-darkgray.text-center
+      Want to get in touch? We'd love to hear from you
+      %p
+
+.row.justify-content-center.flex-column-reverse.flex-md-row
+  .col-12.col-md-6.listing-description-container
+    .border-none
+      .row.p-4
+        .col-12.col-sm-11
+          = render 'contact_form'
+  
+
+  .col-12.col-md-6
+    .border-none.p-4.pt-5
+      .col-12.d-flex.flex-column.flex-md-row.logo-image-container.justify-content-start.pt-3
+        =image_tag "/images/logos/su.png"
+        =image_tag "/images/logos/TUOS_PRIMARY_LOGO_FULL_COLOUR_KEYLINE.png"
+        
+      .col-12.md-6
+        .text-small.text-black.pt-5
+          %p 
+          = icon('fas', 'map-marker-alt', class: 'text-blue') 
+          Located in: The University of Sheffield
+        .text-small.text-black
+          %p
+          = icon('fas', 'compass', class: 'text-blue')
+          Address : Western Bank, Broomhall, Sheffield S10 2TG
+        .text-small.text-black
+          %p
+          = icon('fas', 'envelope', class: 'text-blue')
+          Email: @sheffield.ac.uk
+
+
+
+      
