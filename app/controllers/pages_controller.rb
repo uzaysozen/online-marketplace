@@ -34,7 +34,7 @@ class PagesController < ApplicationController
   def contact_mail
     contact = params[:contact]
     UserMailer.contact_email(contact[:email], contact[:name], contact[:message]).deliver
-    redirect_to pages_contact_path , notice: 'Your message has been sent.'
+    redirect_to contact_path , notice: 'Your message has been sent.'
   end
 
 end
