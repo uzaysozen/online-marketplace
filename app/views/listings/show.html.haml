@@ -1,30 +1,137 @@
+- user_favourite = current_user.user_favourites.find_by(listing: @listing)
+
 #category-history
   %nav{"aria-label" => "breadcrumb"}
-    %ol.breadcrumb.p-0.bg-white.text-small
+  .row
+    %ol.col.breadcrumb.p-0.bg-white.text-small
       - @listing.listing_category.path_to.reverse.each do |category|
         %li.breadcrumb-item
           %a{href: "#"}
             = category.name
       %li.breadcrumb-item.active
         = @listing.title
-        
-.row
-  .col-3
-    .row.conversation-listing-image.text-center
-      =icon('far', 'image')  
+      
+    .col-2.d-flex.justify-content-end.h3.text-blue
+      %p
+      - if @listing.creator != current_user
+        = icon('far', 'flag')
+        .pl-4
+        - if user_favourite.present?
+          = link_to(delete_favourite_listing_path(@listing), method: :post, remote: true, class: 'heart-link') do
+            = icon('fas', 'heart')
+        - else
+          = link_to(add_favourite_listing_path(@listing), method: :post, remote: true, class: 'heart-link') do
+            = icon('far', 'heart') 
+
   
-  .col-9
-    .row.text-medium.text-black.text-left
-      = @listing.title 
-    
-    .row.text-small.text-black.text-left
-      = @listing.description
+  .row
+    .col.text-left
+      .row-8
+        - images = @listing.images
+        -# Carousel 
+        #car.carousel.slide.card{"data-ride" => "carousel", "data-interval" => "false"}
+          -# Indicators
+          %ol.carousel-indicators
+            - len = images.length
+            - for i in 0..len - 1 do
+              %li.bg-gray{"data-slide-to" => i, "data-target" => "#car", :class => ("active" unless i != 0)}
 
-    .row.text-small.text-black.text-left
-      = @listing.creator.username
+          -# Images
+          .carousel-inner
+            - counter = 0
+            - images.each do |image|
+              .carousel-item{:class => ("active" unless counter != 0)}
+                - if image.representable?
+                  %div.image-display{:style => "background-image: url(#{rails_blob_url(image)})"}
+              - counter += 1
+          
+          -# Carousel navigation arrows
+          %a.carousel-control-prev{"data-slide" => "prev", :href => "#car", :role => "button"}
+            %span.carousel-control-prev-icon{"aria-hidden" => "true"}
+            %span.sr-only Previous
+          %a.carousel-control-next{"data-slide" => "next", :href => "#car", :role => "button"}
+            %span.carousel-control-next-icon{"aria-hidden" => "true"}
+            %span.sr-only Next
+        
+      -# Horizontal image cards
+      .container-fluid
+        .row.flex-row.flex-nowrap.overflow-auto
+          - counter = 0
+          - images.each do |image|
+            .col-3.p-1
+              - if image.representable?
+                %div.card.card-block.mini-image{"data-slide-to" => counter, "data-target" => "#car", :style => "background-image: url(#{rails_blob_url(image)})"}
+              - counter += 1
 
-    .row.text-medium.text-black.text-left
-      £
-      = @listing.price 
 
+    .col-7.text-left
+        
+      .text-large.text-black.text-left
+        %p
+        = @listing.title 
+        %p
+
+      .row
+        .col.text-medium.text-black.border-right-black
+          = @listing.creator.username 
+        .col-4.text-large.text-black
+          £
+          = sprintf '%.2f', @listing.price
+          %p
+
+      %hr
+
+      .row.h-25
+        - if @listing.creator != current_user
+          .col-8.mr-1
+            = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex' do 
+              Send Message
+              .far.fa-comment-dots
+          .col.mr-2
+            -# TODO: add in swapping
+            = link_to start_conversation_listing_path(@listing), class: 'btn btn-primary btn-lg d-flex' do 
+              Swap
+              .fas.fa-sync
+        - else
+          .col-8.mr-1
+            -# TODO: mark as sold function
+            = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex' do 
+              Mark As Sold
+              .fas.fa-check-circle.ml-2
+          .col.mr-2
+            = link_to edit_listing_path(@listing), class: 'btn btn-primary btn-lg d-flex' do 
+              Edit
+              .fas.fa-edit.ml-2
+
+      .row.pt-3
+        .col-8.text-small.text-darkgray 
+          .fas.fa-thumbs-up
+          Condition
+          = @listing.listing_condition.name
+          %p
+        .text-small.text-darkgray 
+          .fas.fa-map-marker-alt
+          Location
+          = @listing.location
+          %p
+      
+      .row
+        .col-8.text-small.text-darkgray 
+          .fas.fa-truck
+          Delivery
+          = @listing.deliveries.name
+          %p
+        .text-small.text-darkgray
+          .fas.fa-calendar-alt 
+          Date Listed
+          = @listing.created_at.strftime('%m/%d/%Y')
+          %p
+
+      %hr
+
+      .text-small.text-black
+        %p
+        = @listing.description
+        %p
+        
 = link_to 'Back', :back
