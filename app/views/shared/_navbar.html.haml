@@ -1,15 +1,15 @@
 #user-id{"data-user-id" => "#{current_user.try(:id)}"}
 %nav#main-nav.navbar.navbar-dark.navbar-expand-lg.position-sticky.bg-red
-  = link_to :root, class: 'navbar-brand hidden-sm d-flex align-items-center' do
+  = link_to :root, class: 'hidden-sm d-flex align-items-center text-decoration-none' do
     .navbar-brand
       = image_tag '/images/logos/logo_white.svg'
-    .navbar-header
+    .navbar-header.text-medium.text-white
       Sheffield University Marketplace
   %button.navbar-toggler{ aria: { controls: "navbar-content", expanded: false, label: "Toggle navigation" }, data: { target: "#navbar-content", toggle: "collapse" }, type: "button" }
     %span.navbar-toggler-icon
 
   .collapse.navbar-collapse#navbar-content
-    %ul.nav.navbar-nav
+    %ul.nav.navbar-nav.pl-0.pl-lg-4
       = navbar_link_to listings_path, title: "Go to listings", identifier: :listings do
         = icon 'fas', 'folder-open'
         Listings

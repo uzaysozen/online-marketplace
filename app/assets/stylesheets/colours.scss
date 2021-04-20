@@ -26,14 +26,22 @@
   border: 1px solid $gray;
 }
 
-.borderx-gray {
-  border: 1px solid $gray;
-  border-top: 0;
-  border-bottom: 0;
-}
-
 .border-black {
   border: 1px solid $primary-font;
+}
+
+.bordery-gray {
+  border: 1px solid $gray;
+  border-right: 0;
+  border-left: 0;
+}
+
+@media(min-width: 768px) {
+  .borderx-md-gray {
+    border: 1px solid $gray;
+    border-top: 0;
+    border-bottom: 0;
+  }
 }
 
 // Buttons
