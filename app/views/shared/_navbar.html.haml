@@ -10,9 +10,6 @@
 
   .collapse.navbar-collapse#navbar-content
     %ul.nav.navbar-nav
-      = navbar_link_to :root, title: "Go to the home page", identifier: :home do
-        = icon 'fas', 'home'
-        Home
       = navbar_link_to listings_path, title: "Go to listings", identifier: :listings do
         = icon 'fas', 'folder-open'
         Listings
