@@ -3,6 +3,14 @@
 .logo-image-container {
   img {
     max-height: 80px;
+    object-fit: scale-down;
+  }
+}
+
+.login-logo {
+  img {
+    max-height: 175px;
+    object-fit: scale-down;
   }
 }
 
