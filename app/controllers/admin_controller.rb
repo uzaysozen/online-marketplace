@@ -18,8 +18,13 @@ class AdminController < ApplicationController
     bulk_email = params[:bulk_email]
     banned_words = params[:banned_words]
     covid_guidance = params[:covid_guidance]
+    
     if bulk_email.present?
-      redirect_to moderation_path
+      User.all.each_slice(50) do |users|
+        UserMailer.send_bulk_email(users.map(&:email), bulk_email[:content]).deliver
+      end
+      redirect_to other_path, notice: "The announcement has been sent to all user."
+    
     elsif banned_words.present?
       redirect_to moderation_path
     elsif covid_guidance.present?
