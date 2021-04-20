@@ -34,7 +34,7 @@
           %ol.carousel-indicators
             - len = images.length
             - for i in 0..len - 1 do
-              %li{"data-slide-to" => i, "data-target" => "#car", :class => ("active" unless i != 0)}
+              %li.bg-gray{"data-slide-to" => i, "data-target" => "#car", :class => ("active" unless i != 0)}
 
           -# Images
           .carousel-inner
@@ -47,19 +47,21 @@
           
           -# Carousel navigation arrows
           %a.carousel-control-prev{"data-slide" => "prev", :href => "#car", :role => "button"}
-            %span.carousel-control-prev-icon.bg-blue{"aria-hidden" => "true"}
+            %span.carousel-control-prev-icon{"aria-hidden" => "true"}
             %span.sr-only Previous
           %a.carousel-control-next{"data-slide" => "next", :href => "#car", :role => "button"}
-            %span.carousel-control-next-icon.bg-blue{"aria-hidden" => "true"}
+            %span.carousel-control-next-icon{"aria-hidden" => "true"}
             %span.sr-only Next
         
       -# Horizontal image cards
       .container-fluid
         .row.flex-row.flex-nowrap.overflow-auto
+          - counter = 0
           - images.each do |image|
             .col-3.p-1
               - if image.representable?
-                %div.card.card-block.mini-image{:style => "background-image: url(#{rails_blob_url(image)})"}
+                %div.card.card-block.mini-image{"data-slide-to" => counter, "data-target" => "#car", :style => "background-image: url(#{rails_blob_url(image)})"}
+              - counter += 1
 
 
     .col-7.text-left
