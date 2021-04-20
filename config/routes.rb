@@ -55,6 +55,11 @@ Rails.application.routes.draw do
 
   root to: "pages#home"
   get "pages/admin" => "pages#admin"
+  get :contact, to: "pages#contact"
+  post :contact, to: "pages#contact_mail"
+  get :terms, to: "pages#terms"
+  get :faq, to: "pages#faq"
+  get :about, to: "pages#about"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
