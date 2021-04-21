@@ -17,11 +17,9 @@
         - if can? :create, UserFavourite.new(listing: @listing)
           - if user_favourite.present?
             = link_to(delete_favourite_listing_path(@listing), method: :post, remote: true, class: 'heart-link') do
-              .animated-popping
               = icon('fas', 'heart')
           - else
             = link_to(add_favourite_listing_path(@listing), method: :post, remote: true, class: 'heart-link') do
-              .animated-popping
               = icon('far', 'heart')
 
 
