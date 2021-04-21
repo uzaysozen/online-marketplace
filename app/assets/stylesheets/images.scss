@@ -149,3 +149,11 @@
   font-size: 55px;
   color: $black;
 }
+
+.carousel-indicators li {
+  background-color: $gray;
+}
+
+.carousel-indicators .active {
+  background-color: $darkgray;
+}

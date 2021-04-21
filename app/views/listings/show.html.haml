@@ -73,6 +73,7 @@
 
       .row
         .col.text-medium.text-black.border-right-black
+          .fas.fa-user-alt.pr-2
           = @listing.creator.username 
         .col-4.text-large.text-black
           £
@@ -82,16 +83,23 @@
       %hr
 
       .row.h-25
-        - if @listing.creator != current_user
-          .col-8.mr-1
-            = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex' do 
-              Send Message
-              .far.fa-comment-dots
-          .col.mr-2
-            -# TODO: add in swapping
-            = link_to start_conversation_listing_path(@listing), class: 'btn btn-primary btn-lg d-flex' do 
-              Swap
-              .fas.fa-sync
+        - if @listing.creator = current_user
+          - if @listing.swap
+            .col-8.d-flex.justify-content-center.mr-1
+              = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex' do 
+                Send Message
+                .far.fa-comment-dots.ml-2
+            .col.mr-2
+              -# TODO: add in swapping
+              = link_to start_conversation_listing_path(@listing), class: 'btn btn-primary btn-lg d-flex' do 
+                Swap
+                .fas.fa-sync.ml-2
+          - else 
+            .col.mr-1
+              .d-flex.justify-content-center
+                = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex' do 
+                  Send Message
+                  .far.fa-comment-dots.ml-2.text-center
         - else
           .col-8.mr-1
             -# TODO: mark as sold function
@@ -104,29 +112,38 @@
               .fas.fa-edit.ml-2
 
       .row.pt-3
-        .col-8.text-small.text-darkgray 
-          .fas.fa-thumbs-up
+        .col-3.text-small.text-black 
+          .fas.fa-thumbs-up.pr-2
           Condition
+        .col-3.text-small.text-right.text-darkgray
           = @listing.listing_condition.name
           %p
-        .text-small.text-darkgray 
-          .fas.fa-map-marker-alt
+        .col-3.text-small.text-black 
+          .fas.fa-map-marker-alt.pr-2
           Location
+        .col-3.text-small.text-right.text-darkgray
           = @listing.location
           %p
       
       .row
-        .col-8.text-small.text-darkgray 
-          .fas.fa-truck
+        .col-3.text-small.text-black 
+          .fas.fa-truck.pr-2
           Delivery
-          = @listing.deliveries.name
+        .col-3.text-small.text-right.text-darkgray
+          - is_first = true
+          - @listing.deliveries.each do |delivery|
+            - if !is_first
+              = "- "
+            = delivery.name
+            
+            - is_first = false
           %p
-        .text-small.text-darkgray
-          .fas.fa-calendar-alt 
+        .col-3.text-small.text-small.text-black 
+          .fas.fa-calendar-alt.pr-2
           Date Listed
+        .col-3.text-small.text-right.text-darkgray
           = @listing.created_at.strftime('%m/%d/%Y')
           %p
-
       %hr
 
       .text-small.text-black
