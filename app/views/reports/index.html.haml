@@ -1,8 +1,12 @@
 .row.justify-content-center.flex-column-reverse.flex-md-row
   .col-12.col-md-6
     %h2 Reported Items
-    =render 'reported_items'
+    .reported-items
+      - 20.times do
+        =render 'reported_items'
 
   .col-12.col-md-6
     %h2 Reported Messages
-    =render 'reported_items'
+    .reported-items
+      - 20.times do
+        =render 'reported_items'

@@ -1,4 +1,5 @@
 %h3 Pending Posts
-.row.justify-content-left.flex-column-reverse.flex-md-row
+#pending-posts.row.justify-content-left.flex-column-reverse.flex-md-row
   .col-12.col-md-12
-    =render 'pending_posts'
+    - 20.times do
+      =render 'pending_posts'

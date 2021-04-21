@@ -41,9 +41,20 @@
   }
 }
 
-.report-container {
-  max-width: 250px;
+#pending-posts {
+  overflow-y: auto;
+  max-height: 500px;
 }
 
-
+.reported-items {
+  overflow-y: auto;
+  max-height: 500px;
+  .reported-item {
+    max-width: 495px;
+    padding: 10px;
+  }
+  .report-container {
+    max-width: 250px;
+  }
+}
 
