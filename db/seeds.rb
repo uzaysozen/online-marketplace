@@ -12,3 +12,6 @@ delivery_methods = Delivery.first_or_create([{name: 'Collection'}, {name: 'Drop-
 
 # Listing status
 listing_status = ListingStatus.first_or_create([{name: 'Pending'}, {name: 'Active'}, {name: 'Complete'}, {name: 'Deleted'}])
+
+# Tags
+tags = Tag.first_or_create([{name: 'Novel'}, {name: 'Magazine'}])
