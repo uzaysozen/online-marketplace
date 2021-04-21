@@ -20,6 +20,7 @@
 #
 FactoryBot.define do
   factory :conversation do
-    
+    listing
+    participant
   end
 end

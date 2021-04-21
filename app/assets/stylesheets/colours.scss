@@ -26,14 +26,22 @@
   border: 1px solid $gray;
 }
 
-.borderx-gray {
-  border: 1px solid $gray;
-  border-top: 0;
-  border-bottom: 0;
-}
-
 .border-black {
   border: 1px solid $primary-font;
+}
+
+.bordery-gray {
+  border: 1px solid $gray;
+  border-right: 0;
+  border-left: 0;
+}
+
+@media(min-width: 768px) {
+  .borderx-md-gray {
+    border: 1px solid $gray;
+    border-top: 0;
+    border-bottom: 0;
+  }
 }
 
 // Buttons
@@ -43,9 +51,14 @@
   border-color: $primary-color !important;
 }
 
-.btn-outline-primary, .btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:visited {
+.btn-outline-primary, .btn-outline-primary:active, .btn-outline-primary:visited {
   border-color: $primary-color !important;
   color: $primary-color !important;
+}
+
+.btn-outline-primary:hover {
+  background: $primary-color;
+  color: white !important;
 }
 
 .btn-secondary, .btn-secondary:hover, .btn-secondary:active, .btn-secondary:visited {
@@ -70,12 +83,34 @@
 .listing-blue, .listing-red {
   max-width: 137px;
   max-height: 25px;
+
+  transition: 0.2s ease-in-out;
 }
 
 .listing-blue:hover, .listing-red:hover {
-  box-shadow: 2px 2px;
+  transform: scale(1.02);
 }
 
-.heart-link, .heart-link:hover {
+.heart-link {
   color: $primary-color;
+
+  i {
+    transition: 0.5s ease-in-out;
+  }
+
+  &:hover {
+    color: $primary-color;
+    text-decoration: none;
+
+    i {
+      transform: scale(1.2);
+    }
+  }
+
+  &:active {
+    i {
+      transition: 0.1s linear;
+      transform: scale(0.75);
+    }
+  }
 }

@@ -46,19 +46,19 @@ class Listing < ApplicationRecord
     belongs_to :listing_status
     belongs_to :listing_category
 
-    has_many :listing_views
-    has_many :listing_questions
-    has_many :listing_ratings
+    has_many :listing_views, dependent: :destroy
+    has_many :listing_questions, dependent: :destroy
+    has_many :listing_ratings, dependent: :destroy
     has_many :reports
     has_many :conversations, dependent: :destroy
     has_many_attached :images
 
-    has_many :listing_deliveries
+    has_many :listing_deliveries, dependent: :destroy
     has_many :deliveries, through: :listing_deliveries
 
-    has_many :user_favourites
+    has_many :user_favourites, dependent: :destroy
     has_many :followers, class_name: "User", through: :user_favourites
 
-    has_many :listing_tags
+    has_many :listing_tags, dependent: :destroy
     has_many :tags, through: :listing_tags
 end
