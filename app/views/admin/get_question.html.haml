@@ -1,6 +1,6 @@
 .modal-dialog.modal-lg
   .modal-content.p-5
-    = simple_form_for :new_question, url: add_question_path, method: :post do |f|
+    = simple_form_for :new_question, url: add_question_path, method: :post, remote: true do |f|
       = f.error_notification
       .form-inputs
         = f.input :question, as: :text

@@ -1,5 +1,5 @@
 #admin-form
-  = simple_form_for(:covid_guidance, url: other_path) do |f|
+  = simple_form_for(:covid_guidance, url: other_path, remote: true) do |f|
     = f.error_notification
 
     .form-inputs

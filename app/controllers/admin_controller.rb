@@ -13,11 +13,18 @@ class AdminController < ApplicationController
   def other 
     @admins = User.where(administrator: true)
     @questions = PageContent.where(key: 'Question')
+    words = PageContent.find_by(key: 'Banned Words')
     covid_guidance = PageContent.find_by(key: 'Covid Guidance')
     if covid_guidance.present?
       @covid_message = covid_guidance.content
     else
       @covid_message = nil
+    end
+
+    if words.present?
+      @banned_words = words.content.split(";")
+    else
+      @banned_words = []
     end
   end
 
@@ -33,11 +40,19 @@ class AdminController < ApplicationController
       redirect_to other_path, notice: "The announcement has been sent to all user."
     
     elsif banned_words.present?
-      redirect_to moderation_path
+      page_content = PageContent.all.find_or_create_by(key: "Banned Words")
+      word_container = ""
+      
+      banned_words[:content].each do |word|
+        if word.present?
+          word_container += word + ";"
+        end
+      end
+      page_content.update(content: word_container)
+
     elsif covid_guidance.present?
       page_content = PageContent.all.find_or_create_by(key: "Covid Guidance")
       page_content.update(content: covid_guidance[:content])
-      redirect_to other_path
     end
   end
 
@@ -53,38 +68,40 @@ class AdminController < ApplicationController
     username = params[:new_admin][:username]
     email = params[:new_admin][:email]
     new_admin = User.find_by(username: username, email: email)
+    @admin = new_admin
     if new_admin.present?
       if new_admin.administrator?
-        redirect_to other_path, notice: 'User is already an admin.'
+        render 'failure'
       else
         new_admin.update(administrator: true)
-        redirect_to other_path, notice: 'Admin succesfully added.'
+        render 'load_user'
       end
     else
-      redirect_to other_path, notice: 'There are no users with the username and email.'
+      render 'failure'
     end
   end
 
   def demote
-    username = params[:admin][:username]
-    email = params[:admin][:email]
-    admin = User.find_by(username: username, email: email)
+    admin_id = params[:admin][:id]
+    admin = User.find(admin_id)
     admin.update(administrator: false)
-    redirect_to other_path, notice: 'Admin succesfully removed.'
   end
 
   def add_question
     question = params[:new_question][:question]
     answer = params[:new_question][:answer]
-    PageContent.create(key: 'Question', content: question + ";;;" + answer)
-    redirect_to other_path, notice: 'Question and answer succesfully added.'
+    if question == "" and answer == ""
+      render 'failure'
+    else
+      @question = PageContent.create(key: 'Question', content: question + ";;;" + answer)
+      render 'load_question'
+    end
   end
 
   def remove_question
-    question_content = params[:question][:content]
-    page_content = PageContent.find_by(key: 'Question', content: question_content)
+    question_id = params[:question][:id]
+    page_content = PageContent.find(question_id)
     page_content.destroy
-    redirect_to other_path, notice: 'Question and answer succesfully removed.'
   end
 
 end

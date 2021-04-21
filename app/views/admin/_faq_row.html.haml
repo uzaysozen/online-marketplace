@@ -1,10 +1,12 @@
 %tr
-  %td.text-center #{page_content.content.split(";;;")[0]}
-  %td.text-center #{page_content.content.split(";;;")[1]}
-  %td.text-center 
-    = simple_form_for :question, url: remove_question_path do |f|
+  %td.text-center
+    = question.content.split(";;;")[0]
+  %td.text-center
+    = question.content.split(";;;")[1]
+  %td.text-center
+    = simple_form_for :question, url: remove_question_path, remote: true, html: { class: 'remove' }  do |f|
       = f.error_notification
       .form-inputs
-        = f.input :content, as: :hidden, input_html: { value: page_content.content }
+        = f.input :id, as: :hidden, input_html: { value: question.id }
       .form-actions
         = f.submit 'Remove', class: 'btn btn-sm btn-outline-primary'

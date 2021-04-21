@@ -1,11 +1,12 @@
 %tr
-  %td.text-center #{admin.username}
-  %td.text-center #{admin.givenname + " " + admin.sn}
+  %td.text-center 
+    = admin.username
+  %td.text-center 
+    = admin.givenname + " " + admin.sn
   %td.text-center
-    = simple_form_for :admin, url: demote_user_path do |f|
+    = simple_form_for :admin, url: demote_user_path, remote: true, html: { class: 'remove' }  do |f|
       = f.error_notification
       .form-inputs
-        = f.input :username, as: :hidden, input_html: { value: admin.username }
-        = f.input :email, as: :hidden, input_html: { value: admin.email }
+        = f.input :id, as: :hidden, input_html: { value: admin.id }
       .form-actions
         = f.submit 'Remove', class: 'btn btn-sm btn-outline-primary'

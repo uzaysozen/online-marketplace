@@ -13,9 +13,8 @@
               %th.text-center{scope: "col"} Username
               %th.text-center{scope: "col"} Name
               %th.text-center{scope: "col"} 
-          %tbody{style: 'max-height: 250px'}
-            - @admins.each do |admin| 
-              = render 'user_row', admin: admin
+          %tbody#admins{style: 'max-height: 250px'}
+            = render partial: 'user_row', collection: @admins, as: :admin
       .row.justify-content-left.flex-column-reverse.flex-md-row.mb-4
         = link_to promote_user_path, class: 'ajax-modal btn btn-sm btn-secondary' do
           Add a new admin
@@ -32,7 +31,7 @@
       %h5 
         %strong Banned words
   
-  .row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
+  #word-form.row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
     = render 'banned_words_form'
 
   .row.justify-content-elft.flex-column-reverse.flex-md-row
@@ -43,7 +42,7 @@
   .row.justify-content-elft.flex-column-reverse.flex-md-row
     %p COVID Guidance
   
-  .row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
+  #covid-form.row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
     = render 'covid_form'
   
   .row.justify-content-elft.flex-column-reverse.flex-md-row
@@ -56,9 +55,8 @@
           %th.text-center{scope: "col"} Question
           %th.text-center{scope: "col"} Answer
           %th.text-center{scope: "col"} 
-      %tbody{style: 'max-height: 400px'}
-        - @questions.each do |content|
-          = render 'faq_row', page_content: content
+      %tbody#questions{style: 'max-height: 400px'}
+        = render partial: 'faq_row', collection: @questions, as: :question
   .row.justify-content-center.flex-column-reverse.flex-md-row
     = link_to add_question_path, class: 'ajax-modal btn btn-md btn-primary' do
       Add a new question
