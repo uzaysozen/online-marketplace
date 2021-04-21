@@ -1,2 +1,8 @@
-.jumbotron 
- %h1 Reports Page
+.row.justify-content-center.flex-column-reverse.flex-md-row
+  .col-12.col-md-6
+    %h2 Reported Items
+    =render './admin/reported_items'
+
+  .col-12.col-md-6
+    %h2 Reported Messages
+    =render './admin/reported_items'

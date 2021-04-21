@@ -20,6 +20,13 @@
   }
 }
 
+.listing-image-container-sm {
+  img {
+    max-height: 115px;
+    max-width: 115px
+  }
+}
+
 // Listing image input
 
 .file-input {
