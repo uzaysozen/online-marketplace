@@ -157,7 +157,7 @@ class ListingsController < ApplicationController
       @favourite = UserFavourite.new(listing: @listing, user: current_user)
       @listings = accessible_listings
       if @favourite.save
-        render 'favourited_listing', locals: {listing: @listing}
+        render 'favourited_listing', locals: { listing: @listing, method: 'add' }
       end
     end
 
@@ -165,7 +165,7 @@ class ListingsController < ApplicationController
       @favourite = @listing.user_favourites.find_by(user: current_user)
       @listings = accessible_listings
       @favourite.destroy
-      render 'favourited_listing', locals: {listing: @listing}
+      render 'favourited_listing', locals: {listing: @listing, method: 'remove' }
     end
 
 

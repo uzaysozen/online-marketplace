@@ -97,11 +97,20 @@
   i {
     transition: 0.5s ease-in-out;
   }
-}
-// Fas full, far empty
-.heart-link:hover {
-  color: $primary-color;
-  i {
-    transform: scale(1.2);
+
+  &:hover {
+    color: $primary-color;
+    text-decoration: none;
+
+    i {
+      transform: scale(1.2);
+    }
+  }
+
+  &:active {
+    i {
+      transition: 0.1s linear;
+      transform: scale(0.75);
+    }
   }
 }

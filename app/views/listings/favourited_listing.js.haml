@@ -1,1 +1,13 @@
-$("#listing-#{listing.id}").replaceWith($('#{j render listing}'));
+:plain
+  var heartLink = document.getElementById('listing-#{listing.id}').querySelector('.heart-link');
+  if ('#{method}' == 'add') {
+    heartLink.href = '#{delete_favourite_listing_path(listing)}';
+    var heart = heartLink.querySelector('.fa-heart');
+    heart.classList.remove('far');
+    heart.classList.add('fas');
+  } else {
+    heartLink.href = '#{add_favourite_listing_path(listing)}';
+    var heart = heartLink.querySelector('.fa-heart');
+    heart.classList.remove('fas');
+    heart.classList.add('far');
+  }
