@@ -15,13 +15,13 @@ class ListingsController < ApplicationController
       # Verifying Parameters
       if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
         sort_order = session[:sort_order] || 'asc'
-        @listings = session[:sort_listings] ||= @listings
+        @listings = session[:sort_listings] ||= session[:g_listings]
         @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       else
         params[:sort] = "title"
         sort_order = 'asc'
-        @listings = session[:sort_listings] ||= @listings
+        @listings = session[:sort_listings] ||= session[:g_listings]
         @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       end
