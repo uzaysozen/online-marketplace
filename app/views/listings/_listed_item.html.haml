@@ -5,7 +5,7 @@
     .border-none.rounded.h-100
       .row.p-2
         
-        .col-12.col-sm-2.pl-0.text-left.listing-image-container.text-red
+        .col-12.col-sm-2.text-left.listing-image-container.text-red
           %p
           - if current_user.id != listed_item.creator_id
             = link_to(user_favourite, method: :delete, remote: true, class: 'heart-link') do
@@ -13,7 +13,7 @@
 
           = image_tag "/images/logos/su.png"
 
-        .col-12.col-sm-5.pl-0.text-left.listing-description-container
+        .col-12.col-sm-5.text-left.listing-description-container
           
           .text-medium.text-red.text-left
             %p
@@ -24,7 +24,7 @@
             =listed_item.description 
 
 
-        .col-12.col-sm-3.pl-5.text-left.listing-price-container  
+        .col-12.col-sm-3.text-left.listing-price-container
           .text-small.text-black
             %p
             =listed_item.creator.username

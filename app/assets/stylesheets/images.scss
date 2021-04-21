@@ -3,6 +3,14 @@
 .logo-image-container {
   img {
     max-height: 80px;
+    object-fit: scale-down;
+  }
+}
+
+.login-logo {
+  img {
+    max-height: 175px;
+    object-fit: scale-down;
   }
 }
 
@@ -31,6 +39,20 @@
   display: inline-block;
   padding: 6px 12px;
   cursor: pointer;
+}
+
+@media(max-width: 992px) {
+  .icon-button {
+    i {
+      font-size: 25px;
+    }
+  }
+}
+
+.icon-button {
+  i {
+    font-size: 20px;
+  }
 }
 
 #images-preview {
@@ -118,6 +140,16 @@
   img {
     height: 2rem;
     width: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand {
+    margin-right: 0.5rem;
+    img {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
   }
 }
 

@@ -1,12 +1,12 @@
 %footer#footer.bg-darkgray.text-white.px-4
   .row.pt-4.m-0
-    .col-4.text-small
+    .col-12.col-md-4.py-3.py-md-0.text-small
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.
       Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique,
       tortor mauris molestie elit, et lacinia ipsum quam nec dui. Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna.
       Aenean velit odio, elementum in tempus ut, vehicula eu di
 
-    .col-4.borderx-gray.text-center
+    .col-12.col-md-4.py-3.py-md-0.bordery-gray.borderx-md-gray.text-center
       .text-medium
         Have A Question? Contact Us!
       .text-small.pt-3
@@ -15,7 +15,7 @@
       = link_to(contact_path, class: 'btn btn-light btn-lg my-3') do
         Talk to us!
 
-    .col-4.text-center
+    .col-12.col-md-4.py-3.py-md-0.text-center
       %ul
         %li
           = link_to root_path, class: 'white-button'  do
@@ -37,11 +37,11 @@
             Login
 
   .row.py-4.m-0.align-items-center
-    .col-8.text-small
+    .col-12.col-md-8.text-small
       The official marketplace of The University of Sheffield and The University of Sheffield Student Union
       %br
       &copy; #{Date.today.year}
       = link_to 'epiGenesys', 'https://www.epigenesys.org.uk', target: '_blank', title: 'Go to the epiGenesys website'
-    .col-4.logo-image-container.justify-content-end.pt-3
-      =image_tag "/images/logos/su.png"
-      =image_tag "/images/logos/TUOS_PRIMARY_LOGO_REVERSED.png"
+    .col-12.col-md-4.logo-image-container.justify-content-end.pt-3
+      = image_tag "/images/logos/su.png"
+      = image_tag "/images/logos/TUOS_PRIMARY_LOGO_REVERSED.png"
