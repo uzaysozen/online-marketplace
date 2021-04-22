@@ -11,17 +11,17 @@ class ListingsController < ApplicationController
       # Sorting Function
       table_col = Listing.column_names
       sort_val = ['asc', 'desc']
-      
+
       # Verifying Parameters
       if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
         sort_order = session[:sort_order] || 'asc'
-        @listings = session[:sort_listings] ||= @listings
+        @listings = session[:g_listings] ||= @listings
         @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       else
         params[:sort] = "title"
         sort_order = 'asc'
-        @listings = session[:sort_listings] ||= @listings
+        @listings = session[:g_listings] ||= @listings
         @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       end
@@ -157,7 +157,7 @@ class ListingsController < ApplicationController
       @favourite = UserFavourite.new(listing: @listing, user: current_user)
       @listings = accessible_listings
       if @favourite.save
-        render 'load_listings'
+        render 'favourited_listing', locals: { listing: @listing, method: 'add' }
       end
     end
 
@@ -165,7 +165,7 @@ class ListingsController < ApplicationController
       @favourite = @listing.user_favourites.find_by(user: current_user)
       @listings = accessible_listings
       @favourite.destroy
-      render 'load_listings'
+      render 'favourited_listing', locals: {listing: @listing, method: 'remove' }
     end
 
 

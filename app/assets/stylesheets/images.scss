@@ -3,6 +3,14 @@
 .logo-image-container {
   img {
     max-height: 80px;
+    object-fit: scale-down;
+  }
+}
+
+.login-logo {
+  img {
+    max-height: 175px;
+    object-fit: scale-down;
   }
 }
 
@@ -40,6 +48,20 @@
   cursor: pointer;
 }
 
+@media(max-width: 992px) {
+  .icon-button {
+    i {
+      font-size: 25px;
+    }
+  }
+}
+
+.icon-button {
+  i {
+    font-size: 20px;
+  }
+}
+
 #images-preview {
   .preview {
     max-width: 25%;
@@ -69,10 +91,6 @@
 
     .image-container {
       width: 100%;
-      background-position: 50% 50%;
-      background-repeat: no-repeat;
-      background-size: contain;
-      position: relative;
       border: 1px solid $gray;
       border-radius: 2%;
       padding: 2%;
@@ -109,10 +127,36 @@
   }
 }
 
+.image-container, .image-display, .mini-image {
+  background-position: 50% 50%;
+      background-repeat: no-repeat;
+      background-size: contain;
+      position: relative;
+}
+
+.image-display {
+  height: 40vh;
+}
+
+.mini-image {
+  height: 10vh;
+  cursor: pointer;
+}
+
 .navbar-brand {
   img {
     height: 2rem;
     width: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand {
+    margin-right: 0.5rem;
+    img {
+      height: 1.5rem;
+      width: 1.5rem;
+    }
   }
 }
 
@@ -121,4 +165,26 @@
     width: 25%;
     height: auto;
   }
+}
+
+// Image carousel colour
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-size: 100%, 100%;
+  background-image: none;
+}
+
+.carousel-control-next-icon:after
+{
+  content: '❯';
+  left: 0;
+  font-size: 55px;
+  color: $black;
+}
+
+.carousel-control-prev-icon:after {
+  content: '❮';
+  font-size: 55px;
+  color: $black;
 }

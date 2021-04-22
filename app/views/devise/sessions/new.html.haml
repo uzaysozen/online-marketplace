@@ -1,10 +1,10 @@
 - content_for :title, 'Log In'
 
-.row.justify-content-center.flex-column-reverse.flex-md-row
-  .col-12.col-md-8
+.row.justify-content-center.flex-column-reverse.flex-lg-row
+  .col-12.col-lg-8
     .border-gray.rounded.h-100
       .row.p-4
-        .col-12.col-sm-6
+        .col-12.col-lg-6
           .text-large.text-blue.font-weight-bold
             Sheffield
             %br
@@ -13,16 +13,16 @@
             Marketplace
           .text-medium.text-darkgray
             The official sell and swap page of The University Of Sheffield
-        .col-12.col-sm-6.text-huge.text-red.text-center
-          = icon('fas', 'store')
-        .col-12.d-flex.flex-column.flex-md-row.logo-image-container.justify-content-start.pt-3
+        .col-12.col-lg-6.login-logo.d-flex.justify-content-center.align-items-center
+          = image_tag "/images/logos/logo_primary.svg"
+        .col-12.d-flex.flex-column.flex-lg-row.logo-image-container.justify-content-start.pt-3
           =image_tag "/images/logos/su.png"
           =image_tag "/images/logos/TUOS_PRIMARY_LOGO_FULL_COLOUR_KEYLINE.png"
 
 
-  .col-12.col-md-4
+  .col-12.col-lg-4.pb-4.pb-lg-0
     .card.card-light.h-100
-      = simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      = simple_form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "d-flex flex-column h-100"}) do |f|
         .card-header
           Log In
         .card-body

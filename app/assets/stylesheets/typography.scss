@@ -25,8 +25,30 @@ body, .text-black, .text-darkgray {
   color: $primary-font;
 }
 
+@media (max-width: 576px) {
+  .text-small {
+    font-size: $font-extra-small;
+  }
+
+  .text-medium {
+    font-size: $font-small;
+  }
+
+  .text-large {
+    font-size: $font-not-quite-large;
+  }
+
+  .text-huge {
+    font-size: $font-not-so-huge;
+  }
+}
+
 .text-darkgray {
   color: $darkgray
+}
+
+.text-gray {
+  color: $gray
 }
 
 .text-white, .white-button, .white-button:hover  {

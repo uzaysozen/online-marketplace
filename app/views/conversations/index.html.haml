@@ -25,5 +25,5 @@
               = render 'conversation_messages/send_form', conversation_message: ConversationMessage.new, conversation: @conversation
       - else 
         .empty-conversation-container.card.h-100
-          .text-center
-            %h3.empty-conversation-header You Do Not Have Any Active Conversations    
+          .text-center.text-medium.text-darkgray.m-auto
+            You Do Not Have Any Active Conversations
