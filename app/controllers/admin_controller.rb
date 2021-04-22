@@ -16,13 +16,13 @@ class AdminController < ApplicationController
     words = PageContent.find_by(key: 'Banned Words')
     covid_guidance = PageContent.find_by(key: 'Covid Guidance')
     if covid_guidance.present?
-      @covid_message = covid_guidance.content
+      @covid_message = covid_guidance.content[0]
     else
       @covid_message = nil
     end
 
     if words.present?
-      @banned_words = words.content.split(";")
+      @banned_words = words.content
     else
       @banned_words = []
     end
@@ -40,19 +40,13 @@ class AdminController < ApplicationController
       redirect_to other_path, notice: "The announcement has been sent to all user."
     
     elsif banned_words.present?
+      banned_words[:content].delete("")
       page_content = PageContent.all.find_or_create_by(key: "Banned Words")
-      word_container = ""
-      
-      banned_words[:content].each do |word|
-        if word.present?
-          word_container += word + ";"
-        end
-      end
-      page_content.update(content: word_container)
+      page_content.update(content: banned_words[:content])
 
     elsif covid_guidance.present?
       page_content = PageContent.all.find_or_create_by(key: "Covid Guidance")
-      page_content.update(content: covid_guidance[:content])
+      page_content.update(content: [covid_guidance[:content]])
     end
   end
 
@@ -93,7 +87,7 @@ class AdminController < ApplicationController
     if question == "" and answer == ""
       render 'failure'
     else
-      @question = PageContent.create(key: 'Question', content: question + ";;;" + answer)
+      @question = PageContent.create(key: 'Question', content: [question, answer])
       render 'load_question'
     end
   end
