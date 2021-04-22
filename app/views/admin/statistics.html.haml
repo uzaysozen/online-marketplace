@@ -75,12 +75,12 @@
           %strong Top Categories
       .row.justify-content-left.flex-column-reverse.flex-md-row.ml-2
         %table.table.table-striped.table-sm
-          %thead.thead-light
+          %thead.thead-light.w-100
             %tr
-              %th.text-center{scope: "col"} Category
-              %th.text-center{scope: "col"} Weekly
-              %th.text-center{scope: "col"} Monthly
-              %th.text-center{scope: "col"} All time
+              %th.w-auto.text-center{scope: "col"} Category
+              %th.w-auto.text-center{scope: "col"} Weekly
+              %th.w-auto.text-center{scope: "col"} Monthly
+              %th.w-auto.text-center{scope: "col"} All time
           %tbody
             - 2.times do
               = render 'stat_row', category: 'Books', weekly: 18, monthly: 67, all_time: 233

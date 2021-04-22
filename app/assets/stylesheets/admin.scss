@@ -20,7 +20,6 @@
 
 .table thead, tbody tr {
   display: table;
-  width: 100%;
   table-layout: fixed;
 }
 
@@ -30,7 +29,6 @@
 }
 
 #admin-form {
-  width: 100%;
   .email-btn {
     width: 130px;
   }

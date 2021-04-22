@@ -1,7 +1,7 @@
 @import 'variables';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
 
-body, .text-black, .text-darkgray {
+body, .font-main {
   font-family: "Montserrat", serif !important;
 }
 
@@ -24,6 +24,7 @@ body, .text-black, .text-darkgray {
 .text-black {
   color: $primary-font;
 }
+
 
 @media (max-width: 576px) {
   .text-small {
