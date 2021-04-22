@@ -1,8 +1,10 @@
 %tr
   %td.text-center
-    = question.content.split(";;;")[0]
+    .question-box
+      = question.content[0]
   %td.text-center
-    = question.content.split(";;;")[1]
+    .question-box
+      = question.content[1]
   %td.text-center
     = simple_form_for :question, url: remove_question_path, remote: true, html: { class: 'remove' }  do |f|
       = f.error_notification
