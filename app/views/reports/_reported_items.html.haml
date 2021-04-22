@@ -8,15 +8,14 @@
         .row.justify-content-left.flex-column-rev.flex-md-row
           .col-12.col-md-12.pl-0.text-left.pt-2
             .col-12.col-md-12.pl-0
-              .text-small.text-black.text-left
-                Item Name 
-                acc19pm 
+              .text-left.pt-1.report-container
+                %pre{:class => 'text-black text-small'} Item Name  acc19pm
 
-            .col-12.col-md-12.pl-0.text-left.report-container  
-              .text-small.text-darkgray.pt-2
-                Reason: Inapropriate word used  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.
+            .col-12.col-md-6.pl-0.text-left  
+              .pt-0.report-container
+                %pre{:class => 'text-darkgray text-small'}Reason: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.
 
-        .col-12.col-sm-3.p-0.pt-2
+        .col-12.col-sm-3.p-0.pt-3
           .text-small.text-center.text-blue.listing-blue.rounded
             See Details
           %p
