@@ -2,7 +2,7 @@
   .card-header{id: "heading-#{page_content.id}"}
     %h5.mb-0
       %button.btn.btn-link.btn-block.text-left{"aria-controls" => "collapse-#{page_content.id}", "aria-expanded" => "true", "data-target" => "#collapse-#{page_content.id}", "data-toggle" => "collapse", type: "button"}
-        = page_content.content.split(";;;")[0]
+        = page_content.content[0]
   .collapse{id: "collapse-#{page_content.id}", "aria-labelledby" => "heading-#{page_content.id}", "data-parent" => "#accordion"}
     .card-body
-      = page_content.content.split(";;;")[1]
+      = page_content.content[1]
