@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :update_headers_to_disable_caching
   before_action :ie_warning
   before_action :authenticate_user!
+  before_action :validate_covid_guidance_date
 
   ## The following are used by our Responder service classes so we can access
   ## the instance variable for the current resource easily via a standard method
@@ -51,6 +52,16 @@ class ApplicationController < ActionController::Base
   def ie_warning
     if request.user_agent.to_s =~ /MSIE [6-7]/ && request.user_agent.to_s !~ %r{Trident/7.0}
       redirect_to(ie_warning_path)
+    end
+  end
+
+  def validate_covid_guidance_date
+    @covid_guidance = PageContent.find_by(key: "Covid Guidance")
+    puts @covid_guidance.updated_at
+    puts "\n\n\n\n\n\n"
+    if cookies[:covid_guidance_date] != @covid_guidance.updated_at.to_s
+      cookies.delete :dismissed_covid_guidance
+      cookies.delete :covid_guidance_date
     end
   end
 end
