@@ -140,22 +140,27 @@ class ListingsController < ApplicationController
     # PATCH/PUT /listings/1
     def update
       params = listing_params
-      # take tags out of params, removing blank entries and duplicates
+      # take tags and delivery methods out of params, removing blank entries and duplicates
       tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
-
-      params[:listing_deliveries].reject(&:blank?)
+      delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
 
       if @listing.update(params)
-        @listing.tags = nil
+        # Clearing the listing's current tags
+        @listing.tags = []
+
         tags.each do |tag|
           # create new tags, add to listing
           @listing.tags << Tag.where(name: tag).first_or_create
         end
+
+        delivery_methods.each do |delivery|
+          # get delivery methods by id and add to listing
+          @listing.deliveries << Delivery.where(id: delivery).first
+        end
+
         if @listing.save
-          @listings = active_listings
+          @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update)
           render 'update_success'
-        else
-          render 'update_failure'
         end
       else
         render 'update_failure'
