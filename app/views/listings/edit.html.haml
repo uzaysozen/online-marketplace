@@ -31,7 +31,7 @@
           = f.input :description, hint: '(Max 200 words)'
           = f.association :listing_condition, label: 'Condition'
           = f.association :listing_category, label: 'Category'
-          = f.input :listing_deliveries, label: 'Delivery', as: :check_boxes,  collection: Delivery.all, input_html: { multiple: true }
+          = f.input :listing_deliveries, label: 'Delivery', as: :check_boxes, collection: Delivery.all, input_html: { multiple: true }
           = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
           %p Swaps
           = f.input :swap, label: 'Open to swaps', class: 'hello'
