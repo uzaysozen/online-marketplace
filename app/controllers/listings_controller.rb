@@ -1,5 +1,6 @@
 class ListingsController < ApplicationController
 
+<<<<<<< HEAD
   load_and_authorize_resource only: [:show, :edit, :update, :destroy]
   load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
 
@@ -24,6 +25,33 @@ class ListingsController < ApplicationController
       @listings = session[:g_listings] ||= @listings
       @listings = @listings.order("#{params[:sort]} #{sort_order}")
       session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+=======
+    load_and_authorize_resource only: [:show, :edit, :update, :destroy]
+    load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+
+    # GET /listings
+    def index
+      @listings = accessible_listings
+      session[:g_listings] = @listings
+
+      # Sorting Function
+      table_col = Listing.column_names
+      sort_val = ['asc', 'desc']
+
+      # Verifying Parameters
+      if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
+        sort_order = session[:sort_order] || 'asc'
+        @listings = session[:g_listings] ||= @listings
+        @listings = @listings.order("#{params[:sort]} #{sort_order}")
+        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+      else
+        params[:sort] = "title"
+        sort_order = 'asc'
+        @listings = session[:g_listings] ||= @listings
+        @listings = @listings.order("#{params[:sort]} #{sort_order}")
+        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+      end
+>>>>>>> d13ca3f8b48e5d9e385b8102617075d1d70743d8
     end
   end
 
@@ -81,6 +109,7 @@ class ListingsController < ApplicationController
       session[:sort_listings] = @listings
       render :index
     end
+<<<<<<< HEAD
   end
 
   def mylistings
@@ -128,6 +157,22 @@ class ListingsController < ApplicationController
     delivery_methods.each do |delivery|
       # get delivery methods by id and add to listing
       @listing.deliveries << Delivery.where(id: delivery).first
+=======
+    
+    def add_favourite
+      @favourite = UserFavourite.new(listing: @listing, user: current_user)
+      @listings = accessible_listings
+      if @favourite.save
+        render 'favourited_listing', locals: { listing: @listing, method: 'add' }
+      end
+    end
+
+    def delete_favourite
+      @favourite = @listing.user_favourites.find_by(user: current_user)
+      @listings = accessible_listings
+      @favourite.destroy
+      render 'favourited_listing', locals: {listing: @listing, method: 'remove' }
+>>>>>>> d13ca3f8b48e5d9e385b8102617075d1d70743d8
     end
 
     if @listing.save

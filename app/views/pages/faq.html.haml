@@ -10,4 +10,5 @@
   .col-12.col-md-12
     %br
     #accordion.accordion
-      = render 'question'
+      - @questions.each do |content|
+        = render 'question', page_content: content

@@ -27,8 +27,6 @@ Rails.application.routes.draw do
     get :start_conversation, on: :member
     post :delete_conversation, on: :member
   end
-
-  resources :reports
   
   resources :users do
     post :search, on: :collection
@@ -45,21 +43,41 @@ Rails.application.routes.draw do
     end
   end
 
-  match "/403", to: "errors#error_403", via: :all
-  match "/404", to: "errors#error_404", via: :all
-  match "/422", to: "errors#error_422", via: :all
-  match "/500", to: "errors#error_500", via: :all
-
-  get :ie_warning, to: 'errors#ie_warning'
-  get :javascript_warning, to: 'errors#javascript_warning'
-
-  root to: "pages#home"
-  get "pages/admin" => "pages#admin"
+  # Admin Pages
+  scope :admin do
+    resources :reports
+    get :moderation, to: 'admin#moderation'
+    get :statistics, to: 'admin#statistics'
+    get :other, to: 'admin#other'
+    post :other, to: 'admin#site_settings'
+    get :promote_user, to: 'admin#get_admin'
+    post :promote_user, to: 'admin#promote'
+    post :demote_user, to: 'admin#demote'
+    get :add_question, to: 'admin#get_question'
+    post :add_question, to: 'admin#add_question'
+    post :remove_question, to: 'admin#remove_question'
+  end
+  
+  # Static Pages
   get :contact, to: "pages#contact"
   post :contact, to: "pages#contact_mail"
   get :terms, to: "pages#terms"
   get :faq, to: "pages#faq"
   get :about, to: "pages#about"
+
+  # Error Routes
+
+  get :ie_warning, to: 'errors#ie_warning'
+  get :javascript_warning, to: 'errors#javascript_warning'
+
+  match "/403", to: "errors#error_403", via: :all
+  match "/404", to: "errors#error_404", via: :all
+  match "/422", to: "errors#error_422", via: :all
+  match "/500", to: "errors#error_500", via: :all
+
+  # Home Page
+
+  root to: 'listings#index'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
