@@ -21,13 +21,13 @@
 
     = render 'shared/navbar'
 
-    %main.bg-gray.row.mx-0.py-6.align-items-center
+    %main.bg-gray.row.mx-0.py-4.py-md-6.align-items-center
       #main-container.container
         - if path_starts_with?('/profile')
           = render 'shared/profile_navbar'
         - if path_starts_with?('/admin')
           %h1 admin
-        .bg-white.rounded.p-5
+        .bg-white.rounded.p-3.p-md-5
           = yield
 
     = render 'shared/footer'
