@@ -1,0 +1,11 @@
+- covid_guidance = PageContent.find_by(key: "Covid Guidance")
+
+- if covid_guidance.present?
+  #covid-guidance.alert.alert-warning.alert-dismissible.fade.w-100.show.m-0{role: "alert"}
+    %div{style: "padding: 5px;"}
+      %strong COVID-19 GUIDANCE!
+      %p
+      %p
+        = covid_guidance.content[0]
+      %button.close{"aria-label" => "Close", "data-dismiss" => "alert", type: "button"}
+        %span{"aria-hidden" => "true"} &times
