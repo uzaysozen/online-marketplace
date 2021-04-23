@@ -35,10 +35,10 @@
           = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
           %p Swaps
           = f.input :swap, label: 'Open to swaps', class: 'hello'
-          = f.input :listing_tags, label: 'Tags', hint: 'Add relevant keywords to ensure your listing appear on search (E.g. Education)', as: :select, collection: Tag.where(id: ListingTag.where(listing_id: @listing.id)), input_html: { class: 'select2', multiple: true }
+          = f.input :listing_tags, label: 'Tags', hint: 'Add relevant keywords to ensure your listing appear on search (E.g. Education)', as: :select, collection: @listing.tags.map{|t| [t.name, t.name, {"selected": "selected"}]}, input_html: { class: 'select2', multiple: true }
 
       .modal-footer
-        .pull-left
-          = dismiss_modal_button
         .form-actions
           = f.button :submit, class: 'btn-secondary btn-lg'
+        .pull-left
+          = dismiss_modal_button
