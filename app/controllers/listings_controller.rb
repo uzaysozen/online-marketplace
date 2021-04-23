@@ -139,9 +139,24 @@ class ListingsController < ApplicationController
   
     # PATCH/PUT /listings/1
     def update
-      if @listing.update(listing_params)
-        @listings = active_listings
-        render 'update_success'
+      params = listing_params
+      # take tags out of params, removing blank entries and duplicates
+      tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
+
+      params[:listing_deliveries].reject(&:blank?)
+
+      if @listing.update(params)
+        @listing.tags = nil
+        tags.each do |tag|
+          # create new tags, add to listing
+          @listing.tags << Tag.where(name: tag).first_or_create
+        end
+        if @listing.save
+          @listings = active_listings
+          render 'update_success'
+        else
+          render 'update_failure'
+        end
       else
         render 'update_failure'
       end
