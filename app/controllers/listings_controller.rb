@@ -1,6 +1,5 @@
 class ListingsController < ApplicationController
 
-<<<<<<< HEAD
   load_and_authorize_resource only: [:show, :edit, :update, :destroy]
   load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
 
@@ -25,33 +24,6 @@ class ListingsController < ApplicationController
       @listings = session[:g_listings] ||= @listings
       @listings = @listings.order("#{params[:sort]} #{sort_order}")
       session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
-=======
-    load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-    load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
-
-    # GET /listings
-    def index
-      @listings = accessible_listings
-      session[:g_listings] = @listings
-
-      # Sorting Function
-      table_col = Listing.column_names
-      sort_val = ['asc', 'desc']
-
-      # Verifying Parameters
-      if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
-        sort_order = session[:sort_order] || 'asc'
-        @listings = session[:g_listings] ||= @listings
-        @listings = @listings.order("#{params[:sort]} #{sort_order}")
-        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
-      else
-        params[:sort] = "title"
-        sort_order = 'asc'
-        @listings = session[:g_listings] ||= @listings
-        @listings = @listings.order("#{params[:sort]} #{sort_order}")
-        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
-      end
->>>>>>> d13ca3f8b48e5d9e385b8102617075d1d70743d8
     end
   end
 
@@ -109,55 +81,6 @@ class ListingsController < ApplicationController
       session[:sort_listings] = @listings
       render :index
     end
-<<<<<<< HEAD
-  end
-
-  def mylistings
-    @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update)
-  end
-
-  # GET /listings/1
-  def show
-    @listing = Listing.find(params[:id])
-  end
-
-  # GET /listings/new
-  def new
-    @listing = Listing.new
-  end
-
-  # GET /listings/1/edit
-  def edit
-    authorize! :update, @listing
-    render layout: false
-  end
-
-  # POST /listings
-  def create
-    authorize! :create, Listing
-    params = listing_params
-    # take tags out of params, removing blank entries and duplicates
-    tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
-    # take delivery methods out of params
-    delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
-
-    @listing = Listing.new(params)
-    @listing.listing_status = ListingStatus.first
-    @listing.creator_id = current_user.id
-    @listing.is_active = true
-    @listing.is_moderated = true
-    @listing.receiver_id = current_user.id
-    @listing.moderator_id = current_user.id
-
-    tags.each do |tag|
-      # create new tags, add to listing
-      @listing.tags << Tag.where(name: tag).first_or_create
-    end
-
-    delivery_methods.each do |delivery|
-      # get delivery methods by id and add to listing
-      @listing.deliveries << Delivery.where(id: delivery).first
-=======
     
     def add_favourite
       @favourite = UserFavourite.new(listing: @listing, user: current_user)
@@ -172,7 +95,6 @@ class ListingsController < ApplicationController
       @listings = accessible_listings
       @favourite.destroy
       render 'favourited_listing', locals: {listing: @listing, method: 'remove' }
->>>>>>> d13ca3f8b48e5d9e385b8102617075d1d70743d8
     end
 
     if @listing.save
