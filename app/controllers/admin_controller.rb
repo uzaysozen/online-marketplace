@@ -1,6 +1,5 @@
 class AdminController < ApplicationController
-  load_and_authorize_resource :class => false
-  
+  before_action { authorize! :access, :admin_panel }
   # GET admin/moderation
   def moderation
   end
@@ -10,7 +9,7 @@ class AdminController < ApplicationController
   end
   
   # GET admin/other
-  def other 
+  def other
     @admins = User.where(administrator: true)
     @questions = PageContent.where(key: 'Question')
     words = PageContent.find_by(key: 'Banned Words')
@@ -98,4 +97,5 @@ class AdminController < ApplicationController
     page_content.destroy
   end
 
+  private
 end

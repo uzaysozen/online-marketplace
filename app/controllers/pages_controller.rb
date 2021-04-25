@@ -1,10 +1,6 @@
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!
 
-  def admin
-    @current_nav_identifier = :admin
-  end
-
   # GET pages/about
   def about
     @current_nav_identifier = :about
