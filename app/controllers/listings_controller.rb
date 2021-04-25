@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
 
     load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-    load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+    load_resource only: [:add_favourite, :complete, :delete_favourite, :start_conversation, :delete_conversation]
 
     # GET /listings
     def index
@@ -113,7 +113,7 @@ class ListingsController < ApplicationController
       delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
 
       @listing = Listing.new(params)
-      @listing.listing_status = ListingStatus.first
+      @listing.listing_status = ListingStatus.where(name: 'Pending').first
       @listing.creator_id = current_user.id
       @listing.is_active = true
       @listing.is_moderated = true
@@ -158,6 +158,15 @@ class ListingsController < ApplicationController
       @listings = accessible_listings
       if @favourite.save
         render 'favourited_listing', locals: { listing: @listing, method: 'add' }
+      end
+    end
+
+    # Mark listing as complete
+    def complete 
+      @listing.listing_status = ListingStatus.where(name: 'Complete').first
+
+      if @listing.save
+        redirect_to request.referrer, notice: 'Listing has been marked as complete'
       end
     end
 

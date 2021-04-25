@@ -136,6 +136,12 @@
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  #preview {
+    display: none;
+  }
+}
+
 .navbar-brand {
   img {
     height: 2rem;
