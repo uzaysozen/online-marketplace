@@ -5,21 +5,24 @@ describe 'End to end test' do
 
   specify 'I cannot access the blog without logging in' do
     visit '/'
-    expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    # expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
   
   context 'As a logged in user' do
 
     before do
       user = FactoryBot.create(:user)
+      @public_post  = Listing.create(title: 'A title for a post',        description: 'Some public content')
+      @private_post = Listing.create(title: 'A title for a secret post', description: 'Some private content')
+      
       login_as(user, scope: :user)
     end
-
-    specify "I could create a new listing" do
-      condition_new = FactoryBot.create :listing_condition, name: 'New'
+    def creat_new_listing 
+      # condition_new = FactoryBot.create :listing_condition, name: 'New'
       # condition_new = ListingCondition.create(name: "New")
-      category_books = ListingCategory.create(name: "Books")
+      # category_books = ListingCategory.create(name: "Books")
       # category_books = FactoryBot.create :listing_category, name: 'Books'
+      # tag_education = Tag.create(name: "Education")
       visit '/'
       click_link 'Create Listing'
       fill_in 'Title', with: 'My Title'
@@ -27,24 +30,34 @@ describe 'End to end test' do
       fill_in 'Description', with: 'My description'
       select 'New', from: 'Condition'
       select 'Books', from: 'Category'
-      # check 'Collection'
+      check 'Collection'
       fill_in 'Location', with: 'My Location'
-      # fill_in 'Tags', with: 'Education'
+      # # fill_in 'Tags', with: 'Education'
+      # # select 'Education', from: 'Tags'
+      # # select2("Education", from: "Tags")
       click_button 'Create Listing'
-      # visit '/listings'
-      expect(page).to have_content 'Listing was successfully created.'
-      
-      # within(:css, 'container') { expect(page).to have_content 'My Title' }
     end
 
+    specify "I could create a new listing" do
+      creat_new_listing
+      expect(page).to have_content 'Listing was successfully created.'
+    end
+
+    specify "I can find this new listing in my listing page" do
+
+      creat_new_listing
+      click_link "My Listings"
+      expect(page).to have_content 'My Title'
+      
+    end
     # specify "I cannot perform an SQL injection attack" do
-    #   # Check search works correctly
-    #   page.driver.submit :post, search_result_posts_path(search: { title: "A title for a post" }), {}
+      # Check search works correctly
+    #   page.driver.submit :listing, search_listings_path(search: { title: "A title for a post" }), {}
     #   expect(page).to have_content 'A title for a post'
     #   expect(page).not_to have_content 'A title for a secret post'
 
     #   # Check search is not vulnerable to SQL injection
-    #   page.driver.submit :post, search_result_posts_path(search: { title: "A title for a post') OR '1'--" }), {}
+    #   page.driver.submit :listing, search_listings_path(search: { title: "A title for a post') OR '1'--" }), {}
     #   expect(page).not_to have_content 'A title for a post'
     #   expect(page).not_to have_content 'A title for a secret post'
     # end
