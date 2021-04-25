@@ -81,20 +81,53 @@ class ListingsController < ApplicationController
       session[:sort_listings] = @listings
       render :index
     end
-    
-    def add_favourite
-      @favourite = UserFavourite.new(listing: @listing, user: current_user)
-      @listings = accessible_listings
-      if @favourite.save
-        render 'favourited_listing', locals: { listing: @listing, method: 'add' }
-      end
+  end
+
+  def mylistings
+    @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update)
+  end
+
+  # GET /listings/1
+  def show
+    @listing = Listing.find(params[:id])
+  end
+
+  # GET /listings/new
+  def new
+    @listing = Listing.new
+  end
+
+  # GET /listings/1/edit
+  def edit
+    authorize! :update, @listing
+    render layout: false
+  end
+
+  # POST /listings
+  def create
+    authorize! :create, Listing
+    params = listing_params
+    # take tags out of params, removing blank entries and duplicates
+    tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
+    # take delivery methods out of params
+    delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
+
+    @listing = Listing.new(params)
+    @listing.listing_status = ListingStatus.first
+    @listing.creator_id = current_user.id
+    @listing.is_active = true
+    @listing.is_moderated = true
+    @listing.receiver_id = current_user.id
+    @listing.moderator_id = current_user.id
+
+    tags.each do |tag|
+      # create new tags, add to listing
+      @listing.tags << Tag.where(name: tag).first_or_create
     end
 
-    def delete_favourite
-      @favourite = @listing.user_favourites.find_by(user: current_user)
-      @listings = accessible_listings
-      @favourite.destroy
-      render 'favourited_listing', locals: {listing: @listing, method: 'remove' }
+    delivery_methods.each do |delivery|
+      # get delivery methods by id and add to listing
+      @listing.deliveries << Delivery.where(id: delivery).first
     end
 
     if @listing.save
