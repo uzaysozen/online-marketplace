@@ -17,7 +17,7 @@ describe 'End to end test' do
       
       login_as(user, scope: :user)
     end
-    def creat_new_listing 
+    def create_new_listing 
       # condition_new = FactoryBot.create :listing_condition, name: 'New'
       # condition_new = ListingCondition.create(name: "New")
       # category_books = ListingCategory.create(name: "Books")
@@ -39,13 +39,13 @@ describe 'End to end test' do
     end
 
     specify "I could create a new listing" do
-      creat_new_listing
+      create_new_listing
       expect(page).to have_content 'Listing was successfully created.'
     end
 
     specify "I can find this new listing in my listing page" do
 
-      creat_new_listing
+      create_new_listing
       click_link "My Listings"
       expect(page).to have_content 'My Title'
       
