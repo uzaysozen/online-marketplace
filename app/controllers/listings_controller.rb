@@ -113,6 +113,12 @@ class ListingsController < ApplicationController
       delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
 
       @listing = Listing.new(params)
+
+      # Setting price to free if none was entered 
+      if !@listing.price 
+        @listing.price = 0.0
+      end
+
       @listing.listing_status = ListingStatus.where(name: 'Pending').first
       @listing.creator_id = current_user.id
       @listing.is_active = true

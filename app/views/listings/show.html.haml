@@ -1,6 +1,6 @@
 - user_favourite = current_user.user_favourites.find_by(listing: @listing)
 
-- if @listing.listing_status.name = 'Complete'
+- if @listing.listing_status.name == 'Complete'
   .alert.alert-warning.text-center
     .fas.fa-exclamation-triangle
     This listing is no longer available as it has been completed/sold
