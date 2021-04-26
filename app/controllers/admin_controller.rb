@@ -3,6 +3,7 @@ class AdminController < ApplicationController
   
   # GET admin/moderation
   def moderation
+    @pending_listings = Listing.includes(:creator).where(listing_status: ListingStatus.first)
   end
   
   # GET admin/statistics

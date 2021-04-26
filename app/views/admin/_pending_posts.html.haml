@@ -7,11 +7,12 @@
 
         .col-12.col-sm-3.pl-0.text-left.listing-description-container.pl-1
           .pt-3
-            %pre{:class => 'text-darkgray text-medium font-main'} Item Name     
+            %pre{:class => 'text-darkgray text-medium font-main'}
+              = listing.title 
                
           .text-small.text-darkgray.border-right-black.text-medium
             = icon('fas', 'user-circle')
-            acc19pm
+            = listing.creator.username
 
         .col-12.col-sm-5.pl-3.text-left.listing-price-container  
           .text-small.text-darkgray.pt-3
@@ -20,8 +21,9 @@
             %pre{:class => 'text-darkgray text-small font-main'}Contains the word "bad word" 
 
         .col-12.col-sm-3.pl-5.pt-2
-          .text-small.text-center.btn-md.listing-red.btn-primary.rounded.text-white
-            Delete 
+          .text-small.text-center.text-white.listing-red.rounded.btn-primary 
+            = link_to 'Delete', listing, method: :delete, class: 'white-button listing-button', data: { confirm: 'Are you sure?' }
           %P  
-          .text-small.text-center.text-blue.btn-md.listing-blue.rounded
-            %p See Details
+          .text-small.text-center.text-blue.listing-blue.rounded 
+            = link_to listing, class: 'button-blue listing-button' do
+              See Details
