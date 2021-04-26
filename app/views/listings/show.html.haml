@@ -1,32 +1,24 @@
 - user_favourite = current_user.user_favourites.find_by(listing: @listing)
 - banned_words = PageContent.find_by(key: 'Banned Words')
-- if current_user.administrator? and @listing.listing_status.name == 'Pending'
-  - if @listing.creator == current_user
-    .card.mb-3.bg-light.border-dark
-      .card-body
-        .card-header.text-center 
-          %h4 Admin Options
-        .card-text.mt-3
-          .row
-            .col.text-center
-              = link_to approve_listing_path(listing: @listing), method: :post, class: 'btn btn-secondary btn-sm' do
-                Approve
-                = icon('fas', 'check')
-  - else
-    .card.mb-3.bg-light.border-dark
-      .card-body
-        .card-header.text-center 
-          %h4 Admin Options
-        .card-text.mt-3
-          .row
-            .col.text-right
-              = link_to approve_listing_path(listing: @listing), method: :post, class: 'btn btn-secondary btn-sm' do
-                Approve
-                = icon('fas', 'check')
-            .col.text-left
-              = link_to edit_listing_path(@listing), class: 'btn btn-primary btn-sm' do
-                Edit
-                = icon('fas', 'edit')
+- if current_user.administrator? && @listing.listing_status.name == 'Pending' && @listing.creator != current_user
+  .card.mb-3.bg-light.border-dark
+    .card-body
+      .card-header.text-center 
+        %h4 Admin Options
+      .card-text.mt-3
+        .row
+          .col.text-right
+            = link_to approve_listing_path(listing: @listing), method: :post, class: 'btn btn-secondary btn-sm' do
+              Approve
+              = icon('fas', 'check')
+          .col.text-center
+            = link_to edit_listing_path(@listing), class: 'btn btn-primary btn-sm' do
+              Edit
+              = icon('fas', 'edit')
+          .col.text-left
+            = link_to ban_user_path(user: @listing.creator.id), class: 'btn btn-outline-primary btn-sm ajax-modal' do
+              Ban User
+              = icon('fas', 'ban')
 
 %div{id: "listing-#{@listing.id}"}
   #category-history

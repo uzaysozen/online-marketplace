@@ -6,4 +6,4 @@
 - else
   #pending-posts.row.justify-content-left.flex-column-reverse.flex-md-row
     .col-12.col-md-12
-      =render partial: 'pending_posts', collection: @pending_listings, as: :listing
+      =render partial: 'pending_posts', collection: @pending_listings, as: :listing, locals: { banned_words: PageContent.find_by(key: 'Banned Words')}

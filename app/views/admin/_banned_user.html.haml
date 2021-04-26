@@ -1,0 +1,15 @@
+%tr.w-100
+  %td.text-center.p-3.w-auto
+    = banned_user.username
+  %td.text-center.p-3.w-auto
+    = banned_user.givenname + " " + banned_user.sn
+  %td.text-center.p-3.w-auto
+    .question-box
+      = banned_user.ban_reason
+  %td.text-center.p-0.w-auto
+    = simple_form_for :user, url: unban_user_path, remote: true, html: { class: 'remove w-100' }  do |f|
+      = f.error_notification
+      .form-inputs
+        = f.input :id, as: :hidden, input_html: { value: banned_user.id }
+      .form-actions.pb-3
+        = f.submit 'Unban', class: 'btn btn-sm btn-outline-primary'

@@ -33,6 +33,24 @@
   
   #word-form.row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
     = render 'banned_words_form'
+  
+  .row.justify-content-left.flex-column-reverse.flex-md-row
+    %br
+      %h5 
+        %strong Banned users
+  %br
+    
+  .row.justify-content-left.flex-column-reverse.flex-md-row.mr-2
+    %table.table.table-bordered
+      %thead.thead-light.w-100
+        %tr
+          %th.w-auto.text-center{scope: "col"} Username
+          %th.w-auto.text-center{scope: "col"} Name
+          %th.w-auto.text-center{scope: "col"} Ban Reason
+          %th.w-auto.text-center{scope: "col"} 
+      %tbody{style: 'max-height: 250px'}
+        = render partial: 'banned_user', collection: @banned_users, as: :banned_user
+  %br
 
   .row.justify-content-elft.flex-column-reverse.flex-md-row
     %br
