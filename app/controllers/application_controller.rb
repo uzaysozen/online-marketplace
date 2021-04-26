@@ -57,8 +57,6 @@ class ApplicationController < ActionController::Base
 
   def validate_covid_guidance_date
     @covid_guidance = PageContent.find_by(key: "Covid Guidance")
-    puts @covid_guidance.updated_at
-    puts "\n\n\n\n\n\n"
     if cookies[:covid_guidance_date] != @covid_guidance.updated_at.to_s
       cookies.delete :dismissed_covid_guidance
       cookies.delete :covid_guidance_date

@@ -17,11 +17,12 @@
       = listing.price 
     %p
     .row   
-      .col-12.col-lg-6.text-small.text-center.text-darkgray.rounded.pr-2.pl-0.mt-2
+      .col-12.col-lg-6.text-small.text-center.text-darkgray.rounded.mt-2
         = link_to listing , class: 'conversation-link btn btn-outline-dark btn-block' do
           See Details
-      .col-lg-6.text-small.text-center.text-darkgray.rounded.btn.btn-outline-dark.btn-block.conversation-link.mt-2
-        = icon('far', 'flag') 
-        Report
+      .col-12.col-lg-6.text-small.text-center.text-darkgray.rounded.mt-2
+        = link_to listing , class: 'conversation-link btn btn-outline-dark btn-block' do
+          = icon('far', 'flag')
+          Report
           
 

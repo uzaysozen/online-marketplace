@@ -4,4 +4,4 @@
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
   .form-actions
-    = f.button :submit, "Delete"
+    = f.button :submit, "✗", class: "p-0"

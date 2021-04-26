@@ -1,8 +1,8 @@
-%div{class: "message #{'me' if message.sender == current_user}", id: "message-#{message.id}"}
+%div{class: "message #{'me' if message.sender.id == current_user.id}", id: "message-#{message.id}"}
   .content-container
     .content
       = message.content
-      - if message.sender == current_user
-        .delete-form
-          = render 'conversation_messages/delete_form', message: message
+    - if message.sender.id == current_user.id
+      .delete-form
+        = render 'conversation_messages/delete_form', message: message
         

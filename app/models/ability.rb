@@ -6,6 +6,7 @@ class Ability
   def initialize(user)
     if user.present?
       if user.administrator?
+        # TODO: Whilst this will always work fine, may be worth refactoring to be explicit
         can :manage, :all
       else
         # Listing Restrictions
