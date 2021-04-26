@@ -99,4 +99,11 @@ class AdminController < ApplicationController
     page_content.destroy
   end
 
+  def approve_listing
+    @listing = Listing.find(params[:listing])
+    active_status = ListingStatus.find(2)
+    @listing.update(listing_status: active_status)
+    redirect_to moderation_path, notice: 'Listing approved.'
+  end
+
 end

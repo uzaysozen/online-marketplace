@@ -131,5 +131,24 @@
           %p
           = @listing.description
           %p
+        
+        - if current_user.administrator? and @listing.listing_status.name == 'Pending'
+          - if @listing.creator == current_user
+            .row
+              .col.mr-2
+                = link_to approve_listing_path(listing: @listing), method: :post, class: 'btn btn-secondary btn-lg d-flex' do
+                  Approve
+                  = icon('fas', 'check')
+          - else
+            .row
+              .col.mr-2
+                = link_to approve_listing_path(listing: @listing), method: :post, class: 'btn btn-secondary btn-lg d-flex' do
+                  Approve
+                  = icon('fas', 'check')
+              .col.mr-2
+                = link_to edit_listing_path(@listing), class: 'btn btn-primary btn-lg d-flex' do
+                  Edit
+                  = icon('fas', 'edit')
+
 
 = link_to 'Back', :back

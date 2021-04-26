@@ -56,6 +56,7 @@ Rails.application.routes.draw do
     get :add_question, to: 'admin#get_question'
     post :add_question, to: 'admin#add_question'
     post :remove_question, to: 'admin#remove_question'
+    post :approve_listing, to: 'admin#approve_listing'
   end
   
   # Static Pages
