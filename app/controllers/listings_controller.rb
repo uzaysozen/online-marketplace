@@ -32,7 +32,15 @@ class ListingsController < ApplicationController
       @listings = session[:g_listings] ||= accessible_listings
 
       # Search through Listings
-      @listings = @listings.where("title ilike ?", "%#{params[:search_and_filter][:search_title]}%") if params[:search_and_filter][:search_title].present?
+      if params[:search_and_filter][:search_bar].present?
+        @search_params = params[:search_and_filter][:search_bar]
+        @listing_locations = Listing.pluck(:location)
+        if @listing_locations.include? @search_params
+          @listings = @listings.where("location = ?", "#{params[:search_and_filter][:search_bar]}")
+        else
+          @listings = @listings.where("title ilike ?", "%#{params[:search_and_filter][:search_bar]}%")
+        end
+      end
 
       #Filter by Category
       if params[:search_and_filter][:filter_category].present?

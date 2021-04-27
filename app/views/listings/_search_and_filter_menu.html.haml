@@ -4,11 +4,10 @@
       .row.p-2
         = simple_form_for :search_and_filter, url: search_and_filter_listings_path, method: :post do |f|
           %p Search Bar
-          = f.input :search_title, label: false, required: false #, input_html: { name: 'q' }
+          = f.input :search_bar, label: false, required: false
 
           %p Filter Menu
-          = f.input :filter_category, label: 'Categories', collection: ListingCategory.all, required: false #, input_html: { name: 'category' }
-          
+          = f.input :filter_category, label: 'Categories', collection: ListingCategory.all, required: false
           .row
             .col-6
               = f.input :filter_minprice, label: 'Min Price', as: :decimal, required: false
@@ -16,7 +15,7 @@
             .col-6
               = f.input :filter_maxprice, label: 'Max Price', as: :decimal, required: false
 
-          = f.input :filter_condition, label: 'Condition', collection: ListingCondition.all, required: false #, input_html: { name: 'condition' }
+          = f.input :filter_condition, label: 'Condition', collection: ListingCondition.all, required: false
 
           = f.input :filter_delivery, label: 'Delivery', as: :check_boxes, collection: Delivery.all, required: false, input_html: { multiple: true, checked: true }
 
