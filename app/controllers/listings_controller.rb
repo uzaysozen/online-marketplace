@@ -71,6 +71,11 @@ class ListingsController < ApplicationController
         end
       end
 
+      #Filter by Swap-Only Listings
+      if params[:search_and_filter][:filter_swap].present?
+        @listings = @listings.where("swap = ?", params[:search_and_filter][:filter_swap])
+      end
+
       #Filter by Delivery
       if params[:search_and_filter][:filter_delivery].present?
         delivery_ids = params[:search_and_filter][:filter_delivery]

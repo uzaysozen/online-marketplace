@@ -17,6 +17,8 @@
 
           = f.input :filter_condition, label: 'Condition', collection: ListingCondition.all, required: false
 
+          = f.input :filter_swap, label: 'Swap-Only', as: :boolean, required: false, input_html: { checked: false }
+
           = f.input :filter_delivery, label: 'Delivery', as: :check_boxes, collection: Delivery.all, required: false, input_html: { multiple: true, checked: true }
 
           = f.submit 'Confirm', class: 'btn btn-default', id: 'search-button'
