@@ -86,7 +86,7 @@
 
           .row
             - if @listing.listing_status.name != 'Complete'
-              - if @listing.creator != current_user
+              - if @listing.creator = current_user
                 .col.p-2.d-flex.justify-content-center
                   = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex align-items-center justify-content-center w-100' do 
                     Send Message
@@ -94,7 +94,7 @@
                 - if @listing.swap
                   .col-lg-4.col-xs-12.p-2
                     -# TODO: add in swapping
-                    = link_to start_conversation_listing_path(@listing), class: 'btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do 
+                    = link_to swap_listing_path(@listing), class: 'ajax-modal btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do 
                       Swap
                       .fas.fa-sync.ml-2
 

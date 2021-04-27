@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     post :complete, on: :member
     post :delete_favourite, on: :member
     get :start_conversation, on: :member
+    get :swap_conversation, on: :member
+    get :swap, on: :member
     post :delete_conversation, on: :member
   end
 
