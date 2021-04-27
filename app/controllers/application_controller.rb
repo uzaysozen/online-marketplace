@@ -1,3 +1,5 @@
+require 'jwt'
+
 class ApplicationController < ActionController::Base
   # Ensure that CanCanCan is correctly configured
   # and authorising actions on each controller
@@ -9,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :update_headers_to_disable_caching
   before_action :ie_warning
   before_action :authenticate_user!
-  before_action :validate_covid_guidance_date
+  before_action :validate_covid_guidance_date, :set_jwt
 
   ## The following are used by our Responder service classes so we can access
   ## the instance variable for the current resource easily via a standard method
@@ -60,6 +62,15 @@ class ApplicationController < ActionController::Base
     if cookies[:covid_guidance_date] != @covid_guidance.updated_at.to_s
       cookies.delete :dismissed_covid_guidance
       cookies.delete :covid_guidance_date
+    end
+  end
+
+  def set_jwt
+    if current_user
+      payload = { user_id: current_user.id }
+      cookies[:token] = JWT.encode payload, '5|_||>E.-5e(.-e7|<e`/', 'HS256'
+    else
+      cookies.delete :token
     end
   end
 end

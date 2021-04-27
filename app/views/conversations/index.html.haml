@@ -13,7 +13,7 @@
           = render 'conversation_listing'
         #messages-container.pt-2
           #messages
-            - @conversation.conversation_messages.where(is_deleted: false).each do |message|
+            - @conversation.active_messages.each do |message|
               = render 'conversation_messages/conversation_message', message: message
           = simple_form_for(ConversationMessage.new, url: send_conversation_conversation_message_path(@conversation.id), remote: true) do |f|
             -# Hidden field to associate the message with it's conversation

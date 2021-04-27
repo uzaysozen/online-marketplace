@@ -25,13 +25,12 @@
       display: inline-block;
       max-width: 70%;
 
-      background-color: #62a0ff;
+      background-color: lightgrey;
       border-radius: 2em;
 
       .content {
-        display: inline-block;
-        margin-right: 0.75em;
         padding: 0.5em 1em;
+        word-wrap: break-word;
       }
 
       .delete-form {
@@ -54,6 +53,7 @@
         background-color: #3385ff;
         .content {
           color: white;
+          margin-right: 0.75em;
         }
       }
     }
@@ -93,11 +93,6 @@
   margin-left: 10px;
   max-width: 100%;
   height: auto;
-}
-
-.conversation-card-image {
-  font-size: 70px;
-  padding-top: 5px;
 }
 
 .time-label {

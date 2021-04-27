@@ -40,17 +40,4 @@ class User < ApplicationRecord
 
   has_many :user_favourites
   has_many :favourites, source: :listing, through: :user_favourites
-
-  def all_conversations
-    received = self.received_conversations
-    received.each do |conversation|
-      if conversation.conversation_messages.empty?
-        received -= [conversation]
-      end
-    end
-    received + self.conversations
-  end
-
 end
-
-  
