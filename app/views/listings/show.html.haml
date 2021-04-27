@@ -1,24 +1,26 @@
 - user_favourite = current_user.user_favourites.find_by(listing: @listing)
 - banned_words = PageContent.find_by(key: 'Banned Words')
 - if current_user.administrator? && @listing.listing_status.name == 'Pending' && @listing.creator != current_user
-  .card.mb-3.bg-light.border-dark
-    .card-body
-      .card-header.text-center 
-        %h4 Admin Options
-      .card-text.mt-3
-        .row
-          .col.text-right
-            = link_to approve_listing_path(listing: @listing), method: :post, class: 'btn btn-secondary btn-sm' do
-              Approve
-              = icon('fas', 'check')
-          .col.text-center
-            = link_to edit_listing_path(@listing), class: 'btn btn-primary btn-sm' do
-              Edit
-              = icon('fas', 'edit')
-          .col.text-left
-            = link_to ban_user_path(user: @listing.creator.id), class: 'btn btn-outline-primary btn-sm ajax-modal' do
-              Ban User
-              = icon('fas', 'ban')
+  .row.justify-content-center.mb-3
+    .col-8
+      .card.mb-3.bg-light.border-dark
+        .card-body
+          .card-header.text-center.text-medium
+            %strong Admin Options
+          .card-text
+            .row.justify-content-center.m-3
+              .col-sm.text-center
+                = link_to approve_listing_path(listing: @listing), method: :post, class: 'btn btn-md white-button', style: "background-color: #32CD32;" do
+                  Approve
+                  = icon('fas', 'check')
+              .col-sm.text-center
+                = link_to edit_listing_path(@listing), class: 'btn btn-primary btn-md' do
+                  Edit Post
+                  = icon('fas', 'edit')
+              .col-sm.text-center
+                = link_to ban_user_path(user: @listing.creator.id), class: 'btn btn-outline-primary btn-md ajax-modal' do
+                  Ban User
+                  = icon('fas', 'ban')
 
 %div{id: "listing-#{@listing.id}"}
   #category-history
