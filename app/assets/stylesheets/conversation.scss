@@ -21,6 +21,7 @@
   .message {
     // Generic message styles.
     .content-container {
+      position: relative;
       display: inline-block;
       max-width: 70%;
 
@@ -29,16 +30,18 @@
 
       .content {
         display: inline-block;
+        margin-right: 0.75em;
         padding: 0.5em 1em;
       }
 
       .delete-form {
-        display: inline-block;
+        display: inline-flex;
+        align-items: center;
         // Move the delete button to the middle right
-        position: relative;
-        top: 50%;
-        bottom: 50%;
-        right: -0.25em;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0.5em;
       }
     }
 

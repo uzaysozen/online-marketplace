@@ -59,12 +59,17 @@ class ConversationsController < ApplicationController
     end
 
     def set_sent_and_received
-      @sent = Conversation.includes(:conversation_messages, listing: [:creator]).profile(current_user)
-      @received = current_user.received_conversations.includes(:conversation_messages, listing: [:creator])
-      @received.each do |conversation|
-        if conversation.conversation_messages.empty?
-          @received -= [conversation]
-        end
-      end
+      @conversations = Conversation
+                         .includes(:last_message, listing: [:creator]).joins(:listing)
+                         .where("conversations.participant_id = :user OR listings.creator_id = :user", user: current_user.id)
+                         .order(updated_at: :desc)
+
+      # @sent = Conversation.includes(:conversation_messages, listing: [:creator]).profile(current_user)
+      # @received = current_user.received_conversations.includes(:conversation_messages, listing: [:creator])
+      # @received.each do |conversation|
+      #   if conversation.conversation_messages.empty?
+      #     @received -= [conversation]
+      #   end
+      # end
     end
 end

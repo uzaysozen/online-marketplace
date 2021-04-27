@@ -1,22 +1,15 @@
 = link_to conversation, class: 'conversation-link' do
-  - active_class = (@conversation == conversation) ? 'active-conversation' : ''
-  %div{class: "list-group-item conversation-card #{active_class}"}
+  %div{class: "list-group-item conversation-card #{(@conversation == conversation) ? 'active-conversation' : ''}"}
     .row
       .col-12.col-lg-4.pr-2
         .row.text-large.text-center.text-black
-          =icon('far', 'image', class: 'conversation-card-image')  
+          = icon('far', 'image', class: 'conversation-card-image')
       .col-lg-8.pr-3.pl-4
         .row.text-black.text-large.text-left
           %h5= conversation.listing.title
         .row.text-medium.text-black
           = conversation.listing.creator.givenname
-        - if not conversation.conversation_messages.where(is_deleted: nil).empty?
-          .row.text-small.text-darkgray
-            = conversation.conversation_messages.last.content
-          .time-label.text-small.text-right.font-italic.text-darkgray
-            = conversation.conversation_messages.last.updated_at.in_time_zone(Time.now.gmt_offset).to_s(:time)
-          .time-label.text-small.text-left.text-darkgray
-            - if sent
-              My enquiry
-            - else
-              Received enquiry
+        .row.text-small.text-darkgray
+          = conversation.last_message.content
+        .time-label.text-small.text-right.font-italic.text-darkgray
+          = time_ago_in_words conversation.last_message.updated_at

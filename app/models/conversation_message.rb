@@ -23,7 +23,7 @@
 class ConversationMessage < ApplicationRecord
     validates :content, presence: true
 
-    belongs_to :conversation
+    belongs_to :conversation, touch: true
     belongs_to :sender, class_name: "User"
     has_many :reports
 end

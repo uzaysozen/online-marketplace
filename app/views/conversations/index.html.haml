@@ -6,15 +6,14 @@
       .conversation-header
         %h4 Conversations
       .list-group.list-group-flush.conversations-sidebar
-        = render partial: 'conversation', collection: @received, locals: {sent: false}
-        = render partial: 'conversation', collection: @sent, locals: {sent: true}
+        = render @conversations
     .col-9.conversation-box.p-0  
       - if @conversation.present?
         .listing-preview
           = render 'conversation_listing'
         #messages-container.pt-2
           #messages
-            - @conversation.conversation_messages.where(is_deleted: nil).each do |message|
+            - @conversation.conversation_messages.where(is_deleted: false).each do |message|
               = render 'conversation_messages/conversation_message', message: message
           = simple_form_for(ConversationMessage.new, url: send_conversation_conversation_message_path(@conversation.id), remote: true) do |f|
             -# Hidden field to associate the message with it's conversation
