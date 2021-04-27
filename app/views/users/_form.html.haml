@@ -8,17 +8,17 @@
     = check_box_tag(:email, "category")
     = label_tag(:email_category, "When an item from this category is posted")
   .text-medium.text-black.pl-4.pt-2
-    %p= select_tag(:when,options_for_select([["All", 1],["Custom", 2]]))
+    %p= select_tag(:when,options_for_select([["All", 1],["Custom", 2]]),:class => 'w-100')
 
   When?
   .col-12.col-md-12
-    .text-small.pb-4
+    .text-small.pb-4.pl-3
       = radio_button_tag(:when, "immediately")
-      = label_tag(:when_immediately, "Immediately")
+      = label_tag(:when_immediately, "Immediately", :class => 'pr-5')
       = radio_button_tag(:when, "weekly")
-      = label_tag(:when_immediately, "Weekly")
+      = label_tag(:when_weekly, "Weekly", :class => 'pr-5')
       = radio_button_tag(:when, "Monthly")
-      = label_tag(:when_immediately, "Monthly")
+      = label_tag(:when_monthly, "Monthly")
  
     
   .form-actions.text-center

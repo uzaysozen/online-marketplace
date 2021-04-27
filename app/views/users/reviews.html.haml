@@ -10,9 +10,13 @@
         =render 'reviewed-item'
 
 .row.justify-content-center.flex-column-reverse.flex-md-row
-  .col-12.col-md-12.pt-3
+  .col-12.col-md-8.pt-3
     .text-left.text-medium.text-black
       %strong My Reviews
+
+  .col-12.col-md-4.pt-3.pr-4
+    .text-right.text-medium.text-darkgray
+      = render 'review-filter'
 
 .row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2.pt-3
   %table.table
