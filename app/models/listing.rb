@@ -61,4 +61,9 @@ class Listing < ApplicationRecord
 
     has_many :listing_tags, dependent: :destroy
     has_many :tags, through: :listing_tags
+
+    def delivery_ids
+        delivery_objs = self.deliveries
+        return delivery_objs.ids
+    end
 end
