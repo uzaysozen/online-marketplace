@@ -124,7 +124,7 @@ class ListingsController < ApplicationController
         @listing.price = 0.0
       end
 
-      @listing.listing_status = ListingStatus.where(name: 'Pending').first
+      @listing.listing_status = ListingStatus.find_by(name: 'Pending')
       @listing.creator_id = current_user.id
       @listing.is_active = true
       @listing.is_moderated = true

@@ -46,10 +46,6 @@ class ConversationsController < ApplicationController
       @conversation.destroy
       redirect_to listings_path
     end
-
-    def swap_message
-      
-    end
   
     private
       # Callback functions to share common setup or constraints between actions.

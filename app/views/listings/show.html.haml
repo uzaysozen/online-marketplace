@@ -80,9 +80,12 @@
               .fas.fa-user-alt.pr-2
               = @listing.creator.username 
             .col-lg-6.col-sm-12.text-large.text-black.text-right
-              £
-              = sprintf '%.2f', @listing.price
-              %p
+              - if @listing.price == 0
+                .text-muted
+                  Free
+              - else 
+                £
+                = sprintf '%.2f', @listing.price
 
           .row
             - if @listing.listing_status.name != 'Complete'
@@ -93,7 +96,6 @@
                     .far.fa-comment-dots.ml-2
                 - if @listing.swap
                   .col-lg-4.col-xs-12.p-2
-                    -# TODO: add in swapping
                     = link_to swap_listing_path(@listing), class: 'ajax-modal btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do 
                       Swap
                       .fas.fa-sync.ml-2
