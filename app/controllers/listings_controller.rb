@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
 
     load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-    load_resource only: [:add_favourite, :complete, :delete_favourite, :swap, :start_conversation, :delete_conversation]
+    load_resource only: [:add_favourite, :complete, :delete_favourite, :swap, :swap_conversation, :start_conversation, :delete_conversation]
 
     # GET /listings
     def index
@@ -188,7 +188,6 @@ class ListingsController < ApplicationController
       render 'favourited_listing', locals: {listing: @listing, method: 'remove' }
     end
 
-
     def start_conversation
       authorize! :create, Conversation.new(listing: @listing)
       @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
@@ -198,7 +197,6 @@ class ListingsController < ApplicationController
     def swap_conversation
       authorize! :create, Conversation.new(listing: @listing)
       @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
-      @conversation.swap_message
       redirect_to @conversation
     end
 
