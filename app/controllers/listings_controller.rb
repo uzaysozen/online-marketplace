@@ -112,21 +112,57 @@ class ListingsController < ApplicationController
       end
     end
 
-    #Filter by Minimum Price
-    if params[:search_and_filter][:filter_minprice].present?
-      @listings = @listings.where("price >= ?", params[:search_and_filter][:filter_minprice])
+    def mylistings
+      @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update)
     end
 
-    #Filter by Maximum Price
-    if params[:search_and_filter][:filter_maxprice].present?
-      @listings = @listings.where("price <= ?", params[:search_and_filter][:filter_maxprice])
+    # GET /listings/1
+    def show
+      @listing = Listing.find(params[:id])
     end
+  
+    # GET /listings/new
+    def new
+      @listing = Listing.new
+    end
+  
+    # GET /listings/1/edit
+    def edit
+      authorize! :update, @listing
+      render layout: false
+    end
+  
+    # POST /listings
+    def create
+      authorize! :create, Listing
+      params = listing_params
+      # take tags out of params, removing blank entries and duplicates
+      tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
+      # take delivery methods out of params
+      delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
 
-    #Filter by Condition
-    if params[:search_and_filter][:filter_condition].present?
-      current_condition = ListingCondition.where(id: params[:search_and_filter][:filter_condition]).first
-      unless current_condition.nil?
-        @listings = @listings.where(listing_condition_id: current_condition.id)
+      @listing = Listing.new(params)
+      @listing.listing_status = ListingStatus.first
+      @listing.creator_id = current_user.id
+      @listing.is_active = true
+      @listing.is_moderated = true
+      @listing.receiver_id = current_user.id
+      @listing.moderator_id = current_user.id
+
+      tags.each do |tag|
+        # create new tags, add to listing
+        @listing.tags << Tag.where(name: tag).first_or_create
+      end 
+  
+      delivery_methods.each do |delivery|
+        # get delivery methods by id and add to listing
+        @listing.deliveries << Delivery.where(id: delivery).first
+      end
+
+      if @listing.save
+        redirect_to listings_path, notice: 'Listing was successfully created.'
+      else
+        render :new
       end
     end
   
@@ -159,126 +195,53 @@ class ListingsController < ApplicationController
         render 'update_failure'
       end
     end
-
-    if params[:clear_button]
-      session[:sort_listings] = accessible_listings
-      redirect_to listings_path
-    else
-      session[:sort_listings] = @listings
-      render :index
+  
+    # DELETE /listings/1
+    def destroy
+      @listing.destroy
+      redirect_to listings_url, notice: 'Listing was successfully deleted.'
     end
-  end
-
-  def mylistings
-    @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update)
-  end
-
-  # GET /listings/1
-  def show
-    @listing = Listing.find(params[:id])
-  end
-
-  # GET /listings/new
-  def new
-    @listing = Listing.new
-  end
-
-  # GET /listings/1/edit
-  def edit
-    authorize! :update, @listing
-    render layout: false
-  end
-
-  # POST /listings
-  def create
-    authorize! :create, Listing
-    params = listing_params
-    # take tags out of params, removing blank entries and duplicates
-    tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
-    # take delivery methods out of params
-    delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
-
-    @listing = Listing.new(params)
-    @listing.listing_status = ListingStatus.first
-    @listing.creator_id = current_user.id
-    @listing.is_active = true
-    @listing.is_moderated = true
-    @listing.receiver_id = current_user.id
-    @listing.moderator_id = current_user.id
-
-    tags.each do |tag|
-      # create new tags, add to listing
-      @listing.tags << Tag.where(name: tag).first_or_create
+    
+    def add_favourite
+      @favourite = UserFavourite.new(listing: @listing, user: current_user)
+      @listings = accessible_listings
+      if @favourite.save
+        render 'favourited_listing', locals: { listing: @listing, method: 'add' }
+      end
     end
 
-    delivery_methods.each do |delivery|
-      # get delivery methods by id and add to listing
-      @listing.deliveries << Delivery.where(id: delivery).first
+    def delete_favourite
+      @favourite = @listing.user_favourites.find_by(user: current_user)
+      @listings = accessible_listings
+      @favourite.destroy
+      render 'favourited_listing', locals: {listing: @listing, method: 'remove' }
     end
 
-    if @listing.save
-      redirect_to listings_path, notice: 'Listing was successfully created.'
-    else
-      render :new
+
+    def start_conversation
+      authorize! :create, Conversation.new(listing: @listing)
+      @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
+      redirect_to @conversation
     end
-  end
 
-  # PATCH/PUT /listings/1
-  def update
-    if @listing.update(listing_params)
-      @listings = active_listings
-      render 'update_success'
-    else
-      render 'update_failure'
+    def delete_conversation
+      @conversation = current_user.conversations.find_by(listing: @listing)
+      authorize! :delete, @conversation
+      if @conversation.conversation_messages.empty?
+        @conversation.destroy
+        redirect_to listings_path
+      else
+        redirect_to listings_path
+      end
     end
-  end
 
-  # DELETE /listings/1
-  def destroy
-    @listing.destroy
-    redirect_to listings_url, notice: 'Listing was successfully deleted.'
+    private
+      def accessible_listings
+        Listing.includes(:creator, :listing_condition).accessible_by(current_ability)
+      end
+      # Only allow a trusted parameter "white list" through.
+      def listing_params
+        params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id, 
+          :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
+      end
   end
-
-  def add_favourite
-    @favourite = UserFavourite.new(listing: @listing, user: current_user)
-    @listings = accessible_listings
-    if @favourite.save
-      render 'favourited_listing', locals: { listing: @listing, method: 'add' }
-    end
-  end
-
-  def delete_favourite
-    @favourite = @listing.user_favourites.find_by(user: current_user)
-    @listings = accessible_listings
-    @favourite.destroy
-    render 'favourited_listing', locals: {listing: @listing, method: 'remove' }
-  end
-
-
-  def start_conversation
-    authorize! :create, Conversation.new(listing: @listing)
-    @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
-    redirect_to @conversation
-  end
-
-  def delete_conversation
-    @conversation = current_user.conversations.find_by(listing: @listing)
-    authorize! :delete, @conversation
-    if @conversation.conversation_messages.empty?
-      @conversation.destroy
-      redirect_to listings_path
-    else
-      redirect_to listings_path
-    end
-  end
-
-  private
-  def accessible_listings
-    Listing.includes(:creator, :listing_condition).accessible_by(current_ability)
-  end
-  # Only allow a trusted parameter "white list" through.
-  def listing_params
-    params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
-                                    :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
-  end
-end

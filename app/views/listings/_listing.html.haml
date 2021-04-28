@@ -35,16 +35,10 @@
           .text-medium.text-black
             = number_to_currency listing.price, unit: "£"
             %p
-          .row.p-2
-            .col
-              - if can? :create, Conversation.new(listing: listing)
-                .text-small.text-center.listing-blue.rounded.bg-blue
-                  = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do
-                    Enquire
-            .col        
-              .text-small.text-center.text-blue.listing-blue.rounded 
-                = link_to listing, class: 'button-blue listing-button' do
-                  See Details
+          - if can? :create, Conversation.new(listing: listing)
+            .text-small.text-center.listing-blue.rounded.bg-blue
+              = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do
+                Enquire
         .col-2.col-lg-1.text-medium.text-blue
           .icon-button
             = icon('far', 'flag')

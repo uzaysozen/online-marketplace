@@ -16,4 +16,3 @@
 //= require file-upload
 //= require autoscroll
 //= require notifications
-//= require admin
