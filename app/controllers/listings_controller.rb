@@ -197,7 +197,14 @@ class ListingsController < ApplicationController
     def swap_conversation
       authorize! :create, Conversation.new(listing: @listing)
       @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
-      redirect_to @conversation
+      swap = params[:swap_message]
+      if !swap.nil?
+        listing = Listing.find_by_id(swap[:item])
+        return unless listing
+        message = swap[:message] + ' (' + listing.title + ')'
+        ConversationMessage.create(conversation: @conversation, content: message, sender: current_user)
+        redirect_to @conversation
+      end
     end
 
     def delete_conversation

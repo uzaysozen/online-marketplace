@@ -48,7 +48,7 @@ class ConversationsController < ApplicationController
     end
 
     def swap_message
-      puts "\n\n\n\n\n test \n\n\n\n\n"
+      
     end
   
     private
