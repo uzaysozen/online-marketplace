@@ -10,7 +10,6 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/1
   def show
-    puts "hi"
     render :index
   end
 
