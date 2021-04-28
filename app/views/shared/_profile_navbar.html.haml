@@ -10,8 +10,8 @@
     = link_to user_favourites_path, class: "nav-link #{'active' if path_contains? 'favourites'}" do
       = icon 'fas', 'heart', 'Favourites'
   %li.nav-item
-    = link_to root_path, class: "nav-link #{'active' if path_contains? 'reviews'}" do
+    = link_to reviews_path, class: "nav-link #{'active' if path_contains? 'reviews'}" do
       = icon 'fas', 'star', 'Reviews'
   %li.nav-item
-    = link_to root_path, class: "nav-link #{'active' if path_contains? 'settings'}" do
+    = link_to settings_path, class: "nav-link #{'active' if path_contains? 'settings'}" do
       = icon 'fas', 'cog', 'Settings'
