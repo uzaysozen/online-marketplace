@@ -34,6 +34,8 @@ Rails.application.routes.draw do
   
   scope :profile do
     get :mylistings, to: 'listings#mylistings'
+    get :reviews, to: 'users#reviews'
+    get :settings, to: 'users#settings'
     resources :user_favourites
     resources :conversations do
       resources :conversation_messages, except: :create do
@@ -56,6 +58,10 @@ Rails.application.routes.draw do
     get :add_question, to: 'admin#get_question'
     post :add_question, to: 'admin#add_question'
     post :remove_question, to: 'admin#remove_question'
+    post :approve_listing, to: 'admin#approve_listing'
+    get :ban_user, to: 'admin#get_user'
+    post :ban_user, to: 'admin#ban_user'
+    post :unban_user, to: 'admin#unban_user'
   end
   
   # Static Pages

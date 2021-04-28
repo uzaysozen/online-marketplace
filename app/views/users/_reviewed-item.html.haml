@@ -1,0 +1,24 @@
+.row.justify-content-left.flex-column-reverse.flex-md-row
+  .col-12.col-md-12.listing-container
+    .border-none.rounded.h-100
+      .row.p-2
+        .col-12.col-sm-1.pl-0.text-left.listing-image-container.text-black.text-large.pt-3
+          =icon('fas', 'image')
+
+        .col-12.col-sm-3.pl-0.text-left.pl-1
+          .pt-3
+            %pre{:class => 'text-darkgray text-medium font-main'} Item Name     
+               
+          .text-small.text-darkgray.border-right-black.text-medium
+            £10.00
+
+        .col-12.col-sm-5.pl-3.text-left.listing-price-container  
+          .text-large.text-darkgray.pt-3.pl-2
+            = icon('fas', 'user-circle') 
+          .pl-2.pt-2.text-small 
+            Receiver: 
+
+        .col-12.col-sm-3.pl-5.pt-2
+          .text-medium.text-center.review-btn.listing-red.btn-primary.rounded.text-white.pt-2
+            Review
+            %p{:class => 'text-medium'}= icon('fas', 'star')

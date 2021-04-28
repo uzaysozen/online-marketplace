@@ -14,6 +14,10 @@ body {
   }
 }
 
+mark {
+  background-color: $higlight-color;
+}
+
 #profile-nav {
   border-bottom: none;
 
@@ -39,4 +43,14 @@ body {
   top: 0px; 
   left: 0px; 
   z-index: 1; 
+}
+
+.btn-huge {
+  max-height: 94px;
+  max-width: 316px;
+}
+
+.review-btn {
+  max-height: 104px;
+  max-width: 187px;
 }

@@ -4,11 +4,13 @@
 #
 #  id                 :bigint           not null, primary key
 #  administrator      :boolean
+#  ban_reason         :text
 #  current_sign_in_at :datetime
 #  current_sign_in_ip :inet
 #  dn                 :string
 #  email              :string           default(""), not null
 #  givenname          :string
+#  is_banned          :boolean          default(FALSE)
 #  last_sign_in_at    :datetime
 #  last_sign_in_ip    :inet
 #  mail               :string
@@ -40,4 +42,8 @@ class User < ApplicationRecord
 
   has_many :user_favourites
   has_many :favourites, source: :listing, through: :user_favourites
+
+  def active_for_authentication?
+    super && !is_banned
+  end
 end

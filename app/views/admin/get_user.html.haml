@@ -1,0 +1,10 @@
+.modal-dialog
+  .modal-content.p-5
+    = simple_form_for :user, url: ban_user_path, method: :post, remote: true do |f|
+      = f.error_notification
+      .form-inputs
+        = f.input :id, as: :hidden, input_html: { value: @user.id }
+        = f.input :ban_reason, as: :text
+      .form-actions
+        = f.submit 'Ban User', class: 'btn btn-secondary'
+        = dismiss_modal_button 

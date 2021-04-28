@@ -1,0 +1,4 @@
+= simple_form_for(:settings, url: reviews_path) do |f|
+  = f.error_notification
+
+  %p= select_tag(:when,options_for_select([["Received as buyer", 1],["Received as seller", 2]]), :class => 'text-darkgray pt-1 pb-1 pr-3')
