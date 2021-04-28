@@ -9,10 +9,10 @@
             %strong Admin Options
           .card-text
             .row.justify-content-center.m-3
-              .col-sm.text-center
-                = link_to approve_listing_path(listing: @listing), method: :post, class: 'btn btn-md white-button', style: "background-color: #32CD32;" do
+              .col-sm.text-center.text-black
+                = link_to approve_listing_path(listing: @listing), method: :post, class: 'btn btn-md btn-approve white-button' do
                   Approve
-                  = icon('fas', 'check')
+                  = icon('fas', 'check-circle')
               .col-sm.text-center
                 = link_to edit_listing_path(@listing), class: 'btn btn-primary btn-md' do
                   Edit Post

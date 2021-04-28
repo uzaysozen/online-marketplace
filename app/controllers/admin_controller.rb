@@ -3,7 +3,7 @@ class AdminController < ApplicationController
   
   # GET admin/moderation
   def moderation
-    @pending_listings = Listing.includes(:creator).where(listing_status: ListingStatus.first)
+    @pending_listings = Listing.includes(:creator).where(listing_status: ListingStatus.find_by(name: 'Pending'))
     @pending_listings = @pending_listings.where.not(creator: current_user)
   end
   
