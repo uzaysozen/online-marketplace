@@ -1,6 +1,5 @@
 class AdminController < ApplicationController
-  load_and_authorize_resource :class => false
-  
+  before_action { authorize! :access, :admin_panel }
   # GET admin/moderation
   def moderation
     @pending_listings = Listing.includes(:creator).where(listing_status: ListingStatus.find_by(name: 'Pending'))
@@ -12,7 +11,7 @@ class AdminController < ApplicationController
   end
   
   # GET admin/other
-  def other 
+  def other
     @banned_users = User.where(is_banned: true)
     @admins = User.where(administrator: true)
     @questions = PageContent.where(key: 'Question')
@@ -125,5 +124,4 @@ class AdminController < ApplicationController
     @user = User.find(params[:user][:id])
     @user.update(is_banned: false)
   end
-
 end

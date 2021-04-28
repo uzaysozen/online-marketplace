@@ -1,20 +1,5 @@
 class PagesController < ApplicationController
-
   skip_before_action :authenticate_user!
-
-  def home
-    @current_nav_identifier = :home
-    covid_content = PageContent.find_by(key: 'Covid Guidance')
-    if covid_content.present?
-      @covid_guidance = covid_content.content[0]
-    else
-      @covid_guidance = nil
-    end
-  end
-
-  def admin
-    @current_nav_identifier = :admin
-  end
 
   # GET pages/about
   def about
