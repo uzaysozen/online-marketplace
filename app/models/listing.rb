@@ -61,4 +61,10 @@ class Listing < ApplicationRecord
 
     has_many :listing_tags, dependent: :destroy
     has_many :tags, through: :listing_tags
+
+    validates :deliveries, presence: true
+    validates :description, presence: true
+    validates :images, presence: true
+    validates :location, presence: true
+    validates :title, presence: true
 end

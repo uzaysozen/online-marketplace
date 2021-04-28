@@ -143,6 +143,12 @@
   cursor: pointer;
 }
 
+@media (max-width: 768px) {
+  #preview {
+    display: none;
+  }
+}
+
 .navbar-brand {
   img {
     height: 2rem;
@@ -200,4 +206,12 @@
     width: 100%;
     height: auto;
   }
+}
+
+.carousel-indicators li {
+  background-color: $gray;
+}
+
+.carousel-indicators .active {
+  background-color: $darkgray;
 }

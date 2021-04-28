@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
-  load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-  load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+    load_and_authorize_resource only: [:show, :edit, :update, :destroy]
+    load_resource only: [:add_favourite, :complete, :delete_favourite, :swap, :swap_conversation, :start_conversation, :delete_conversation]
 
   # GET /listings
   def index
@@ -86,38 +86,49 @@ class ListingsController < ApplicationController
     @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update)
   end
 
-  # GET /listings/1
-  def show
-    @listing = Listing.find(params[:id])
-  end
+    # GET /listings/1
+    def show
+      @listing = Listing.find(params[:id])
+    end
+  
+    # GET /listings/new
+    def new
+      @listing = Listing.new
+    end
+  
+    # GET /listings/1/edit
+    def edit
+      authorize! :update, @listing
+      render layout: false
+    end
 
-  # GET /listings/new
-  def new
-    @listing = Listing.new
-  end
-
-  # GET /listings/1/edit
-  def edit
-    authorize! :update, @listing
-    render layout: false
-  end
+  # GET /listings/1/swap
+    def swap
+      render layout: false
+    end
 
   # POST /listings
-  def create
-    authorize! :create, Listing
-    params = listing_params
-    # take tags out of params, removing blank entries and duplicates
-    tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
-    # take delivery methods out of params
-    delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
+    def create
+      authorize! :create, Listing
+      params = listing_params
+      # take tags out of params, removing blank entries and duplicates
+      tags = params.delete(:listing_tags).reject(&:blank?).map(&:upcase).uniq
+      # take delivery methods out of params
+      delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
 
-    @listing = Listing.new(params)
-    @listing.listing_status = ListingStatus.first
-    @listing.creator_id = current_user.id
-    @listing.is_active = true
-    @listing.is_moderated = true
-    @listing.receiver_id = current_user.id
-    @listing.moderator_id = current_user.id
+      @listing = Listing.new(params)
+
+      # Setting price to free if none was entered
+      if !@listing.price
+        @listing.price = 0.0
+      end
+
+      @listing.listing_status = ListingStatus.first
+      @listing.creator_id = current_user.id
+      @listing.is_active = true
+      @listing.is_moderated = true
+      @listing.receiver_id = current_user.id
+      @listing.moderator_id = current_user.id
 
     tags.each do |tag|
       # create new tags, add to listing
@@ -160,19 +171,40 @@ class ListingsController < ApplicationController
     end
   end
 
-  def delete_favourite
-    @favourite = @listing.user_favourites.find_by(user: current_user)
-    @listings = accessible_listings
-    @favourite.destroy
-    render 'favourited_listing', locals: {listing: @listing, method: 'remove' }
-  end
+    # Mark listing as complete
+    def complete
+      @listing.listing_status = ListingStatus.where(name: 'Complete').first
 
+      if @listing.save
+        redirect_to request.referrer, notice: 'Listing has been marked as complete'
+      end
+    end
 
-  def start_conversation
-    authorize! :create, Conversation.new(listing: @listing)
-    @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
-    redirect_to @conversation
-  end
+    def delete_favourite
+      @favourite = @listing.user_favourites.find_by(user: current_user)
+      @listings = accessible_listings
+      @favourite.destroy
+      render 'favourited_listing', locals: {listing: @listing, method: 'remove' }
+    end
+
+    def start_conversation
+      authorize! :create, Conversation.new(listing: @listing)
+      @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
+      redirect_to @conversation
+    end
+
+    def swap_conversation
+      authorize! :create, Conversation.new(listing: @listing)
+      @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
+      swap = params[:swap_message]
+      if !swap.nil?
+        listing = Listing.find_by_id(swap[:item])
+        return unless listing
+        message = swap[:message] + ' (' + listing.title + ')'
+        ConversationMessage.create(conversation: @conversation, content: message, sender: current_user)
+        redirect_to @conversation
+      end
+    end
 
   def delete_conversation
     @conversation = current_user.conversations.find_by(listing: @listing)
