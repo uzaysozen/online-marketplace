@@ -32,6 +32,12 @@ class UsersController < ApplicationController
         @users = @users.where(ban_reason: params[:search][:ban_reason]) if params[:search][:ban_reason].present?
         render :index
     end
+
+    def settings
+    end
+
+    def reviews
+    end
   
     private
       # Callback functions to share common setup or constraints between actions.
