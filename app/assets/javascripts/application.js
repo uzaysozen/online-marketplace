@@ -14,5 +14,6 @@
 //= require turbolinks
 //= require activestorage
 //= require file-upload
-//= require autoscroll
+//= require conversation
 //= require notifications
+//= require admin

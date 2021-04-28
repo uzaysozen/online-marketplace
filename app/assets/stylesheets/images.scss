@@ -28,6 +28,13 @@
   }
 }
 
+.listing-image-container-sm {
+  img {
+    max-height: 100px;
+    max-width: 100px
+  }
+}
+
 // Listing image input
 
 .file-input {
@@ -186,6 +193,19 @@
   content: '❮';
   font-size: 55px;
   color: $black;
+}
+
+.preview-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 .carousel-indicators li {

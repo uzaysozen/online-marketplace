@@ -1,8 +1,8 @@
 @import 'variables';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
 
-body {
-  font-family: "Montserrat", serif !important;
+body, .font-main {
+  font-family: "Montserrat", sans-serif !important;
 }
 
 .text-small {
@@ -24,6 +24,7 @@ body {
 .text-black {
   color: $primary-font;
 }
+
 
 @media (max-width: 576px) {
   .text-small {
@@ -61,6 +62,10 @@ body {
 
 .text-red, .delete-button, .delete-button:hover {
   color: $primary-color;
+}
+
+.text-gold {
+  color: $gold;
 }
 
 .listing-button:hover{

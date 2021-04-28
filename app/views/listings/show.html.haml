@@ -1,4 +1,27 @@
 - user_favourite = current_user.user_favourites.find_by(listing: @listing)
+- banned_words = PageContent.find_by(key: 'Banned Words')
+- if current_user.administrator? && @listing.listing_status.name == 'Pending' && @listing.creator != current_user
+  .row.justify-content-center.mb-3
+    .col-8
+      .card.mb-3.bg-light.border-dark
+        .card-body
+          .card-header.text-center.text-medium
+            %strong Admin Options
+          .card-text
+            .row.justify-content-center.m-3
+              .col-sm.text-center
+                = link_to approve_listing_path(listing: @listing), method: :post, class: 'btn btn-md btn-approve white-button' do
+                  Approve
+                  = icon('fas', 'check-circle')
+              .col-sm.text-center
+                = link_to edit_listing_path(@listing), class: 'btn btn-primary btn-md ajax-modal' do
+                  Edit Post
+                  = icon('fas', 'edit')
+              .col-sm.text-center
+                = link_to ban_user_path(user: @listing.creator.id), class: 'btn btn-outline-primary btn-md ajax-modal' do
+                  Ban User
+                  = icon('fas', 'ban')
+
 
 - if @listing.listing_status.name == 'Complete'
   .alert.alert-warning.text-center
@@ -58,7 +81,7 @@
               %a.carousel-control-next{"data-slide" => "next", :href => "#car", :role => "button"}
                 %span.carousel-control-next-icon{"aria-hidden" => "true"}
                 %span.sr-only Next
-          
+
           -# Horizontal image cards
           #preview.container-fluid
             .row.flex-row.flex-nowrap.overflow-auto
@@ -69,95 +92,90 @@
                     %div.card.card-block.mini-image{"data-slide-to" => counter, "data-target" => "#car", :style => "background-image: url(#{rails_blob_url(image)})"}
                   - counter += 1
 
+
         .col-lg-7.col-sm-12.text-left
           .text-large.text-black.text-left
-            %p
-            = @listing.title 
-            %p
+            - if current_user.administrator? and banned_words.present?
+              = highlight(@listing.title, banned_words.content)
+            - else
+              = @listing.title
 
-          .row
-            .col-lg-6.col-sm-12.text-medium.text-black.border-right-black
-              .fas.fa-user-alt.pr-2
-              = @listing.creator.username 
-            .col-lg-6.col-sm-12.text-large.text-black.text-right
-              - if @listing.price == 0
-                .text-muted
-                  Free
-              - else 
-                £
-                = sprintf '%.2f', @listing.price
+            .row
+              .col-lg-6.col-sm-12.text-medium.text-black.border-right-black
+                .fas.fa-user-alt.pr-2
+                = @listing.creator.username
+              .col-lg-6.col-sm-12.text-large.text-black.text-right
+                - if @listing.price == 0
+                  .text-muted
+                    Free
+                - else
+                  £
+                  = sprintf '%.2f', @listing.price
 
-          .row
-            - if @listing.listing_status.name != 'Complete'
-              - if @listing.creator = current_user
-                .col.p-2.d-flex.justify-content-center
-                  = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex align-items-center justify-content-center w-100' do 
-                    Send Message
-                    .far.fa-comment-dots.ml-2
-                - if @listing.swap
+            .row
+              - if @listing.listing_status.name != 'Complete'
+                - if @listing.creator = current_user
+                  .col.p-2.d-flex.justify-content-center
+                    = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex align-items-center justify-content-center w-100' do
+                      Send Message
+                      .far.fa-comment-dots.ml-2
+                  - if @listing.swap
+                    .col-lg-4.col-xs-12.p-2
+                      = link_to swap_listing_path(@listing), class: 'ajax-modal btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do
+                        Swap
+                        .fas.fa-sync.ml-2
+
+                - else
+                  .col-lg-8.col-xs-12.p-2
+                    = link_to complete_listing_path(@listing), method: :complete, data: { confirm: 'Are you sure you want to mark this listing as sold?' }, class: 'btn btn-secondary btn-lg d-flex align-items-center justify-content-center w-100' do
+                      Mark As Sold
+                      .fas.fa-check-circle.ml-2
                   .col-lg-4.col-xs-12.p-2
-                    = link_to swap_listing_path(@listing), class: 'ajax-modal btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do 
-                      Swap
-                      .fas.fa-sync.ml-2
+                    = link_to edit_listing_path(@listing), class: 'ajax-modal btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do
+                      Edit
+                      .fas.fa-edit.ml-2
 
-              - else
-                .col-lg-8.col-xs-12.p-2
-                  = link_to complete_listing_path(@listing), method: :complete, data: { confirm: 'Are you sure you want to mark this listing as sold?' }, class: 'btn btn-secondary btn-lg d-flex align-items-center justify-content-center w-100' do
-                    Mark As Sold
-                    .fas.fa-check-circle.ml-2
-                .col-lg-4.col-xs-12.p-2
-                  = link_to edit_listing_path(@listing), class: 'ajax-modal btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do
-                    Edit 
-                    .fas.fa-edit.ml-2
+            .row.pt-5
+              .col-lg-3.col-md-6.text-small.text-black
+                .fas.fa-thumbs-up.pr-2
+                Condition
+              .col-lg-3.col-md-6.text-small.text-right.text-darkgray
+                = @listing.listing_condition.name
 
-          .row.pt-5
-            .col-lg-3.col-md-6.text-small.text-black 
-              .fas.fa-thumbs-up.pr-2
-              Condition
-            .col-lg-3.col-md-6.text-small.text-right.text-darkgray
-              = @listing.listing_condition.name
-              %p
-            .col-lg-3.col-md-6.text-small.text-black 
-              .fas.fa-map-marker-alt.pr-2
-              Location
-            .col-lg-3.col-md-6.text-small.text-right.text-darkgray
-              = @listing.location
-              %p
-          
-          .row
-            .col-lg-3.col-md-6.text-small.text-black 
-              .fas.fa-truck.pr-2
-              Delivery
-            .col-lg-3.col-md-6.text-small.text-right.text-darkgray
-              - is_first = true
-              - @listing.deliveries.each do |delivery|
-                - if !is_first
-                  = "- "
-                = delivery.name
-                - is_first = false
-              %p
+              .col-lg-3.col-md-6.text-small.text-black
+                .fas.fa-map-marker-alt.pr-2
+                Location
+              .col-lg-3.col-md-6.text-small.text-right.text-darkgray.pb-3
+                - if current_user.administrator? and banned_words.present?
+                  = highlight(@listing.location, banned_words.content)
+                - else
+                  = @listing.location
 
-            .col-lg-3.col-md-6.text-small.text-small.text-black 
-              .fas.fa-calendar-alt.pr-2
-              Date Listed
-            .col-lg-3.col-md-6.text-small.text-right.text-darkgray
-              = @listing.created_at.strftime('%m/%d/%Y')
-              %p
-          %hr
+              .col-lg-3.col-md-6.text-small.text-black
+                .fas.fa-truck.pr-2
+                Delivery
+              .col-lg-3.col-md-6.text-small.text-right.text-darkgray
+                - is_first = true
+                - @listing.deliveries.each do |delivery|
+                  - if !is_first
+                    = "- "
+                  = delivery.name
+                  - is_first = false
 
-          .text-small.text-black
-            %p
-            = @listing.description
-            %p
+              .col-lg-3.col-md-6.text-small.text-small.text-black
+                .fas.fa-calendar-alt.pr-2
+                Date Listed
+              .col-lg-3.col-md-6.text-small.text-right.text-darkgray
+                = @listing.created_at.strftime('%m/%d/%Y')
+            %hr
 
-          .text-small.text-black
-            %p
-            - is_first = true
+          .text-small.text-black.pb-4
+            - if current_user.administrator? and banned_words.present?
+              = highlight(@listing.description, banned_words.content)
+            - else
+              = @listing.description
+
+          .text-medium
             - @listing.tags.each do |tag|
-              - if !is_first
-                = ", "
-              = tag.name
-              - is_first = false
-            %p
-
-  = link_to 'Back', :back, class: 'btn btn-outline-primary mt-3'
+              %span.badge.badge-secondary
+                = tag.name

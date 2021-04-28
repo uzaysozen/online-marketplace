@@ -1,14 +1,5 @@
 class PagesController < ApplicationController
-
   skip_before_action :authenticate_user!
-
-  def home
-    @current_nav_identifier = :home
-  end
-
-  def admin
-    @current_nav_identifier = :admin
-  end
 
   # GET pages/about
   def about
@@ -23,6 +14,7 @@ class PagesController < ApplicationController
   # GET pages/faq
   def faq
     @current_nav_identifier = :faq
+    @questions = PageContent.where(key: 'Question')
   end
   
   # GET pages/contact
