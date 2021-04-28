@@ -44,6 +44,7 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'delayed-plugins-airbrake'
 gem 'daemons', '1.1.9'
+gem 'turbolinks', '~> 5.2.0'
 
 group :development, :test do
   gem 'rspec-rails'
