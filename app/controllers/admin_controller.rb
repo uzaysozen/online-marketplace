@@ -3,6 +3,8 @@ class AdminController < ApplicationController
   
   # GET admin/moderation
   def moderation
+    @pending_listings = Listing.includes(:creator).where(listing_status: ListingStatus.find_by(name: 'Pending'))
+    @pending_listings = @pending_listings.where.not(creator: current_user)
   end
   
   # GET admin/statistics
@@ -11,6 +13,7 @@ class AdminController < ApplicationController
   
   # GET admin/other
   def other 
+    @banned_users = User.where(is_banned: true)
     @admins = User.where(administrator: true)
     @questions = PageContent.where(key: 'Question')
     words = PageContent.find_by(key: 'Banned Words')
@@ -96,6 +99,31 @@ class AdminController < ApplicationController
     question_id = params[:question][:id]
     page_content = PageContent.find(question_id)
     page_content.destroy
+  end
+
+  def approve_listing
+    @listing = Listing.find(params[:listing])
+    active_status = ListingStatus.find(2)
+    @listing.update(listing_status: active_status)
+    redirect_to moderation_path, notice: 'Listing approved.'
+  end
+
+  def get_user
+    @user = User.find(params[:user])
+    render layout: false
+  end
+
+  def ban_user
+    @user = User.find(params[:user][:id])
+    if params[:user][:ban_reason] != ""
+      @user.update(is_banned: true, ban_reason: params[:user][:ban_reason])
+      render 'user_banned'
+    end
+  end
+
+  def unban_user
+    @user = User.find(params[:user][:id])
+    @user.update(is_banned: false)
   end
 
 end
