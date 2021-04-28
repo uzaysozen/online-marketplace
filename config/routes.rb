@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     get :start_conversation, on: :member
     post :delete_conversation, on: :member
   end
+
+  resources :reports
   
   resources :users do
     post :search, on: :collection
@@ -34,8 +36,6 @@ Rails.application.routes.draw do
   
   scope :profile do
     get :mylistings, to: 'listings#mylistings'
-    get :reviews, to: 'users#reviews'
-    get :settings, to: 'users#settings'
     resources :user_favourites
     resources :conversations do
       resources :conversation_messages, except: :create do
@@ -45,22 +45,9 @@ Rails.application.routes.draw do
     end
   end
 
-  # Admin Pages
-  scope :admin do
-    resources :reports
-    get :moderation, to: 'admin#moderation'
-    get :statistics, to: 'admin#statistics'
-    get :other, to: 'admin#other'
-    post :other, to: 'admin#site_settings'
-    get :promote_user, to: 'admin#get_admin'
-    post :promote_user, to: 'admin#promote'
-    post :demote_user, to: 'admin#demote'
-    get :add_question, to: 'admin#get_question'
-    post :add_question, to: 'admin#add_question'
-    post :remove_question, to: 'admin#remove_question'
-  end
-  
   # Static Pages
+
+  get "pages/admin" => "pages#admin"
   get :contact, to: "pages#contact"
   post :contact, to: "pages#contact_mail"
   get :terms, to: "pages#terms"
