@@ -42,6 +42,22 @@ class ListingsController < ApplicationController
         end
       end
 
+      #Filter the Listings by Tags
+      if params[:search_and_filter][:filter_tags].present?
+        @entered_tags = params[:search_and_filter][:filter_tags].reject(&:blank?)
+        @all_tag_names = Tag.pluck(:name)
+
+        if not (@all_tag_names & @entered_tags).empty?
+          @common_tags = @all_tag_names & @entered_tags
+          @tag_objects = Tag.where(name: @common_tags)
+          @listing_tag_objects = ListingTag.where(tag_id: @old_tag_objects.ids)
+
+          unless @listing_tag_objects.nil?
+            @listings = @listings.where(id: @listing_tag_objects.listing_id)
+          end
+        end
+      end
+
       #Filter by Category
       if params[:search_and_filter][:filter_category].present?
         current_category = ListingCategory.where(id: params[:search_and_filter][:filter_category]).first

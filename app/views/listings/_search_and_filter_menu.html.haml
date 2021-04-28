@@ -6,6 +6,9 @@
           %p Search Bar
           = f.input :search_bar, label: false, required: false
 
+          %p Select Tags
+          = f.input :filter_tags, label: false, as: :select, collection: Tag.pluck(:name), input_html: { class: 'select2', multiple: true }, required: false
+
           %p Filter Menu
           = f.input :filter_category, label: 'Categories', collection: ListingCategory.all, required: false
           .row
