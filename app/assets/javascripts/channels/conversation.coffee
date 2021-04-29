@@ -1,4 +1,8 @@
 load = ->
+  # Ensure that we have an App instance
+  if App.cable == undefined
+    return
+
   conversation_element = document.getElementById('conversation-id')
 
   # If there's no conversation element, there's nothing to listen for.

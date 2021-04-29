@@ -59,7 +59,9 @@ class ApplicationController < ActionController::Base
 
   def validate_covid_guidance_date
     @covid_guidance = PageContent.find_by(key: "Covid Guidance")
+    # Check if the user has dismissed the covid guidance and if the updated dates differ.
     if cookies[:covid_guidance_date] != @covid_guidance.updated_at.to_s
+      # Delete covid guidance cookies if they have to force a refresh of them
       cookies.delete :dismissed_covid_guidance
       cookies.delete :covid_guidance_date
     end
@@ -67,9 +69,12 @@ class ApplicationController < ActionController::Base
 
   def set_jwt
     if current_user
-      payload = { user_id: current_user.id }
+      # SET JWT Token on page load to authenticate our requests.
+      # Set an expiry of 3 hours from now, this should refresh every time the user moves page so shouldn't be a problem.
+      payload = { user_id: current_user.id, exp: Time.now.to_i + (3600 * 3) }
       cookies[:token] = JWT.encode payload, '5|_||>E.-5e(.-e7|<e`/', 'HS256'
     else
+      # Delete JWT Token if no current since that means they signed out.
       cookies.delete :token
     end
   end
