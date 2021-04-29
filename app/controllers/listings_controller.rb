@@ -67,6 +67,9 @@ class ListingsController < ApplicationController
           @listings = @listings.where(listing_category_id: subcategory_ids << current_category.id)
           session[:category_listings] = @listings
         end
+      else
+        @listings = accessible_listings
+        session[:category_listings] = accessible_listings
       end
 
       #Filter by Minimum Price
