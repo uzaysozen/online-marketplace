@@ -25,4 +25,4 @@
           = f.input :filter_delivery, label: 'Delivery', as: :check_boxes, collection: Delivery.all, required: false, input_html: { multiple: true, checked: true }
 
           = f.submit 'Confirm', class: 'btn btn-default', id: 'search-button'
-          = f.submit 'Clear', class: 'btn btn-default', name: 'clear_button'
+          = f.submit 'Clear', class: 'btn btn-default', id: 'clear_button'

@@ -105,7 +105,7 @@ class ListingsController < ApplicationController
 
       if params[:clear_button]
         session[:sort_listings] = accessible_listings
-        redirect_to listings_path
+        render :index
       else
         session[:sort_listings] = @listings
         render :index
