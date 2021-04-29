@@ -4,11 +4,6 @@
   border-top: solid 1px $gray;
 }
 
-.listing-description-container {
-  border-right: solid 1px $gray;
-}
-
-
 .listing-price-container, .details-container {
   line-height: 1.0;
 }
@@ -27,4 +22,12 @@
   &:hover {
     text-decoration: none;
   }
+}
+
+.listing-description {
+  line-height: 1.2em;
+  max-height: 4.8em;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow: hidden;
 }

@@ -1,55 +1,53 @@
 - user_favourite = current_user.user_favourites.find_by(listing: listing)
-.row.justify-content-left.flex-column-reverse.flex-md-row.listing-container{id: "listing-#{listing.id}"}
-  .col-12.col-md-12
-    .border-none.rounded.h-100
-      .row.p-2
-            
-        .col-3.text-left.listing-image-container-lrg.text-huge
-          .preview-image
-            - if listing.images&.attached?
-              = image_tag(rails_blob_url(listing.images.first))
+.listing-container{id: "listing-#{listing.id}"}
+  .border-none.rounded.h-100
+    .row.p-2
+      .col-3.text-left.text-huge.d-flex.align-items-center.justify-content-center
+        .preview-image
+          - if listing.images&.attached?
+            = image_tag(rails_blob_url(listing.images.first))
+          - else
+            = icon('fas', 'tags', class: 'text-large')
+
+      .col-7.col-lg-8.text-left.details-container
+
+        .text-medium.text-red.py-2
+          = listing.title
+
+        .text-small.text-black.pb-2
+          = listing.creator.username
+
+        .text-small.text-black.listing-description.pb-2
+          = listing.description
+
+        .text-small.text-darkgray.pb-2
+          = listing.listing_condition.name
+
+        .text-small.text-darkgray.pb-2
+          Delivery Option
+
+        .text-medium.text-black.pb-2
+          = number_to_currency listing.price, unit: "£"
+
+        .row.p-2
+          .col
+            - if can? :create, Conversation.new(listing: listing)
+              = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do
+                .text-small.text-center.listing-blue.rounded.bg-blue
+                  Enquire
+          .col
+            = link_to listing, class: 'listing-button button-blue' do
+              .text-small.text-center.text-blue.listing-blue.rounded
+                See Details
+      .col-2.col-lg-1.text-medium.text-blue.d-flex.flex-column.justify-content-around
+        .icon-button
+          - if can? :create, Report.new(listing: listing)
+            = icon('far', 'flag')
+        .text-medium
+          - if can? :create, UserFavourite.new(listing: listing)
+            - if user_favourite.present?
+              = link_to(delete_favourite_listing_path(listing), method: :post, remote: true, class: 'icon-button heart-link') do
+                = icon('fas', 'heart')
             - else
-              = icon('fas', 'tags', class: 'text-large')
-
-        .col-7.col-lg-8.text-left.details-container
-            
-          .text-medium.text-red.py-2
-            = listing.title
-
-          .text-small.text-black.pb-2
-            = listing.creator.username
-
-          .text-small.text-black.pb-2
-            =listing.description
-
-          .text-small.text-darkgray.pb-2
-            = listing.listing_condition.name
-
-          .text-small.text-darkgray.pb-2
-            Delivery Option
-
-          .text-medium.text-black.pb-2
-            = number_to_currency listing.price, unit: "£"
-
-          .row.p-2
-            .col
-              - if can? :create, Conversation.new(listing: listing)
-                = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do
-                  .text-small.text-center.listing-blue.rounded.bg-blue
-                    Enquire
-            .col
-              = link_to listing, class: 'listing-button button-blue' do
-                .text-small.text-center.text-blue.listing-blue.rounded
-                  See Details
-        .col-2.col-lg-1.text-medium.text-blue.d-flex.flex-column.justify-content-between
-          .icon-button
-            - if can? :create, Report.new(listing: listing)
-              = icon('far', 'flag')
-          .text-medium
-            - if can? :create, UserFavourite.new(listing: listing)
-              - if user_favourite.present?
-                = link_to(delete_favourite_listing_path(listing), method: :post, remote: true, class: 'icon-button heart-link') do
-                  = icon('fas', 'heart')
-              - else
-                = link_to(add_favourite_listing_path(listing), method: :post, remote: true, class: 'icon-button heart-link') do
-                  = icon('far', 'heart') 
+              = link_to(add_favourite_listing_path(listing), method: :post, remote: true, class: 'icon-button heart-link') do
+                = icon('far', 'heart')

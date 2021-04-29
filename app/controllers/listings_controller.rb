@@ -83,7 +83,7 @@ class ListingsController < ApplicationController
   end
 
   def mylistings
-    @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update)
+    @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update).where(creator: current_user)
   end
 
     # GET /listings/1
