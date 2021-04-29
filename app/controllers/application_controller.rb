@@ -1,3 +1,5 @@
+require 'jwt'
+
 class ApplicationController < ActionController::Base
   # Ensure that CanCanCan is correctly configured
   # and authorising actions on each controller
@@ -9,6 +11,7 @@ class ApplicationController < ActionController::Base
   before_action :update_headers_to_disable_caching
   before_action :ie_warning
   before_action :authenticate_user!
+  before_action :validate_covid_guidance_date, :set_jwt
 
   ## The following are used by our Responder service classes so we can access
   ## the instance variable for the current resource easily via a standard method
@@ -51,6 +54,28 @@ class ApplicationController < ActionController::Base
   def ie_warning
     if request.user_agent.to_s =~ /MSIE [6-7]/ && request.user_agent.to_s !~ %r{Trident/7.0}
       redirect_to(ie_warning_path)
+    end
+  end
+
+  def validate_covid_guidance_date
+    @covid_guidance = PageContent.find_by(key: "Covid Guidance")
+    # Check if the user has dismissed the covid guidance and if the updated dates differ.
+    if cookies[:covid_guidance_date] != @covid_guidance.updated_at.to_s
+      # Delete covid guidance cookies if they have to force a refresh of them
+      cookies.delete :dismissed_covid_guidance
+      cookies.delete :covid_guidance_date
+    end
+  end
+
+  def set_jwt
+    if current_user
+      # SET JWT Token on page load to authenticate our requests.
+      # Set an expiry of 3 hours from now, this should refresh every time the user moves page so shouldn't be a problem.
+      payload = { user_id: current_user.id, exp: Time.now.to_i + (3600 * 3) }
+      cookies[:token] = JWT.encode payload, '5|_||>E.-5e(.-e7|<e`/', 'HS256'
+    else
+      # Delete JWT Token if no current since that means they signed out.
+      cookies.delete :token
     end
   end
 end

@@ -66,4 +66,10 @@ class Listing < ApplicationRecord
         delivery_objs = self.deliveries
         return delivery_objs.ids
     end
+    
+    validates :deliveries, presence: true
+    validates :description, presence: true
+    validates :images, presence: true
+    validates :location, presence: true
+    validates :title, presence: true
 end

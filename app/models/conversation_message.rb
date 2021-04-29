@@ -21,7 +21,9 @@
 #  fk_rails_...  (sender_id => users.id)
 #
 class ConversationMessage < ApplicationRecord
-    belongs_to :conversation
+    validates :content, presence: true
+
+    belongs_to :conversation, touch: true
     belongs_to :sender, class_name: "User"
     has_many :reports
 end

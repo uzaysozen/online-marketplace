@@ -1,10 +1,9 @@
-- user_conversations = current_user.all_conversations
 %ul#profile-nav.nav.nav-tabs.nav-justified.text-medium
   %li.nav-item
     = link_to mylistings_path, class: "nav-link #{'active' if path_contains? 'listings'}" do
       = icon 'fas', 'tag', 'Listings'
   %li.nav-item
-    = link_to user_conversations.empty? ? conversations_path : conversation_path(user_conversations.first), class: "nav-link #{'active' if path_contains? 'conversations'}" do
+    = link_to conversations_path, class: "nav-link #{'active' if path_contains? 'conversations'}" do
       = icon 'fas', 'envelope', 'Conversations'
   %li.nav-item
     = link_to user_favourites_path, class: "nav-link #{'active' if path_contains? 'favourites'}" do

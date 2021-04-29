@@ -1,8 +1,13 @@
 @import 'variables';
+@import 'bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
 
 body, .font-main {
-  font-family: "Montserrat", serif !important;
+  font-family: "Montserrat", sans-serif !important;
+}
+
+.text-extra-small {
+  font-size: $font-extra-small;
 }
 
 .text-small {
@@ -68,6 +73,6 @@ body, .font-main {
   color: $gold;
 }
 
-.listing-button:hover{
-  text-decoration: none !important;
+.line-height-normal {
+  line-height: $line-height-base;
 }

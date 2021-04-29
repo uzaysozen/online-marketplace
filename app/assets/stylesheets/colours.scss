@@ -36,6 +36,16 @@
   border-left: 0;
 }
 
+.border-bottom-gray {
+  border: 0 solid $gray;
+  border-bottom-width: 1px;
+}
+
+.border-right-gray {
+  border: 0 solid $gray;
+  border-right-width: 1px;
+}
+
 @media(min-width: 768px) {
   .borderx-md-gray {
     border: 1px solid $gray;
@@ -81,18 +91,15 @@
 }
 
 .listing-blue, .listing-red {
-  max-width: 137px;
-  max-height: 25px;
-
   transition: 0.2s ease-in-out;
 }
 
-.btn-md {
-  max-width: 249px;
-  max-height: 49;
-}
 .listing-blue:hover, .listing-red:hover {
   transform: scale(1.02);
+}
+
+.btn-approve {
+  background-color: $green;
 }
 
 .heart-link {

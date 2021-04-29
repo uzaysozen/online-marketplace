@@ -23,8 +23,11 @@ Rails.application.routes.draw do
   resources :listings do
     post :search_and_filter, on: :collection
     post :add_favourite, on: :member
+    post :complete, on: :member
     post :delete_favourite, on: :member
     get :start_conversation, on: :member
+    post :swap_conversation, on: :member
+    get :swap, on: :member
     post :delete_conversation, on: :member
   end
   
@@ -58,6 +61,10 @@ Rails.application.routes.draw do
     get :add_question, to: 'admin#get_question'
     post :add_question, to: 'admin#add_question'
     post :remove_question, to: 'admin#remove_question'
+    post :approve_listing, to: 'admin#approve_listing'
+    get :ban_user, to: 'admin#get_user'
+    post :ban_user, to: 'admin#ban_user'
+    post :unban_user, to: 'admin#unban_user'
   end
   
   # Static Pages

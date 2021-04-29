@@ -1,62 +1,66 @@
-.container-fluid
-  .row.rows-cols-2.justify-content-center.flex-column-reverse.flex-md-row
-    .col.text-left.border-right
-      .row.rows-cols-2.justify-content-left.flex-column-reverse.flex-md-row
-      %br
-        %h5 
-          %strong Admin permissions
-        %p.mod-info Demote/promote users administrator privileges
-      .row.justify-content-left.flex-column-reverse.flex-md-row.mr-2
-        %table.table.table-bordered
-          %thead.thead-light.w-100
-            %tr
-              %th.w-auto.text-center{scope: "col"} Username
-              %th.w-auto.text-center{scope: "col"} Name
-              %th.w-auto.text-center{scope: "col"} 
-          %tbody#admins{style: 'max-height: 250px'}
-            = render partial: 'user_row', collection: @admins, as: :admin
-      .row.justify-content-left.flex-column-reverse.flex-md-row.mb-4
-        = link_to promote_user_path, class: 'ajax-modal btn btn-sm btn-secondary' do
+#admin-and-email.py-4.border-bottom-gray
+  .row
+    .col.text-left.border-right-gray
+      %h5
+        %strong Admin permissions
+      %p.text-extra-small.text-darkgray Demote/promote users administrator privileges
+      %table.table.table-bordered
+        %thead.thead-light.w-100
+          %tr.text-center
+            %th.w-auto{scope: "col"} Username
+            %th.w-auto{scope: "col"} Name
+            %th.w-auto{scope: "col"}
+        %tbody#admins{style: 'max-height: 250px'}
+          = render partial: 'user_row', collection: @admins, as: :admin
+      .row
+        = link_to promote_user_path, class: 'ajax-modal btn btn-secondary col-6 offset-3 col-lg-4 offset-lg-4' do
           Add a new admin
     .col.text-left
-      .row.justify-content-left.flex-column-reverse.flex-md-row
-      %br
-        %h5 
-          %strong Send an email...
-        %p.mod-info Send a message to all users of the site via email
-      .row.justify-content-center.flex-column-reverse.flex-md-row.ml-2
-        = render 'email_form'
-  .row.justify-content-left.flex-column-reverse.flex-md-row
-    %br
-      %h5 
-        %strong Banned words
-  
-  #word-form.row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
+      %h5
+        %strong Send an email...
+      %p.text-extra-small.text-darkgray Send a message to all users of the site via email
+      = render 'email_form'
+
+#banned-words.py-4.border-bottom-gray.text-left
+  %h5
+    %strong Banned words
+
+  #word-form
     = render 'banned_words_form'
 
-  .row.justify-content-elft.flex-column-reverse.flex-md-row
-    %br
-      %h5 
-        %strong Edit the site...
-  %br
-  .row.justify-content-elft.flex-column-reverse.flex-md-row
-    %p COVID Guidance
-  
-  #covid-form.row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
+#banned-users.py-4.border-bottom-gray.text-left
+  %h5
+    %strong Banned users
+
+  %table.table.table-bordered
+    %thead.thead-light.w-100
+      %tr.text-center
+        %th.w-auto{scope: "col"} Username
+        %th.w-auto{scope: "col"} Name
+        %th.w-auto{scope: "col"} Ban Reason
+        %th.w-auto{scope: "col"}
+    %tbody{style: 'max-height: 250px'}
+      = render partial: 'banned_user', collection: @banned_users, as: :banned_user
+
+#site-editing.py-4.text-left
+  %h5
+    %strong Edit the site...
+
+  %p COVID Guidance
+
+  #covid-form
     = render 'covid_form'
-  
-  .row.justify-content-elft.flex-column-reverse.flex-md-row
-    %p FAQs
-  
-  .row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2
-    %table.table.table-bordered
-      %thead.thead-light.w-100
-        %tr
-          %th.w-auto.pr-5.text-center{scope: "col"} Question
-          %th.w-auto.pr-5.text-center{scope: "col"} Answer
-          %th.w-auto.text-center{scope: "col"} 
-      %tbody#questions{style: 'max-height: 400px'}
-        = render partial: 'faq_row', collection: @questions, as: :question
-  .row.justify-content-center.flex-column-reverse.flex-md-row
-    = link_to add_question_path, class: 'ajax-modal btn btn-md btn-primary' do
+
+  %p FAQs
+
+  %table.table.table-bordered
+    %thead.thead-light.w-100
+      %tr
+        %th.w-auto.pr-5.text-center{scope: "col"} Question
+        %th.w-auto.pr-5.text-center{scope: "col"} Answer
+        %th.w-auto.text-center{scope: "col"}
+    %tbody#questions{style: 'max-height: 400px'}
+      = render partial: 'faq_row', collection: @questions, as: :question
+  .row
+    = link_to add_question_path, class: 'ajax-modal btn btn-primary col-6 offset-3 col-lg-4 offset-lg-4' do
       Add a new question

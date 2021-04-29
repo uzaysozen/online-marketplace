@@ -23,20 +23,6 @@
   table-layout: fixed;
 }
 
-.mod-info {
-  color: #606060;
-  font-size: 12px;
-}
-
-#admin-form {
-  .email-btn {
-    width: 130px;
-  }
-  .edit-btn {
-    width: 150px;
-  }
-}
-
 #pending-posts {
   overflow-y: auto;
   max-height: 500px;

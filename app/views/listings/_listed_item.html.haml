@@ -1,82 +1,68 @@
 - user_favourite = current_user.user_favourites.find_by(listing: listed_item)
 
-.row.justify-content-left.flex-column-reverse.flex-md-row.listing-container
+.row.listing-container.py-2{id: "listing-#{listed_item.id}"}
   .col-12.col-md-12
     .border-none.rounded.h-100
       .row.p-2
-        
-        .col-12.col-sm-2.text-left.listing-image-container.text-red
-          %p
+        .col-12.col-sm-2.d-flex.align-items-center.justify-content-center
+          .preview-image
+            - if listed_item.images&.attached?
+              = image_tag(rails_blob_url(listed_item.images.first))
+            - else
+              = icon('fas', 'tags', class: 'text-large')
+
+        .col-9.col-sm-4.text-left
+          .text-medium.text-red.text-left.py-2
+            = listed_item.title
+          .text-small.text-black.border-right-black.listing-description.pb-2
+            = listed_item.description
+
+        .col-3.col-sm-1.d-flex.align-items-center
           - if current_user.id != listed_item.creator_id
-            = link_to(user_favourite, method: :delete, remote: true, class: 'heart-link') do
+            = link_to(delete_favourite_listing_path(listed_item), method: :post, remote: true, class: 'icon-button heart-link') do
               = icon('fas', 'heart')
 
-          = image_tag "/images/logos/su.png"
 
-        .col-12.col-sm-5.text-left.listing-description-container
-          
-          .text-medium.text-red.text-left
-            %p
-            %p
-            =listed_item.title 
-              
-          .text-small.text-black.border-right-black
-            =listed_item.description 
-
-
-        .col-12.col-sm-3.text-left.listing-price-container
+        .col-12.col-sm-3.text-left.listing-price-container.d-flex.flex-column.justify-content-around
           .text-small.text-black
-            %p
-            =listed_item.creator.username
-            %p
+            = listed_item.creator.username
 
-          .text-small.text-darkgray 
+          .text-small.text-darkgray
             = listed_item.listing_condition.name
-            %p
 
-          .text-small.text-darkgray 
+          .text-small.text-darkgray
             Delivery Option
-            %p
 
           .text-medium.text-black
             £
             = listed_item.price 
 
 
-        - if current_user.id == listed_item.creator_id 
-
-          .col-12.col-sm-2.text-left  
-            %p  
-          
-            .text-small.text-center.listing-blue.rounded.bg-blue
+        - if current_user.id == listed_item.creator_id
+          .col-12.col-sm-2.text-left.d-flex.flex-column.justify-content-between
+            .text-small.text-center.listing-blue.rounded.bg-blue.my-2.my-md-0
               = link_to edit_listing_path(listed_item), class: 'ajax-modal listing-button white-button' do
-                Edit 
-            %p
+                Edit
 
-            .text-small.text-center.text-blue.listing-blue.rounded 
+            .text-small.text-center.text-blue.listing-blue.rounded.my-2.my-md-0
               = link_to listed_item, class: 'button-blue listing-button' do
                 See Details
-            
-            %p 
 
-            .text-small.text-center.text-red.listing-red.rounded
+            .text-small.text-center.text-red.listing-red.rounded.my-2.my-md-0
               = link_to listed_item, method: :delete, data: { confirm: 'Are you sure?' }, class: 'listing-button delete-button' do
                 = icon('fas', 'trash') 
                 Delete
 
-        - else 
- 
-          .col-12.col-sm-2.text-left    
-            %p
-            .text-small.text-center.listing-blue.rounded.bg-blue
-              = link_to start_conversation_listing_path(listed_item), class: 'listing-button white-button' do
+        - else
+          .col-12.col-sm-2.text-left.d-flex.flex-column.justify-content-between
+            = link_to start_conversation_listing_path(listed_item), class: 'listing-button white-button my-2 my-md-0' do
+              .text-small.text-center.listing-blue.rounded.bg-blue
                 Enquire
-            %p
-            .text-small.text-center.text-blue.listing-blue.rounded 
-              = link_to listed_item, class: 'button-blue listing-button' do
-                See Details
-            %p 
 
-            .text-small.text-center.text-blue.listing-blue.rounded
+            = link_to listed_item, class: 'button-blue listing-button my-2 my-md-0' do
+              .text-small.text-center.text-blue.listing-blue.rounded
+                See Details
+
+            .text-small.text-center.text-blue.listing-blue.rounded.my-2.my-md-0
               = icon('far', 'flag') 
               Report

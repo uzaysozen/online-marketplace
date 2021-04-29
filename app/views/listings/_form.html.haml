@@ -1,18 +1,21 @@
 = simple_form_for @listing, html: {enctype: "multipart/form-data"} do |f|
   = f.error_notification
 
-  .form-inputs
-    = f.input :title, hint: 'Use a descriptive title to promote your item'
-    = f.input :price, hint: 'Leaving the price empty will set the price as \'Free\''
+  .form-inputs.pt-3
+    .row
+      .col-lg-7.col-sm-12
+        = f.input :title, hint: 'Use a descriptive title to promote your item'
+      .col-lg-5.col-sm-12
+        = f.input :price, label: 'Price (£)', hint: 'Leaving the price empty will set the price as \'Free\'', placeholder: 'Free'
     .row
       .col 
-        %p.mb-0 Add A Photo
+        %label.required.mb-0 Add A Photo
         %p.text-small.text-darkgray Using clear photos will help sell your item
       %label.col-4.file-input.btn-secondary.btn-lg.text-center.d-inline-flex.justify-content-center.align-items-center
         Upload
         .fas.fa-file-upload.ml-2
         %span.input
-          = f.file_field :images, multiple: true, direct_upload: true
+          = f.file_field :images, multiple: true, direct_upload: true, require: true, hint: 'You must upload at least one image'
 
     #images-preview.row
       - (1..8).each do |i|
@@ -23,7 +26,7 @@
     = f.input :description, hint: '(Max 200 words)'
     = f.association :listing_condition, label: 'Condition'
     = f.association :listing_category, label: 'Category'
-    = f.input :listing_deliveries, label: 'Delivery', as: :check_boxes,  collection: Delivery.all, input_html: { multiple: true }
+    = f.input :listing_deliveries, label: 'Delivery', collection_wrapper_class: 'row', item_wrapper_class: 'col-sm-3 col-xs-12 ml-4', as: :check_boxes,  collection: Delivery.all, input_html: { multiple: true }
     = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
     %p Swaps
     = f.input :swap, label: 'Open to swaps', class: 'hello'
