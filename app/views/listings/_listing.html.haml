@@ -11,22 +11,22 @@
 
       .col-7.col-lg-8.text-left.details-container
 
-        .text-medium.text-red.py-2
+        .text-medium.text-red.my-2
           = listing.title
 
-        .text-small.text-black.pb-2
+        .text-small.text-black.mb-2
           = listing.creator.username
 
-        .text-small.text-black.listing-description.pb-2
+        .text-small.text-black.listing-description.mb-2
           = listing.description
 
-        .text-small.text-darkgray.pb-2
+        .text-small.text-darkgray.mb-2
           = listing.listing_condition.name
 
-        .text-small.text-darkgray.pb-2
+        .text-small.text-darkgray.mb-2
           Delivery Option
 
-        .text-medium.text-black.pb-2
+        .text-medium.text-black.mb-2
           = number_to_currency listing.price, unit: "£"
 
         .row.p-2
