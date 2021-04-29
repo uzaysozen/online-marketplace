@@ -8,6 +8,14 @@ class ListingsController < ApplicationController
       @listings = accessible_listings
       session[:category_listings] = accessible_listings
 
+      # Initializing variables for the filter menu to remember filter settings
+      session[:search_string] = ""
+      session[:search_category] = ""
+      session[:search_minprice] = ""
+      session[:search_maxprice] = ""
+      session[:search_condition] = ""
+      session[:search_swap] = false
+
       # Sorting Function
       table_col = Listing.column_names
       sort_val = ['asc', 'desc']
@@ -30,17 +38,6 @@ class ListingsController < ApplicationController
     # POST /listings/search_and_filter
     def search_and_filter
       @listings = session[:category_listings] ||= accessible_listings
-
-      # Search through Listings
-      if params[:search_and_filter][:search_bar].present?
-        @search_params = params[:search_and_filter][:search_bar]
-        @listing_locations = Listing.pluck(:location)
-        if @listing_locations.include? @search_params
-          @listings = @listings.where("location = ?", "#{params[:search_and_filter][:search_bar]}")
-        else
-          @listings = @listings.where("title ilike ?", "%#{params[:search_and_filter][:search_bar]}%")
-        end
-      end
 
       #Filter the Listings by Tags
       #if params[:search_and_filter][:filter_tags].present?
@@ -66,30 +63,62 @@ class ListingsController < ApplicationController
           @listings = accessible_listings
           @listings = @listings.where(listing_category_id: subcategory_ids << current_category.id)
           session[:category_listings] = @listings
+          session[:search_category] = params[:search_and_filter][:filter_category]
         end
+      else
+        session[:search_category] = ""
+        session[:category_listings] = accessible_listings
+        @listings = accessible_listings
+      end
+
+      # Search through Listings
+      if params[:search_and_filter][:search_bar].present?
+        @search_params = params[:search_and_filter][:search_bar]
+        @listing_locations = Listing.pluck(:location)
+        if @listing_locations.include? @search_params
+          @listings = @listings.where("location = ?", "#{params[:search_and_filter][:search_bar]}")
+          session[:search_string] = @search_params
+        else
+          @listings = @listings.where("title ilike ?", "%#{params[:search_and_filter][:search_bar]}%")
+          session[:search_string] = @search_params
+        end
+      else
+        session[:search_string] = ""
       end
 
       #Filter by Minimum Price
       if params[:search_and_filter][:filter_minprice].present?
         @listings = @listings.where("price >= ?", params[:search_and_filter][:filter_minprice])
+        session[:search_minprice] = params[:search_and_filter][:filter_minprice]
+      else
+        session[:search_minprice] = ""
       end
 
       #Filter by Maximum Price
       if params[:search_and_filter][:filter_maxprice].present?
         @listings = @listings.where("price <= ?", params[:search_and_filter][:filter_maxprice])
+        session[:search_maxprice] = params[:search_and_filter][:filter_maxprice]
+      else
+        session[:search_maxprice] = ""
       end
 
       #Filter by Condition
       if params[:search_and_filter][:filter_condition].present?
         current_condition = ListingCondition.where(id: params[:search_and_filter][:filter_condition]).first
+        session[:search_condition] = params[:search_and_filter][:filter_condition]
         unless current_condition.nil?
           @listings = @listings.where(listing_condition_id: current_condition.id)
         end
+      else
+        session[:search_condition] = ""
       end
 
       #Filter by Swap-Only Listings
       if params[:search_and_filter][:filter_swap] == "1"
         @listings = @listings.where("swap = ?", params[:search_and_filter][:filter_swap])
+        session[:search_swap] = true
+      else
+        session[:search_swap] = false
       end
 
       #Filter by Delivery
@@ -110,6 +139,12 @@ class ListingsController < ApplicationController
         @listings = accessible_listings
         session[:sort_listings] = accessible_listings
         session[:category_listings] = accessible_listings
+        session[:search_string] = ""
+        session[:search_category] = ""
+        session[:search_minprice] = ""
+        session[:search_maxprice] = ""
+        session[:search_condition] = ""
+        session[:search_swap] = false
         render :index
       end
     end
