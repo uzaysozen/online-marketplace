@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   def validate_covid_guidance_date
     @covid_guidance = PageContent.find_by(key: "Covid Guidance")
     # Check if the user has dismissed the covid guidance and if the updated dates differ.
-    if cookies[:covid_guidance_date] != @covid_guidance.updated_at.to_s
+    if @covid_guidance.present? && cookies[:covid_guidance_date] != @covid_guidance.updated_at.to_s
       # Delete covid guidance cookies if they have to force a refresh of them
       cookies.delete :dismissed_covid_guidance
       cookies.delete :covid_guidance_date
