@@ -1,4 +1,5 @@
 @import 'variables';
+@import 'bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
 
 body, .font-main {
@@ -72,6 +73,6 @@ body, .font-main {
   color: $gold;
 }
 
-.listing-button:hover{
-  text-decoration: none !important;
+.line-height-normal {
+  line-height: $line-height-base;
 }

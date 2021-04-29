@@ -20,3 +20,11 @@
 .action-container {
   line-height: 18.0;
 }
+
+.listing-button {
+  line-height: 1.5;
+
+  &:hover {
+    text-decoration: none;
+  }
+}

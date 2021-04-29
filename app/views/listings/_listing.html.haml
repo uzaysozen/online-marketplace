@@ -38,12 +38,12 @@
           .row.p-2
             .col
               - if can? :create, Conversation.new(listing: listing)
-                .text-small.text-center.listing-blue.rounded.bg-blue
-                  = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do
+                = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do
+                  .text-small.text-center.listing-blue.rounded.bg-blue
                     Enquire
-            .col        
-              .text-small.text-center.text-blue.listing-blue.rounded 
-                = link_to listing, class: 'button-blue listing-button' do
+            .col
+              = link_to listing, class: 'listing-button button-blue' do
+                .text-small.text-center.text-blue.listing-blue.rounded
                   See Details
         .col-2.col-lg-1.text-medium.text-blue
           .icon-button
