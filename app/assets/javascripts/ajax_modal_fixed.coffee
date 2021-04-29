@@ -1,3 +1,8 @@
+# THIS FILE IS TAKEN FROM THE EPIGENESYS GEM.
+# That version binds to body at the start of the following line
+# $(document).on 'click', 'a.ajax-modal, [data-toggle="ajax-modal"]', (e) ->
+# Because of this, turbolinks breaks all buttons using the ajax-modal class or data attribute
+# It has therefore been modified to bind to document instead.
 (($) ->
   'use strict'
   $.ajaxModal = (url, params) ->
