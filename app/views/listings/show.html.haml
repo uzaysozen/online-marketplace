@@ -114,7 +114,7 @@
 
             .row
               - if @listing.listing_status.name != 'Complete'
-                - if @listing.creator = current_user
+                - if @listing.creator != current_user
                   .col.p-2.d-flex.justify-content-center
                     = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex align-items-center justify-content-center w-100' do
                       Send Message
