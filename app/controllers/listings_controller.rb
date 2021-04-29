@@ -6,7 +6,7 @@ class ListingsController < ApplicationController
     # GET /listings
     def index
       @listings = accessible_listings
-      session[:g_listings] = @listings
+      session[:category_listings] = accessible_listings
 
       # Sorting Function
       table_col = Listing.column_names
@@ -15,13 +15,13 @@ class ListingsController < ApplicationController
       # Verifying Parameters
       if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
         sort_order = session[:sort_order] || 'asc'
-        @listings = session[:sort_listings] ||= session[:g_listings]
+        @listings = session[:sort_listings] ||= accessible_listings
         @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       else
         params[:sort] = "title"
         sort_order = 'asc'
-        @listings = session[:sort_listings] ||= session[:g_listings]
+        @listings = session[:sort_listings] ||= accessible_listings
         @listings = @listings.order("#{params[:sort]} #{sort_order}")
         session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
       end
@@ -29,7 +29,7 @@ class ListingsController < ApplicationController
 
     # POST /listings/search_and_filter
     def search_and_filter
-      @listings = session[:g_listings] ||= accessible_listings
+      @listings = session[:category_listings] ||= accessible_listings
 
       # Search through Listings
       if params[:search_and_filter][:search_bar].present?
@@ -43,20 +43,20 @@ class ListingsController < ApplicationController
       end
 
       #Filter the Listings by Tags
-      if params[:search_and_filter][:filter_tags].present?
-        @entered_tags = params[:search_and_filter][:filter_tags].reject(&:blank?)
-        @all_tag_names = Tag.pluck(:name)
+      #if params[:search_and_filter][:filter_tags].present?
+      #  @entered_tags = params[:search_and_filter][:filter_tags].reject(&:blank?)
+      #  @all_tag_names = Tag.pluck(:name)
 
-        if not (@all_tag_names & @entered_tags).empty?
-          @common_tags = @all_tag_names & @entered_tags
-          @tag_objects = Tag.where(name: @common_tags)
-          @listing_tag_objects = ListingTag.where(tag_id: @old_tag_objects.ids)
+      #  if not (@all_tag_names & @entered_tags).empty?
+      #    @common_tags = @all_tag_names & @entered_tags
+      #    @tag_objects = Tag.where(name: @common_tags)
+      #    @listing_tag_objects = ListingTag.where(tag_id: @tag_objects.ids)
 
-          unless @listing_tag_objects.nil?
-            @listings = @listings.where(id: @listing_tag_objects.listing_id)
-          end
-        end
-      end
+      #    unless @listing_tag_objects.nil?
+      #      @listings = @listings.where(id: @listing_tag_objects.listing_id)
+      #    end
+      #  end
+      #end
 
       #Filter by Category
       if params[:search_and_filter][:filter_category].present?
@@ -65,7 +65,7 @@ class ListingsController < ApplicationController
           subcategory_ids = current_category.explored.map(&:id)
           @listings = accessible_listings
           @listings = @listings.where(listing_category_id: subcategory_ids << current_category.id)
-          session[:g_listings] = @listings
+          session[:category_listings] = @listings
         end
       end
 
@@ -88,7 +88,7 @@ class ListingsController < ApplicationController
       end
 
       #Filter by Swap-Only Listings
-      if params[:search_and_filter][:filter_swap].present?
+      if params[:search_and_filter][:filter_swap] == "1"
         @listings = @listings.where("swap = ?", params[:search_and_filter][:filter_swap])
       end
 
@@ -103,11 +103,13 @@ class ListingsController < ApplicationController
         end
       end
 
-      if params[:clear_button]
-        session[:sort_listings] = accessible_listings
-        render :index
-      else
+      if params[:search_button] == 'Confirm'
         session[:sort_listings] = @listings
+        render :index
+      elsif params[:search_button] == 'Clear'
+        @listings = accessible_listings
+        session[:sort_listings] = accessible_listings
+        session[:category_listings] = accessible_listings
         render :index
       end
     end

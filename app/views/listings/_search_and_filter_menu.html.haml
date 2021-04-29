@@ -6,8 +6,10 @@
           %p Search Bar
           = f.input :search_bar, label: false, required: false
 
-          %p Select Tags
-          = f.input :filter_tags, label: false, as: :select, collection: Tag.pluck(:name), input_html: { class: 'select2', multiple: true }, required: false
+          -# %p Select Tags
+          -# = f.input :filter_tags, label: false, as: :select, collection: Tag.pluck(:name), input_html: { class: 'select2', multiple: true }, required: false
+
+          %br
 
           %p Filter Menu
           = f.input :filter_category, label: 'Categories', collection: ListingCategory.all, required: false
@@ -24,5 +26,5 @@
 
           = f.input :filter_delivery, label: 'Delivery', as: :check_boxes, collection: Delivery.all, required: false, input_html: { multiple: true, checked: true }
 
-          = f.submit 'Confirm', class: 'btn btn-default', id: 'search-button'
-          = f.submit 'Clear', class: 'btn btn-default', id: 'clear_button'
+          = f.submit 'Confirm', class: 'btn btn-default', name: 'search_button'
+          = f.submit 'Clear', class: 'btn btn-default', name: 'search_button'
