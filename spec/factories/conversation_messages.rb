@@ -4,7 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  content         :text
-#  is_deleted      :boolean
+#  is_deleted      :boolean          default(FALSE), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  conversation_id :bigint
