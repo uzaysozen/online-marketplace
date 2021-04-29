@@ -1,8 +1,8 @@
 = link_to conversation, class: 'conversation-link' do
   %div{class: "list-group-item conversation-card #{(@conversation == conversation) ? 'active-conversation' : ''}"}
     .row
-      .col-12.col-lg-4.px-0
-        .preview-image
+      .col-12.col-lg-4.px-0.d-flex.align-items-center.justify-content-center
+        .preview-image.preview-image-md
           - if conversation.listing.images&.attached?
             = image_tag(rails_blob_url(conversation.listing.images.first))
           - else

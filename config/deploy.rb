@@ -3,7 +3,7 @@ set :application,             'team01'
 set :branch,                  -> { fetch(:stage) }
 set :repo_url,                'git@git.shefcompsci.org.uk:com3420-2020-21/team01/project.git'
 set :linked_files,            fetch(:linked_files,  fetch(:env_links, [])).push('config/database.yml', 'config/secrets.yml')
-set :linked_dirs,             fetch(:linked_dirs, []).push('log', 'tmp/pids', 'uploads')
+set :linked_dirs,             fetch(:linked_dirs, []).push('log', 'tmp/pids', 'uploads', 'storage')
 # set the locations to look for changed assets to determine whether to precompile
 set :assets_dependencies,     %w(app/assets lib/assets vendor/assets)
 set :branch,                  -> { fetch(:stage) }
