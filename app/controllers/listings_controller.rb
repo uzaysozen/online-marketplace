@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
 
     load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-    load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+    load_resource only: [:swap, :swap_conversation, :add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
 
     # GET /listings
     def index
@@ -259,7 +259,7 @@ class ListingsController < ApplicationController
     def start_conversation
       authorize! :create, Conversation.new(listing: @listing)
       @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
-      redirect_to @conversation
+      redirect_to @conversation, notice: "Swap"
     end
 
     def delete_conversation
@@ -270,6 +270,25 @@ class ListingsController < ApplicationController
         redirect_to listings_path
       else
         redirect_to listings_path
+      end
+    end
+
+    def swap
+      render layout: false
+    end
+
+    def swap_conversation
+      message = params[:swap_message][:message]
+      @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
+      @conversation_message = ConversationMessage.new(conversation: @conversation, content: message)
+      @conversation_message.sender = current_user
+      @conversation_message.swap_listing_id = params[:swap_message][:item]
+      if @conversation_message.valid?
+        @conversation_message.save
+        SendConversationMessageJob.perform_later(@conversation_message, current_user)
+        head :ok
+      else
+        head :bad_request
       end
     end
 
