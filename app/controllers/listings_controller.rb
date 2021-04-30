@@ -273,17 +273,6 @@ class ListingsController < ApplicationController
       end
     end
 
-  def delete_conversation
-    @conversation = current_user.conversations.find_by(listing: @listing)
-    authorize! :delete, @conversation
-    if @conversation.conversation_messages.empty?
-      @conversation.destroy
-      redirect_to listings_path
-    else
-      redirect_to listings_path
-    end
-  end
-
   private
   def accessible_listings
     Listing.includes(:creator, :listing_condition).where(listing_status_id: 2).accessible_by(current_ability)
