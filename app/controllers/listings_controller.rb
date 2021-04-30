@@ -89,6 +89,7 @@ class ListingsController < ApplicationController
     # GET /listings/1
     def show
       @listing = Listing.find(params[:id])
+      ListingView.create(listing: @listing, user: current_user)
     end
   
     # GET /listings/new
