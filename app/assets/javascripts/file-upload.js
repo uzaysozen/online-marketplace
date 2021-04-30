@@ -18,8 +18,6 @@ addImagePreview = (file, imageNumber) => {
         let image = document.createElement('img');
         image.src = URL.createObjectURL(file);
         image_container.style.backgroundImage = "url(" + image.src + ")";
-        image_icon = image_container.children[0];
-        image_icon.remove();
 
         // Create a delete button to remove the image preview.
         let delete_button = document.createElement('span');
@@ -42,9 +40,7 @@ removeImagePreview = (fileName) => {
     let image_container = document.createElement('div');
     image_container.className = 'image-container';
     image_container.id = 'image_8';
-    let image_icon = document.createElement('div');
-    image_icon.className = 'far fa-image placeholder';
-    image_container.append(image_icon);
+    image_container.style.backgroundImage = "url(/images/placeholder.png)";
     preview.append(image_container);
 
     // Add to container

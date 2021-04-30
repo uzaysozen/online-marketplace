@@ -71,5 +71,5 @@ class Listing < ApplicationRecord
     validates :description, presence: true
     validates :images, presence: true
     validates :location, presence: true
-    validates :title, presence: true
+    validates :title, presence: true  
 end

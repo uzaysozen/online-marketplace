@@ -20,13 +20,12 @@
     #images-preview.row
       - (1..8).each do |i|
         %div.col-4.preview{:id => "preview_#{i}"}
-          %div.image-container{:id => "image_#{i}"}
-            %div.far.fa-image.placeholder
+          %div.image-container{:id => "image_#{i}", :style => "background-image: url(/images/placeholder.png)" }
 
     = f.input :description, hint: '(Max 200 words)'
     = f.association :listing_condition, label: 'Condition'
     = f.association :listing_category, label: 'Category'
-    = f.input :listing_deliveries, label: 'Delivery', collection_wrapper_class: 'row', item_wrapper_class: 'col-sm-3 col-xs-12 ml-4', as: :check_boxes,  collection: Delivery.all, input_html: { multiple: true }
+    = f.input :listing_deliveries, label: 'Delivery', collection_wrapper_class: 'row', item_wrapper_class: 'col-sm-3 col-xs-12 ml-4', item_label_class: 'text-small', as: :check_boxes,  collection: Delivery.all, input_html: { multiple: true }
     = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
     %p Swaps
     = f.input :swap, label: 'Open to swaps', class: 'hello'
