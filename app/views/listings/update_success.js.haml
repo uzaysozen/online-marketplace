@@ -1,2 +1,2 @@
 $('#modalWindow').modal('hide');
-$("#mylistings-table").html($('#{j render 'mylistings_table'}'));
+$("#mylistings-table").html($('#{j render partial: 'listed_item', collection: @listings}'));
