@@ -14,9 +14,9 @@
                   Approve
                   = icon('fas', 'check-circle')
               .col-sm.text-center
-                = link_to edit_listing_path(@listing), class: 'btn btn-primary ajax-modal' do
-                  Edit Post
-                  = icon('fas', 'edit')
+                = link_to @listing, method: :delete, class: 'btn btn-primary white-button listing-button', data: { confirm: 'Are you sure?' } do
+                  Delete
+                  = icon('fas', 'trash')
               .col-sm.text-center
                 = link_to ban_user_path(user: @listing.creator.id), class: 'btn btn-outline-primary ajax-modal' do
                   Ban User

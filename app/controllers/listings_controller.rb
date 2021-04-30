@@ -160,6 +160,7 @@ class ListingsController < ApplicationController
     # GET /listings/1
     def show
       @listing = Listing.find(params[:id])
+      ListingView.create(listing: @listing, user: current_user)
     end
   
     # GET /listings/new
@@ -276,13 +277,13 @@ class ListingsController < ApplicationController
       end
     end
 
-    private
-      def accessible_listings
-        Listing.includes(:creator, :listing_condition).accessible_by(current_ability)
-      end
-      # Only allow a trusted parameter "white list" through.
-      def listing_params
-        params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id, 
-          :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
-      end
+  private
+  def accessible_listings
+    Listing.includes(:creator, :listing_condition).where(listing_status_id: 2).accessible_by(current_ability)
   end
+  # Only allow a trusted parameter "white list" through.
+  def listing_params
+    params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
+                                    :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
+  end
+end
