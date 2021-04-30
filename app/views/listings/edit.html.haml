@@ -1,7 +1,44 @@
-.modal-dialog
-  .modal-content
-    = render 'form'
+.modal-dialog.modal-lg
+  .modal-content.p-5
+    = simple_form_for @listing, remote: true, html: {enctype: "multipart/form-data"} do |f|
+      = f.error_notification
 
-  .modal-footer
-    .pull-left
-      = dismiss_modal_button
+      .modal-header
+        %h4.modal-title Updating Listing
+        %button.close{ type: :button, data: { dismiss: :modal } }
+          %span &times;
+
+      .modal-body
+        .form-inputs
+          = f.input :title, hint: 'Use a descriptive title to promote your item'
+          = f.input :price, hint: 'Leaving the price empty will set the price as \'Free\''
+          .row
+            .col 
+              %p.mb-0 Add A Photo
+              %p.text-small.text-darkgray Using clear photos will help sell your item
+            %label.col-4.file-input.btn-secondary.btn-lg.text-center.d-inline-flex.justify-content-center.align-items-center
+              Upload
+              .fas.fa-file-upload.ml-2
+              %span.input
+                = f.file_field :images, multiple: true, direct_upload: true
+
+          #images-preview.row
+            - (1..8).each do |i|
+              %div.col-4.preview{:id => "preview_#{i}"}
+                %div.image-container{:id => "image_#{i}"}
+                  %div.far.fa-image.placeholder
+
+          = f.input :description, hint: '(Max 200 words)'
+          = f.association :listing_condition, label: 'Condition'
+          = f.association :listing_category, label: 'Category'
+          = f.input :listing_deliveries, label: 'Delivery', as: :check_boxes, collection: Delivery.all, checked: @listing.delivery_ids, input_html: { multiple: true }
+          = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
+          %p Swaps
+          = f.input :swap, label: 'Open to swaps', class: 'hello'
+          = f.input :listing_tags, label: 'Tags', hint: 'Add relevant keywords to ensure your listing appear on search (E.g. Education)', as: :select, collection: @listing.tags.map{|t| [t.name, t.name, {"selected": "selected"}]}, input_html: { class: 'select2', multiple: true }
+
+      .modal-footer
+        .form-actions
+          = f.button :submit, class: 'btn-secondary btn-lg'
+        .pull-left
+          = dismiss_modal_button
