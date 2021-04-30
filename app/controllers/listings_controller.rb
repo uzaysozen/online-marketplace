@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
 
     load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-    load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+    load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation, :complete, :swap, :swap_conversation]
 
     # GET /listings
     def index
@@ -168,6 +168,11 @@ class ListingsController < ApplicationController
       authorize! :update, @listing
       render layout: false
     end
+
+    # GET /listings/1/swap
+    def swap
+      render layout: false
+    end
   
     # POST /listings
     def create
@@ -261,6 +266,19 @@ class ListingsController < ApplicationController
       redirect_to @conversation
     end
 
+    def swap_conversation
+      authorize! :create, Conversation.new(listing: @listing)
+      @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
+      swap = params[:swap_message]
+      if !swap.nil?
+        listing = Listing.find_by_id(swap[:item])
+        return unless listing
+        message = swap[:message] + ' (' + listing.title + ')'
+        ConversationMessage.create(conversation: @conversation, content: message, sender: current_user)
+        redirect_to @conversation
+      end 
+    end
+
     def delete_conversation
       @conversation = current_user.conversations.find_by(listing: @listing)
       authorize! :delete, @conversation
@@ -271,6 +289,15 @@ class ListingsController < ApplicationController
         redirect_to listings_path
       end
     end
+
+    # Mark listing as complete
+    def complete 
+      @listing.listing_status = ListingStatus.where(name: 'Complete').first
+
+      if @listing.save
+        redirect_to request.referrer, notice: 'Listing has been marked as complete'
+      end
+    end  
 
     private
       def accessible_listings
