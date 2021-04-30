@@ -126,6 +126,10 @@ class ListingsController < ApplicationController
         delivery_ids = params[:search_and_filter][:filter_delivery]
         new_delivery_ids = delivery_ids.drop(1)
 
+        puts "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+        puts new_delivery_ids
+        puts "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+
         current_delivery = Delivery.where(id: new_delivery_ids)
         unless current_delivery.nil?
           @listings = @listings.where(listing_deliveries: current_delivery.ids)
