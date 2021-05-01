@@ -156,7 +156,7 @@ class ListingsController < ApplicationController
     # GET /listings/1
     def show
       @listing = Listing.find(params[:id])
-      @user_listings = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active'))
+      @user_listings_count = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active')).count
       ListingView.create(listing: @listing, user: current_user)
     end
   
@@ -300,7 +300,7 @@ class ListingsController < ApplicationController
 
   private
   def accessible_listings
-    Listing.includes(:creator, :listing_condition).where(listing_status_id: 2).accessible_by(current_ability)
+    Listing.includes(:creator, :listing_condition).accessible_by(current_ability, :list)
   end
   # Only allow a trusted parameter "white list" through.
   def listing_params

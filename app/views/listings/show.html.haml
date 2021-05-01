@@ -119,7 +119,7 @@
                     = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex align-items-center justify-content-center w-100' do
                       Send Message
                       .far.fa-comment-dots.ml-2
-                  - if @listing.swap and !@user_listings.empty?
+                  - if @listing.swap and @user_listings_count > 0
                     .col-lg-4.col-xs-12.p-2
                       = link_to start_conversation_listing_path(@listing, swap: "Swap"), class: 'btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do
                         Swap
