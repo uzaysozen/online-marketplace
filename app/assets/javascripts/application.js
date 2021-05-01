@@ -17,3 +17,4 @@
 //= require conversation
 //= require notifications
 //= require admin
+//= require swap

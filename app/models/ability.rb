@@ -38,6 +38,9 @@ class Ability
       cannot :create, Conversation, listing: { creator_id: user.id }
       cannot :create, UserFavourite, listing: { creator_id: user.id }
       cannot :create, Report, listing: { creator_id: user.id }
+
+      cannot :list, Listing
+      can :list, Listing, listing_status: { name: "Active" }
     end
   end
 end

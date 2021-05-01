@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
 
     load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-    load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+    load_resource only: [:swap, :swap_conversation, :add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
 
     # GET /listings
     def index
@@ -150,12 +150,13 @@ class ListingsController < ApplicationController
     end
 
     def mylistings
-      @listings = Listing.includes([:creator, :listing_condition]).accessible_by(current_ability, :update)
+      @listings = Listing.includes([:creator, :listing_condition, :images_attachments]).accessible_by(current_ability, :update)
     end
 
     # GET /listings/1
     def show
       @listing = Listing.find(params[:id])
+      @user_listings_count = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active')).count
       ListingView.create(listing: @listing, user: current_user)
     end
   
@@ -259,7 +260,11 @@ class ListingsController < ApplicationController
     def start_conversation
       authorize! :create, Conversation.new(listing: @listing)
       @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
-      redirect_to @conversation
+      if params[:swap].present?
+        redirect_to @conversation, notice: params[:swap]
+      else
+        redirect_to @conversation
+      end
     end
 
     def delete_conversation
@@ -273,9 +278,29 @@ class ListingsController < ApplicationController
       end
     end
 
+    def swap
+      @user_listings = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active'))
+      render layout: false
+    end
+
+    def swap_conversation
+      message = params[:swap_message][:message]
+      @conversation = current_user.conversations.find_or_create_by(listing: @listing, participant: current_user)
+      @conversation_message = ConversationMessage.new(conversation: @conversation, content: message)
+      @conversation_message.sender = current_user
+      @conversation_message.swap_listing_id = params[:swap_message][:item]
+      if @conversation_message.valid?
+        @conversation_message.save
+        SendConversationMessageJob.perform_later(@conversation_message, current_user)
+        head :ok
+      else
+        head :bad_request
+      end
+    end
+
   private
   def accessible_listings
-    Listing.includes(:creator, :listing_condition).where(listing_status_id: 2).accessible_by(current_ability)
+    Listing.includes(:creator, :listing_condition).accessible_by(current_ability, :list)
   end
   # Only allow a trusted parameter "white list" through.
   def listing_params
