@@ -1,6 +1,5 @@
 - user_favourite = current_user.user_favourites.find_by(listing: @listing)
 - banned_words = PageContent.find_by(key: 'Banned Words')
-- user_listings = Listing.where(creator: current_user)
 - if current_user.administrator? && @listing.listing_status.name == 'Pending' && @listing.creator != current_user
   .row.justify-content-center.mb-3
     .col-8
@@ -120,7 +119,7 @@
                     = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex align-items-center justify-content-center w-100' do
                       Send Message
                       .far.fa-comment-dots.ml-2
-                  - if @listing.swap and !user_listings.empty?
+                  - if @listing.swap and !@user_listings.empty?
                     .col-lg-4.col-xs-12.p-2
                       = link_to start_conversation_listing_path(@listing, swap: "Swap"), class: 'btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do
                         Swap

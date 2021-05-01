@@ -156,6 +156,7 @@ class ListingsController < ApplicationController
     # GET /listings/1
     def show
       @listing = Listing.find(params[:id])
+      @user_listings = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active'))
       ListingView.create(listing: @listing, user: current_user)
     end
   
@@ -278,6 +279,7 @@ class ListingsController < ApplicationController
     end
 
     def swap
+      @user_listings = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active'))
       render layout: false
     end
 

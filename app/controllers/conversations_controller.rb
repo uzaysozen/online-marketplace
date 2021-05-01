@@ -10,6 +10,7 @@ class ConversationsController < ApplicationController
 
   # GET /conversations/1
   def show
+    @user_listings = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active'))
     render :index
   end
 

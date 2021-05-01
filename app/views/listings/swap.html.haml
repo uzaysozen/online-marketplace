@@ -1,4 +1,3 @@
-- user_listings = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active'))
 .modal-dialog
   .modal-content.p-4
     = simple_form_for :swap_message, url: swap_conversation_listing_path, remote: true, html: { id: 'swap-form' } do |f|
@@ -9,7 +8,7 @@
       %hr
 
       = f.input :message, as: :string, required: false, input_html: { value: 'Hey, would you be interested in swapping for my item?'}
-      = f.input :item, collection: user_listings, label: 'Swap for', include_blank: false
+      = f.input :item, collection: @user_listings, label: 'Swap for', include_blank: false
       .form-actions.d-flex.align-items-center.justify-content-center
         = f.button :submit, 'Send', class: 'btn-secondary btn-lg w-25', id: 'swap-send-btn'
         = dismiss_modal_button

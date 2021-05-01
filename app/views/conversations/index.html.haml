@@ -1,5 +1,4 @@
 #conversation-id{"data-conversation-id" => "#{@conversation.try(:id)}"}
-- user_listings = Listing.where(creator: current_user)
 
 .container-fluid
   .row
@@ -26,7 +25,7 @@
               .input-group-append
                 %button.btn.btn-outline-primary{type: "submit"}
                   = icon('far', 'paper-plane')
-                - if @conversation.listing.swap and !user_listings.empty?
+                - if @conversation.listing.swap and !@user_listings.empty?
                   = link_to swap_listing_path(@conversation.listing), class: 'ajax-modal btn btn-primary', id: 'swap-button' do
                     = icon('fas', 'sync')
       - else 
