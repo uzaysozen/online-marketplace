@@ -1,7 +1,7 @@
 - user_listings = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active'))
 .modal-dialog
   .modal-content.p-4
-    = simple_form_for :swap_message, url: swap_conversation_listing_path, remote: true do |f|
+    = simple_form_for :swap_message, url: swap_conversation_listing_path, remote: true, html: { id: 'swap-form' } do |f|
       
       .text-large.text-center Swap
       .text-medium.text-center.p-2 Propose a swap for '#{@listing.title}' with user #{@listing.creator.username}
