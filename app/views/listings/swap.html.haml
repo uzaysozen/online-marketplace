@@ -1,4 +1,4 @@
-- user_listings = Listing.where(creator: current_user)
+- user_listings = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active'))
 .modal-dialog
   .modal-content.p-4
     = simple_form_for :swap_message, url: swap_conversation_listing_path, remote: true do |f|
