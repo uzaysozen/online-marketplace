@@ -25,8 +25,8 @@
             %div.far.fa-image.placeholder
 
     = f.input :description, hint: '(Max 200 words)'
-    = f.association :listing_condition, label: 'Condition'
-    = f.association :listing_category, label: 'Category'
+    = f.association :listing_condition, label: 'Condition', input_html: { class: 'select2-basic'}, include_blank: false, include_hidden: false
+    = f.association :listing_category, label: 'Category', input_html: { class: 'select2-basic'}, include_blank: false, include_hidden: false
     = f.input :listing_deliveries, label: 'Delivery', as: :select,  collection: Delivery.all, required: true, input_html: { class: 'select2-multiple', multiple: true }
     = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
     %p Swaps

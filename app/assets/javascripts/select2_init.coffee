@@ -10,3 +10,7 @@ $ ->
     $('.select2-multiple').each( (_) ->
       $(this).select2({closeOnSelect: false})
     )
+
+    $('.select2-basic').each( (_) ->
+      $(this).select2()
+    )

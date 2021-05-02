@@ -3,7 +3,7 @@
     = f.error_notification
 
     .form-inputs
-      = f.input :content, label: false, as: :select, collection: @banned_words, selected: @banned_words, input_html: { class: 'select2', multiple: true }
+      = f.input :content, label: false, as: :select, collection: @banned_words, selected: @banned_words, input_html: { class: 'select2-tags', multiple: true }
     .form-actions.row
       = f.button :button, class: 'btn-primary col-6 offset-3 col-lg-4 offset-lg-4' do
         Save changes
