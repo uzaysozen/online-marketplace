@@ -23,11 +23,13 @@
             .input-group
               %input.form-control#send-message-input{name: "conversation_message[content]", placeholder: "Send a message...", autocomplete: "off"}
               .input-group-append
+                - if @conversation.listing.swap and @user_listings_count > 0
+                  = link_to swap_listing_path(@conversation.listing), class: 'ajax-modal btn btn-primary', id: 'swap-button' do
+                    Offer Swap
+                    = icon('fas', 'sync')
                 %button.btn.btn-outline-primary{type: "submit"}
                   = icon('far', 'paper-plane')
-                - if @conversation.listing.swap and !@user_listings.empty?
-                  = link_to swap_listing_path(@conversation.listing), class: 'ajax-modal btn btn-primary', id: 'swap-button' do
-                    = icon('fas', 'sync')
+
       - else 
         .empty-conversation-container.card.h-100
           .text-center.text-medium.text-darkgray.m-auto
