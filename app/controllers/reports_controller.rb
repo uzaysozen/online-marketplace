@@ -1,7 +1,7 @@
 class ReportsController < ApplicationController
     load_resource only: [:show, :edit, :update, :destroy]
     load_and_authorize_resource
-  
+
     # GET /reports
     def index
       @message_reports = Report.includes([:listing]).where.not(conversation_message: nil)

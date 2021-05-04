@@ -1,43 +1,38 @@
 - user_favourite = current_user.user_favourites.find_by(listing: listing)
-.row.justify-content-left.flex-column-reverse.flex-md-row.listing-container{id: "listing-#{listing.id}"}
-  .col-12.col-md-12
-    .border-none.rounded.h-100
-      .row.p-2
-            
-        .col-3.text-left.listing-image-container-lrg.text-huge
-          %p
-          =icon('far', 'image')
+.listing-container{id: "listing-#{listing.id}"}
+  .border-none.rounded.h-100
+    .row.p-2
+      .col-3.text-left.text-huge.d-flex.align-items-center.justify-content-center
+        .preview-image
+          - if listing.images&.attached?
+            = image_tag(rails_blob_url(listing.images.first))
+          - else
+            = icon('fas', 'tags', class: 'text-large')
 
-        .col-7.col-lg-8.text-left.details-container
-            
-          .text-medium.text-red.text-left
-            %p
-            =listing.title 
-            %p
-          .text-small.text-black.border-right-black
-            
-            =listing.creator.username 
+      .col-7.col-lg-8.text-left.details-container
 
-          .text-small.text-black
-            %p
-            =listing.description
-            %p
+        .text-medium.text-red.my-2
+          = listing.title
 
-          .text-small.text-darkgray 
+        .text-small.text-black.mb-2
+          = listing.creator.username
 
-            = listing.listing_condition.name
-            %p
+        .text-small.text-black.listing-description.mb-2
+          = listing.description
 
-          .text-small.text-darkgray 
-            Delivery Option
-            %p
+        .text-small.text-darkgray.mb-2
+          = listing.listing_condition.name
 
-          .text-medium.text-black
-            = number_to_currency listing.price, unit: "£"
-            %p
-          .row.p-2
-            .col
-              - if can? :create, Conversation.new(listing: listing)
+        .text-small.text-darkgray.mb-2
+          Delivery Option
+
+        .text-medium.text-black.mb-2
+          = number_to_currency listing.price, unit: "£"
+
+        .row.p-2
+          .col
+            - if can? :create, Conversation.new(listing: listing)
+              = link_to start_conversation_listing_path(listing), class: 'listing-button white-button' do
                 .text-small.text-center.listing-blue.rounded.bg-blue
                   Enquire
           .col

@@ -23,8 +23,11 @@ Rails.application.routes.draw do
   resources :listings do
     post :search_and_filter, on: :collection
     post :add_favourite, on: :member
+    post :complete, on: :member
     post :delete_favourite, on: :member
     get :start_conversation, on: :member
+    post :swap_conversation, on: :member
+    get :swap, on: :member
     post :delete_conversation, on: :member
     get :report, on: :member
     post :send_report, on: :member
@@ -36,6 +39,8 @@ Rails.application.routes.draw do
   
   scope :profile do
     get :mylistings, to: 'listings#mylistings'
+    get :reviews, to: 'users#reviews'
+    get :settings, to: 'users#settings'
     resources :user_favourites
     resources :conversations do
       resources :conversation_messages, except: :create do

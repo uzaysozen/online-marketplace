@@ -38,6 +38,7 @@ gem 'devise'
 gem 'devise_ldap_authenticatable'
 gem 'devise_cas_authenticatable'
 gem 'cancancan'
+gem 'jwt'
 
 gem 'whenever'
 gem 'delayed_job'

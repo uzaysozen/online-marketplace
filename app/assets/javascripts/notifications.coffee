@@ -1,8 +1,6 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-     
-window.notice = (content) -> 
+# Create a function in the window so it can be called from anywhere.
+window.notice = (content) ->
+  # Construct our notice content
   $alert = $('<div>').addClass('toast');
   $alert.attr('role', 'alert').attr('aria-live', 'assertive').attr('data-delay', '3000').attr('aria-atomic');
   $header = $('<div>').addClass('toast-header');
@@ -15,5 +13,6 @@ window.notice = (content) ->
 
   $alert.append($header).append($body);
 
+  # Move our toast into place and show it.
   $('.toasts').prepend($alert)
   $alert.toast('show')

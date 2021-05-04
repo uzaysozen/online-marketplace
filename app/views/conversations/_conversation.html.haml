@@ -1,22 +1,20 @@
 = link_to conversation, class: 'conversation-link' do
-  - active_class = (@conversation == conversation) ? 'active-conversation' : ''
-  %div{class: "list-group-item conversation-card #{active_class}"}
+  %div{class: "list-group-item conversation-card #{(@conversation == conversation) ? 'active-conversation' : ''}"}
     .row
-      .col-12.col-lg-4.pr-2
-        .row.text-large.text-center.text-black
-          =icon('far', 'image', class: 'conversation-card-image')  
-      .col-lg-8.pr-3.pl-4
-        .row.text-black.text-large.text-left
-          %h5= conversation.listing.title
-        .row.text-medium.text-black
+      .col-12.col-lg-4.px-0.d-flex.align-items-center.justify-content-center
+        .preview-image.preview-image-md
+          - if conversation.listing.images&.attached?
+            = image_tag(rails_blob_url(conversation.listing.images.first))
+          - else
+            = icon('fas', 'tags', class: 'text-large')
+      .col-12.col-lg-8.px-2
+        .text-black.text-medium.text-left.text-bold.text-truncate
+          = conversation.listing.title
+        .text-medium.text-black.text-truncate
           = conversation.listing.creator.givenname
-        - if not conversation.conversation_messages.where(is_deleted: nil).empty?
-          .row.text-small.text-darkgray
-            = conversation.conversation_messages.last.content
+        - if conversation.last_message
+          .text-small.text-darkgray.text-truncate
+            = conversation.last_message.content
           .time-label.text-small.text-right.font-italic.text-darkgray
-            = conversation.conversation_messages.last.updated_at.in_time_zone(Time.now.gmt_offset).to_s(:time)
-          .time-label.text-small.text-left.text-darkgray
-            - if sent
-              My enquiry
-            - else
-              Received enquiry
+            = time_ago_in_words conversation.last_message.updated_at
+            ago

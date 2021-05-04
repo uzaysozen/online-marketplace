@@ -1,11 +1,13 @@
-- covid_guidance = PageContent.find_by(key: "Covid Guidance")
-
-- if covid_guidance.present?
+- if @covid_guidance.present? and cookies[:dismissed_covid_guidance] != "true"
   #covid-guidance.alert.alert-warning.alert-dismissible.fade.w-100.show.m-0{role: "alert"}
     %div{style: "padding: 5px;"}
       %strong COVID-19 GUIDANCE!
       %p
       %p
-        = covid_guidance.content[0]
-      %button.close{"aria-label" => "Close", "data-dismiss" => "alert", type: "button"}
+        = @covid_guidance.content[0]
+      // On click we set a cookie that will last two weeks to keep the banner at bay
+      %button.close{"aria-label" => "Close", "data-dismiss" => "alert", type: "button",
+      onclick: "
+        document.cookie='dismissed_covid_guidance=true; max-age=1209600; path=/'
+        document.cookie='covid_guidance_date=#{@covid_guidance.updated_at}; max-age=1209600; path=/'"}
         %span{"aria-hidden" => "true"} &times

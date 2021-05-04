@@ -1,18 +1,16 @@
 class AdminController < ApplicationController
-  load_and_authorize_resource :class => false
-  
+  before_action { authorize! :access, :admin_panel }
   # GET admin/moderation
   def moderation
     @pending_listings = Listing.includes(:creator).where(listing_status: ListingStatus.find_by(name: 'Pending'))
     @pending_listings = @pending_listings.where.not(creator: current_user)
   end
-  
+
   # GET admin/statistics
-  def statistics
-  end
-  
+  def statistics; end
+
   # GET admin/other
-  def other 
+  def other
     @banned_users = User.where(is_banned: true)
     @admins = User.where(administrator: true)
     @questions = PageContent.where(key: 'Question')
@@ -35,13 +33,13 @@ class AdminController < ApplicationController
     bulk_email = params[:bulk_email]
     banned_words = params[:banned_words]
     covid_guidance = params[:covid_guidance]
-    
+
     if bulk_email.present?
       User.all.each_slice(50) do |users|
         UserMailer.send_bulk_email(users.map(&:email), bulk_email[:content]).deliver
       end
       redirect_to other_path, notice: "The announcement has been sent to all user."
-    
+
     elsif banned_words.present?
       banned_words[:content].delete("")
       page_content = PageContent.all.find_or_create_by(key: "Banned Words")
@@ -125,5 +123,4 @@ class AdminController < ApplicationController
     @user = User.find(params[:user][:id])
     @user.update(is_banned: false)
   end
-
 end

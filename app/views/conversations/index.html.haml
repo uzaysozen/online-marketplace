@@ -2,27 +2,32 @@
 
 .container-fluid
   .row
-    .col-3.p-0
-      .card
-        .card-header.text-center
-          .conversation-header 
-            %h4 Conversations
-        .list-group.list-group-flush.conversations-sidebar
-          = render partial: 'conversation', collection: @received, locals: {sent: false}
-          = render partial: 'conversation', collection: @sent, locals: {sent: true}
+    .col-3
+      .conversation-header
+        %h4 Conversations
+      .list-group.list-group-flush.conversations-sidebar
+        = render @conversations
     .col-9.conversation-box.p-0  
       - if @conversation.present?
-        .card.pl-0
-          .card-header
-            = render 'conversation_listing'
-          .card-body
-            .conversation
-              #messages
-                - @conversation.conversation_messages.where(is_deleted: nil).each do |message|
-                  = render 'conversation_messages/conversation_message', message: message
-          .card-footer
-            #send-form 
-              = render 'conversation_messages/send_form', conversation_message: ConversationMessage.new, conversation: @conversation
+        .listing-preview
+          = render 'conversation_listing'
+        #messages-container.pt-2
+          #messages
+            - @conversation.active_messages.each do |message|
+              = render 'conversation_messages/conversation_message', message: message
+          = simple_form_for(ConversationMessage.new, url: send_conversation_conversation_message_path(@conversation.id), remote: true) do |f|
+            -# Hidden field to associate the message with it's conversation
+            = f.hidden_field :conversation_id, :value => @conversation.id
+            -# This is a bit hacky to get around making our own simple_form wrapper but
+               much easier than doing that just for this one instance of it.
+            .input-group
+              %input.form-control#send-message-input{name: "conversation_message[content]", placeholder: "Send a message...", autocomplete: "off"}
+              .input-group-append
+                %button.btn.btn-outline-primary{type: "submit"}
+                  = icon('far', 'paper-plane')
+                - if @conversation.listing.swap and !@user_listings.empty?
+                  = link_to swap_listing_path(@conversation.listing), class: 'ajax-modal btn btn-primary', id: 'swap-button' do
+                    = icon('fas', 'sync')
       - else 
         .empty-conversation-container.card.h-100
           .text-center.text-medium.text-darkgray.m-auto

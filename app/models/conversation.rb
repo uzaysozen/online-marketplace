@@ -20,8 +20,8 @@
 #
 class Conversation < ApplicationRecord
     belongs_to :listing
-    belongs_to :participant , class_name: "User"
+    belongs_to :participant , class_name: 'User'
     has_many :conversation_messages, dependent: :delete_all
-
-    scope :profile, ->(current_user) { where(participant_id: current_user.id) }
+    has_many :active_messages, -> { where(is_deleted: false).includes([:conversation]) }, class_name: 'ConversationMessage'
+    has_one :last_message, -> { order(created_at: :desc) }, class_name: 'ConversationMessage'
 end

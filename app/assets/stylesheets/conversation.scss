@@ -1,36 +1,74 @@
-.conversation {
-    height: 30vh;
-  
-    #messages {
-      height: 100%;
-      overflow-y: auto;
-      padding-bottom: 200px;
-      padding-top: 10px;
+#messages-container {
+  // We need a set height or we can't make it scrollable.
+  height: 60vh;
+
+  #new_conversation_message {
+    // Set height since we want two scrollable containers of the same height
+    // next to each other but we also have the form in this one.
+    height: 3em;
+    display: flex;
+    align-items: end;
+  }
+
+  #messages {
+    // CSS can do maths, who knew. This keeps the two containers the same height.
+    height: calc(100% - 3em);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message {
+    // Generic message styles.
+    .content-container {
+      position: relative;
+      display: inline-block;
+      max-width: 70%;
+
+      background-color: lightgrey;
+      border-radius: 2em;
+
+      .content {
+        padding: 0.5em 1em;
+        word-wrap: break-word;
+      }
+
+      .delete-form {
+        display: inline-flex;
+        align-items: center;
+        // Move the delete button to the middle right
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0.5em;
+      }
     }
 
-    .message {
-        min-height: 59px;
-        .content-container {
-          display: inline-block;
-          .content {
-            background-color: #4d94ff;
-            padding: 8px 16px;
-            border-radius: 20px;
-          }
-        }
-        &.me {
-          .content-container {
-            float: right;
-            .content {
-              background-color: #3385ff;
-              color: white;
-              .delete-form {
-                display: inline-block;
-              }
-            }
-          }
+    padding-top: 4px;
+    // Message styles specific to current user's messages
+    &.me {
+      .content-container {
+        float: right;
+
+        background-color: #3385ff;
+        .content {
+          color: white;
+          margin-right: 0.75em;
         }
       }
+    }
+
+    // Styles to "group" messages
+    // Looks for messages that have .me class that are then followed
+    // by a message with the same .me class
+    &.me + .me {
+      padding-top: 1px;
+    }
+
+    &:not(.me) + :not(.me) {
+      padding-top: 1px;
+    }
+  }
 }
 
 .active-conversation {
@@ -57,11 +95,6 @@
   height: auto;
 }
 
-.conversation-card-image {
-  font-size: 70px;
-  padding-top: 5px;
-}
-
 .time-label {
   font-size: 12px;
 }
@@ -77,6 +110,6 @@
 }
 
 .conversations-sidebar {
-  max-height: 478px;
+  height: 60vh;
   overflow-y: auto;
 }

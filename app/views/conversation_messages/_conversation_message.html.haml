@@ -1,8 +1,13 @@
-%div{class: "message #{'me' if message.sender == current_user}", id: "message-#{message.id}"}
+%div{class: "message #{'me' if message.sender.id == current_user.id}", id: "message-#{message.id}"}
   .content-container
     .content
       = message.content
-      - if message.sender == current_user
-        .delete-form
-          = render 'conversation_messages/delete_form', message: message
+      - if message.swap_listing_id.present?
+        - swap_listing = Listing.find(message.swap_listing_id)
+        .row.justify-content-center
+          %p= link_to "See '" + swap_listing.title + "' ", swap_listing, class: "btn btn-outline-light mt-2"
+
+    - if message.sender.id == current_user.id
+      .delete-form
+        = render 'conversation_messages/delete_form', message: message
         
