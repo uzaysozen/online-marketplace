@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
 
     load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-    load_resource only: [:swap, :swap_conversation, :add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+    load_resource only: [:report, :send_report, :swap, :swap_conversation, :add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
 
     # GET /listings
     def index
