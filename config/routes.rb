@@ -26,6 +26,8 @@ Rails.application.routes.draw do
     post :delete_favourite, on: :member
     get :start_conversation, on: :member
     post :delete_conversation, on: :member
+    get :report, on: :member
+    post :send_report, on: :member
   end
   
   resources :users do

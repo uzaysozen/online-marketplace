@@ -25,41 +25,61 @@
 %div{id: "listing-#{@listing.id}"}
   #category-history
     %nav{"aria-label" => "breadcrumb"}
-    .row
-      %ol.col.breadcrumb.p-0.bg-white.text-small
-        - @listing.listing_category.path_to.reverse.each do |category|
-          %li.breadcrumb-item
-            %a{href: "#"}
-              = category.name
-        %li.breadcrumb-item.active
-          = @listing.title
+    .container-fluid
+      .row
+        %ol.col.breadcrumb.p-0.bg-white.text-small
+          - @listing.listing_category.path_to.reverse.each do |category|
+            %li.breadcrumb-item
+              %a{href: "#"}
+                = category.name
+          %li.breadcrumb-item.active
+            = @listing.title
 
-      .col-2.d-flex.justify-content-end.h3.text-blue
-        - if @listing.creator != current_user
-          = icon('far', 'flag')
-        - if can? :create, UserFavourite.new(listing: @listing)
-          - if user_favourite.present?
-            = link_to(delete_favourite_listing_path(@listing), method: :post, remote: true, class: 'heart-link') do
-              = icon('fas', 'heart')
-          - else
-            = link_to(add_favourite_listing_path(@listing), method: :post, remote: true, class: 'heart-link') do
-              = icon('far', 'heart')
+        .col-2.d-flex.justify-content-end.h3.text-blue
+          - if can? :create, Report.new(listing: @listing)
+            = link_to report_listing_path(@listing), class: 'ajax-modal' do
+              = icon('far', 'flag')
+          - if can? :create, UserFavourite.new(listing: @listing)
+            - if user_favourite.present?
+              = link_to(delete_favourite_listing_path(@listing), method: :post, remote: true, class: 'heart-link') do
+                = icon('fas', 'heart')
+            - else
+              = link_to(add_favourite_listing_path(@listing), method: :post, remote: true, class: 'heart-link') do
+                = icon('far', 'heart')
 
 
-    .row
-      .col.text-left
-        .row-8
-          - images = @listing.images
-          -# Carousel
-          #car.carousel.slide.card{"data-ride" => "carousel", "data-interval" => "false"}
-            -# Indicators
-            %ol.carousel-indicators
-              - len = images.length
-              - for i in 0..len - 1 do
-                %li.bg-gray{"data-slide-to" => i, "data-target" => "#car", :class => ("active" unless i != 0)}
+      .row
+        .col-lg-5.col-sm-12.text-left
+          .row-8
+            - images = @listing.images
+            -# Carousel
+            #car.carousel.slide.card.w-100{"data-ride" => "carousel", "data-interval" => "false"}
+              -# Indicators
+              %ol.carousel-indicators
+                - len = images.length
+                - for i in 0..len - 1 do
+                  %li.bg-gray{"data-slide-to" => i, "data-target" => "#car", :class => ("active" unless i != 0)}
 
-            -# Images
-            .carousel-inner
+              -# Images
+              .carousel-inner
+                - counter = 0
+                - images.each do |image|
+                  .carousel-item{:class => ("active" unless counter != 0)}
+                    - if image.representable?
+                      %div.image-display{:style => "background-image: url(#{rails_blob_url(image)})"}
+                  - counter += 1
+
+              -# Carousel navigation arrows
+              %a.carousel-control-prev{"data-slide" => "prev", :href => "#car", :role => "button"}
+                %span.carousel-control-prev-icon{"aria-hidden" => "true"}
+                %span.sr-only Previous
+              %a.carousel-control-next{"data-slide" => "next", :href => "#car", :role => "button"}
+                %span.carousel-control-next-icon{"aria-hidden" => "true"}
+                %span.sr-only Next
+
+          -# Horizontal image cards
+          #preview.container-fluid
+            .row.flex-row.flex-nowrap.overflow-auto
               - counter = 0
               - images.each do |image|
                 .carousel-item{:class => ("active" unless counter != 0)}

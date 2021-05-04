@@ -1,10 +1,11 @@
 class ReportsController < ApplicationController
-    before_action :set_report, only: [:show, :edit, :update, :destroy]
+    load_resource only: [:show, :edit, :update, :destroy]
     load_and_authorize_resource
   
     # GET /reports
     def index
-      @reports = Report.all
+      @message_reports = Report.includes([:listing]).where.not(conversation_message: nil)
+      @listing_reports = Report.includes([:listing]).where.not(listing: nil)
     end
   
     # GET /reports/1

@@ -1,28 +1,38 @@
 class ListingsController < ApplicationController
-  load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-  load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
 
-  # GET /listings
-  def index
-    @listings = accessible_listings
-    session[:g_listings] = @listings
+    load_and_authorize_resource only: [:show, :edit, :update, :destroy]
+    load_resource only: [:report, :send_report, :swap, :swap_conversation, :add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
 
-    # Sorting Function
-    table_col = Listing.column_names
-    sort_val = ['asc', 'desc']
+    # GET /listings
+    def index
+      @listings = accessible_listings
+      session[:category_listings] = accessible_listings
 
-    # Verifying Parameters
-    if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
-      sort_order = session[:sort_order] || 'asc'
-      @listings = session[:g_listings] ||= @listings
-      @listings = @listings.order("#{params[:sort]} #{sort_order}")
-      session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
-    else
-      params[:sort] = "title"
-      sort_order = 'asc'
-      @listings = session[:g_listings] ||= @listings
-      @listings = @listings.order("#{params[:sort]} #{sort_order}")
-      session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+      # Initializing variables for the filter menu to remember filter settings
+      session[:search_string] = ""
+      session[:search_category] = ""
+      session[:search_minprice] = ""
+      session[:search_maxprice] = ""
+      session[:search_condition] = ""
+      session[:search_swap] = false
+
+      # Sorting Function
+      table_col = Listing.column_names
+      sort_val = ['asc', 'desc']
+
+      # Verifying Parameters
+      if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
+        sort_order = session[:sort_order] || 'asc'
+        @listings = session[:sort_listings] ||= accessible_listings
+        @listings = @listings.order("#{params[:sort]} #{sort_order}")
+        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+      else
+        params[:sort] = "title"
+        sort_order = 'asc'
+        @listings = session[:sort_listings] ||= accessible_listings
+        @listings = @listings.order("#{params[:sort]} #{sort_order}")
+        session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+      end
     end
   end
 
@@ -184,6 +194,15 @@ class ListingsController < ApplicationController
       redirect_to listings_path
     end
   end
+
+    def report
+      render layout: false
+    end
+
+    def send_report
+      report_message = params[:report][:message]
+      Report.create(message: report_message, listing: @listing, reporter: current_user)
+    end
 
   private
   def accessible_listings

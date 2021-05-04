@@ -28,7 +28,7 @@
 #
 class Report < ApplicationRecord
     belongs_to :reporter, class_name: "User"
-    belongs_to :moderator, class_name: "User"
-    belongs_to :listing
-    belongs_to :conversation_message
+    belongs_to :moderator, class_name: "User", optional: true
+    belongs_to :listing, optional: true
+    belongs_to :conversation_message, optional: true
 end

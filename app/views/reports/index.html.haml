@@ -2,11 +2,9 @@
   .col-12.col-md-6
     %h2 Reported Items
     .reported-items
-      - 20.times do
-        =render 'reported_items'
+      =render partial: 'reported_items', collection: @listing_reports, as: :report
 
   .col-12.col-md-6
     %h2 Reported Messages
     .reported-items
-      - 20.times do
-        =render 'reported_items'
+      =render partial: 'reported_items', collection: @listing_messages, as: :report
