@@ -301,12 +301,13 @@ class ListingsController < ApplicationController
       end
     end
 
-  private
-  def accessible_listings
-    Listing.includes(:creator, :listing_condition).accessible_by(current_ability, :list)
-  end
-  # Only allow a trusted parameter "white list" through.
-  def listing_params
-    params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
-                                    :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
+    private
+      def accessible_listings
+        Listing.includes(:creator, :listing_condition).accessible_by(current_ability, :list)
+      end
+      # Only allow a trusted parameter "white list" through.
+      def listing_params
+        params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
+                                        :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
+      end
   end
