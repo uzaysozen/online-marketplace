@@ -8,6 +8,10 @@ module ApplicationCable
       self.current_user = find_verified_user
     end
 
+    def ability
+      @ability ||= Ability.new(current_user)
+    end
+
     private
     def find_verified_user
       token = request.query_parameters[:token]
