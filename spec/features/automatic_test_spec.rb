@@ -5,10 +5,13 @@ describe 'End to end test' do
 
   specify 'I cannot access the blog without logging in' do
     visit '/'
-    # expect(page).to have_content 'You need to sign in or sign up before continuing.'
+    expect(page).to have_content 'Sheffield University Marketplace'
+    expect(page).to have_content 'COVID 19 guidences'
+    expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
   
   context 'As a logged in user' do
+    
 
     before do
       user = FactoryBot.create(:user)
@@ -38,11 +41,8 @@ describe 'End to end test' do
       click_button 'Create Listing'
     end
 
-    specify "I could create a new listing" do
-      create_new_listing
-      expect(page).to have_content 'Listing was successfully created.'
-    end
 
+    # Home page 
     specify "I can find this new listing in my listing page" do
 
       create_new_listing
@@ -50,6 +50,105 @@ describe 'End to end test' do
       expect(page).to have_content 'My Title'
       
     end
+
+    specify "I can click 'Edit' button on that listing" do 
+      
+      create_new_listing
+      click_link "My Listings"
+      click_button "Edit"
+      expect(page).to have_content "My Title" """it is javesript so """
+    end 
+
+    specify "I can click 'See Details' " do 
+      create_new_listing
+      click_link "My Listings"
+      click_button "See Details"
+      expect(page).to have_content "My Title"
+    end 
+
+    specify "I can delete my listing" do 
+      create_new_listing
+      click_link "My Listings"
+      click_button "Delete"
+      expect(page).to not_to have_content 'My Title'
+    end
+
+    # Message page
+    specify "I can see my conversations with different users" do 
+    
+    end 
+
+    specify "I can check out all my favourite listings " do
+      
+      visit '/'
+      click_link "heart-link"
+      click_link "Favourate"
+      expect(page).to have_content 'User2 listing'
+
+    end 
+    specify "check the reviews" do
+      visit '/'
+      click_link "Reviews"
+      expect(page).to have_content "Leave a Review"
+      expect(page).to have_content "My Reviews"
+    end 
+
+    specify "I can checkout my setting page " do 
+      visit '/'
+      click_link "Settings"
+      check "When I receive a message"
+      select "All" from "When an item from this category is posted"
+      radio_check "Weekly" from "When?"
+      click_button "Save"
+      expect(page).to have_content "succussful?"
+    end 
+    specify "I could create a new listing" do
+      create_new_listing
+      expect(page).to have_content 'Listing was successfully created.'
+    end
+
+    specify "Swapping Items" do 
+      visit '/'
+      click_button "Open to swap"
+    end 
+
+    specify "I can editing my listings" do 
+      visit '/'
+      click_button "My Listings"
+      click_button "Edit"
+      #click x to delete current image
+      #upload images
+      fill_in "Title", with: "My New Title"
+      fill_in 'Price', with: '321'
+      fill_in 'Description', with: 'My new description'
+      select 'Used', from: 'Condition'
+      select 'Cloting', from: 'Category'
+      uncheck 'Collection'
+      check "Postage"
+      fill_in 'New Location', with: 'My Location'
+      # # fill_in 'Tags', with: 'Education'
+      # # select 'Education', from: 'Tags'
+      # # select2("Education", from: "Tags")
+      click_button 'Update Listing'
+      expect(page).to have_content "My New Title"
+      expect(page).to have_content "My new description"
+      expect(page).to have_content "£ 321"
+    end
+
+    specify "As admin, I can promote and demote other users as admin " do
+      login_as(admin)
+      visit "/"
+      click_link "Other"
+      click_button "Add a new admin"
+      fill_in "Username", with: "ace19cl"
+      fill_in "Email". with: "cliu85@sheffield.ac.uk"
+      click_button "Add a admin"
+      expect(page). to have_content "ace19cl"
+      click_button "Remove"
+      expect(pa)
+
+
+
     # specify "I cannot perform an SQL injection attack" do
       # Check search works correctly
     #   page.driver.submit :listing, search_listings_path(search: { title: "A title for a post" }), {}
