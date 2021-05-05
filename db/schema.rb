@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_27_101236) do
+ActiveRecord::Schema.define(version: 2021_04_30_170232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,8 +43,10 @@ ActiveRecord::Schema.define(version: 2021_04_27_101236) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "conversation_id"
     t.bigint "sender_id"
+    t.bigint "swap_listing_id"
     t.index ["conversation_id"], name: "index_conversation_messages_on_conversation_id"
     t.index ["sender_id"], name: "index_conversation_messages_on_sender_id"
+    t.index ["swap_listing_id"], name: "index_conversation_messages_on_swap_listing_id"
   end
 
   create_table "conversations", force: :cascade do |t|
@@ -258,6 +260,7 @@ ActiveRecord::Schema.define(version: 2021_04_27_101236) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "conversation_messages", "conversations"
+  add_foreign_key "conversation_messages", "listings", column: "swap_listing_id"
   add_foreign_key "conversation_messages", "users", column: "sender_id"
   add_foreign_key "conversations", "listings"
   add_foreign_key "conversations", "users", column: "participant_id"
