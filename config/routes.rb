@@ -44,6 +44,8 @@ Rails.application.routes.draw do
     resources :user_favourites
     resources :conversations do
       resources :conversation_messages, except: :create do
+        get :report, on: :member
+        post :send_report, on: :member
         post :send_message, :as => 'send', on: :member
         patch :delete_message, :as => 'delete', on: :member
       end
@@ -52,7 +54,11 @@ Rails.application.routes.draw do
 
   # Admin Pages
   scope :admin do
-    resources :reports
+    resources :reports do
+      get :see_message, on: :member
+      get :moderate, on: :member
+      post :moderate_update, on: :member
+    end
     get :moderation, to: 'admin#moderation'
     get :statistics, to: 'admin#statistics'
     get :other, to: 'admin#other'

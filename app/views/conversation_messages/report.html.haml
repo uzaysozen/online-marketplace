@@ -1,10 +1,12 @@
+- message = @conversation_message
 .modal-dialog
   .modal-content.p-4
-    = simple_form_for :report, url: send_report_listing_path, html: { id: 'swap-form' } do |f|
+    = simple_form_for :report, url: send_report_conversation_conversation_message_path(message.conversation, message), html: { id: 'swap-form' } do |f|
       
       .text-large.text-center
         = icon 'fas', 'exclamation-triangle', 'Report'
-      .text-medium.text-center.p-2 Sending a report for '#{@listing.title}' created by user #{@listing.creator.username}
+      .text-medium.text-center.p-2 Sending a report for message '#{message.content}'
+      .text-medium.text-center.p-2 The message was sent by #{message.sender.username}
       = f.error_notification
       %hr
 
