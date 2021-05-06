@@ -41,18 +41,25 @@ load = ->
 
         # If message was not sent by current user we need to remove the class and delete form
         # Otherwise we can just put it in as is.
+        el = document.createElement('div');
+        el.insertAdjacentHTML('beforeend', data.html);
         if Number(current_user_id) != Number(data.sender_id)
-          el = document.createElement('div');
-          el.insertAdjacentHTML('beforeend', data.html);
-
           el.querySelector(".message").classList.remove("me")
           el.querySelector(".delete-form").remove()
-          messageContainer.innerHTML = messageContainer.innerHTML + el.innerHTML
-        else
-          messageContainer.innerHTML = messageContainer.innerHTML + data.html
+
+        messageContainer.innerHTML = messageContainer.innerHTML + el.innerHTML
 
         # Scroll to new messages.
         messageContainer.scrollTo(0, messageContainer.scrollHeight)
+
+      # Update conversations on left or send notification here.
+      conversationPreview = document.getElementById("conversation-preview-#{conversation_id}")
+      if conversationPreview
+        # Update latest message date and content
+        messageContentContainer = conversationPreview.querySelector('.message-content')
+        dateContentContainer = conversationPreview.querySelector('.date')
+        messageContentContainer.innerText = el.querySelector('.content').innerText
+
 
 document.addEventListener 'turbolinks:load', load
 

@@ -6,7 +6,7 @@
 //= require flash_message
 //= require visibility_map
 //= require modal
-//= require select2
+//= require select2.min
 //= require select2_init
 //= require rails-ujs
 //= require cable
