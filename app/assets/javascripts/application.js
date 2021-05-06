@@ -9,8 +9,10 @@
 //= require select2.min
 //= require select2_init
 //= require rails-ujs
+//= require chartkick
+//= require Chart.bundle
 //= require cable
-//= require reload_toast_init
+//= require bootstrap-enablers
 //= require turbolinks
 //= require activestorage
 //= require file-upload

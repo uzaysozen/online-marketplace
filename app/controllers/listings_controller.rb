@@ -300,7 +300,7 @@ class ListingsController < ApplicationController
 
   private
   def accessible_listings
-    Listing.includes(:creator, :listing_condition).accessible_by(current_ability, :list)
+    Listing.includes(:creator, :listing_condition, :images_attachments).accessible_by(current_ability, :list)
   end
   # Only allow a trusted parameter "white list" through.
   def listing_params
