@@ -1,5 +1,5 @@
 = link_to conversation, class: 'conversation-link' do
-  %div{class: "list-group-item conversation-card #{(@conversation == conversation) ? 'active-conversation' : ''}"}
+  %div{class: "list-group-item conversation-card #{(@conversation == conversation) ? 'active-conversation' : ''}", d: "conversation-preview-#{conversation.listing.id}"}
     .row
       .col-12.col-lg-4.px-0.d-flex.align-items-center.justify-content-center
         .preview-image.preview-image-md
@@ -13,8 +13,8 @@
         .text-medium.text-black.text-truncate
           = conversation.listing.creator.givenname
         - if conversation.last_message
-          .text-small.text-darkgray.text-truncate
+          .message-content.text-small.text-darkgray.text-truncate
             = conversation.last_message.content
-          .time-label.text-small.text-right.font-italic.text-darkgray
+          .date.time-label.text-small.text-right.font-italic.text-darkgray
             = time_ago_in_words conversation.last_message.updated_at
             ago
