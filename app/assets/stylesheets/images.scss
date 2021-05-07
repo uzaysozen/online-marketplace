@@ -17,8 +17,15 @@
 // Listing image input
 
 .file-input {
+  position: relative;
+
   .input {
-    display: none;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 0;
+    height: 0;
+    opacity: 0;
   }
 
   border: 1px solid #ccc;

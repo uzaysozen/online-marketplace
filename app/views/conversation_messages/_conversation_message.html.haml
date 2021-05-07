@@ -2,6 +2,11 @@
   .content-container
     .content
       = message.content
+      - if message.swap_listing_id.present?
+        - swap_listing = Listing.find(message.swap_listing_id)
+        .row.justify-content-center
+          %p= link_to "See '" + swap_listing.title + "' ", swap_listing, class: "btn btn-outline-light mt-2"
+
     - if message.sender.id == current_user.id
       .delete-form
         = render 'conversation_messages/delete_form', message: message

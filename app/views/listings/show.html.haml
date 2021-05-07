@@ -14,9 +14,9 @@
                   Approve
                   = icon('fas', 'check-circle')
               .col-sm.text-center
-                = link_to edit_listing_path(@listing), class: 'btn btn-primary ajax-modal' do
-                  Edit Post
-                  = icon('fas', 'edit')
+                = link_to @listing, method: :delete, class: 'btn btn-primary white-button listing-button', data: { confirm: 'Are you sure?' } do
+                  Delete
+                  = icon('fas', 'trash')
               .col-sm.text-center
                 = link_to ban_user_path(user: @listing.creator.id), class: 'btn btn-outline-primary ajax-modal' do
                   Ban User
@@ -119,9 +119,9 @@
                     = link_to start_conversation_listing_path(@listing), class: 'btn btn-secondary btn-lg d-flex align-items-center justify-content-center w-100' do
                       Send Message
                       .far.fa-comment-dots.ml-2
-                  - if @listing.swap
+                  - if @listing.swap and @user_listings_count > 0
                     .col-lg-4.col-xs-12.p-2
-                      = link_to swap_listing_path(@listing), class: 'ajax-modal btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do
+                      = link_to start_conversation_listing_path(@listing, swap: "Swap"), class: 'btn btn-primary btn-lg d-flex align-items-center justify-content-center w-100' do
                         Swap
                         .fas.fa-sync.ml-2
 

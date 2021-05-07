@@ -22,6 +22,10 @@ class PagesController < ApplicationController
     @current_nav_identifier = :contact
   end
 
+  #GET pages/covid
+  def covid
+  end
+
   # POST pages/contact
   def contact_mail
     contact = params[:contact]
