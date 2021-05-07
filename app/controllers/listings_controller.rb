@@ -186,6 +186,9 @@ class ListingsController < ApplicationController
       delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
 
       @listing = Listing.new(params)
+      if !@listing.price?
+        @listing.price = 0.0
+      end
       @listing.listing_status = ListingStatus.first
       @listing.creator_id = current_user.id
       @listing.is_active = true
@@ -286,9 +289,19 @@ class ListingsController < ApplicationController
     # Mark listing as complete
     def complete 
       @listing.listing_status = ListingStatus.where(name: 'Complete').first
+      if params[:receiver].present?
+        @listing.receiver = User.find_by_id(params[:receiver])
+        print "test"
+        puts @listing.receiver.username
+      end
 
+      print 
+      
       if @listing.save
         redirect_to request.referrer, notice: 'Listing has been marked as complete'
+      else
+        print @listing.errors.full_messages
+        redirect_to request.referrer, notice: 'Failed to complete listing'
       end
     end 
 

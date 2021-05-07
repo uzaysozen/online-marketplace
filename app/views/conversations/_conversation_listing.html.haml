@@ -12,12 +12,16 @@
       = listing.creator.username
 
     .row.text-medium.text-black.text-left.pb-1
-      £
-      = listing.price 
+      - if listing.price == 0
+        .text-muted
+          Free
+      - else
+        £
+        = sprintf '%.2f', @listing.price 
     .row   
       .col-12.col-lg-6.text-small.text-center.text-darkgray.rounded.mt-2
         - if listing.creator == current_user
-          = link_to complete_listing_path(listing, @conversation.participant_id), method: :complete, class: 'conversation-link btn btn-outline-dark btn-block' do
+          = link_to complete_listing_path(listing, receiver: @conversation.participant_id), method: :complete, class: 'conversation-link btn btn-outline-dark btn-block' do
             Complete Listing
         - else
           = link_to listing , class: 'conversation-link btn btn-outline-dark btn-block' do
