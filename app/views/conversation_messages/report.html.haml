@@ -1,16 +1,24 @@
 - message = @conversation_message
 .modal-dialog
   .modal-content.p-4
-    = simple_form_for :report, url: send_report_conversation_conversation_message_path(message.conversation, message), html: { id: 'swap-form' } do |f|
-      
+    
+    .modal-header.align-items-center.justify-content-center
       .text-large.text-center
         = icon 'fas', 'exclamation-triangle', 'Report'
-      .text-medium.text-center.p-2 Sending a report for message '#{message.content}'
-      .text-medium.text-center.p-2 The message was sent by #{message.sender.username}
-      = f.error_notification
+    .modal-body.align-items-center.justify-content-center
+      .font-weight-bold.text-medium.text-center.p-2 Sending a report for message 
+      
+      #messages-container.h-100.text-center
+        .message
+          .content-container
+            .content
+              = message.content
+      .text-small.text-center.text-darkgray.p-2 The message was sent by #{message.sender.username}
+      
       %hr
-
-      = f.input :message, as: :text, label: "Report Reason:"
-      .form-actions.d-flex.align-items-center.justify-content-center
-        = f.button :submit, 'Send', class: 'btn-secondary btn-lg w-25'
-        = dismiss_modal_button
+      = simple_form_for :report, url: send_report_conversation_conversation_message_path(message.conversation, message), html: { id: 'swap-form' } do |f|
+        = f.error_notification
+        = f.input :message, as: :text, label: "Report Reason:"
+        .form-actions.d-flex.align-items-center.justify-content-center
+          = f.button :submit, 'Send', class: 'btn-secondary btn-lg w-25'
+          = dismiss_modal_button

@@ -1,14 +1,31 @@
 .modal-dialog
   .modal-content.p-4
-    = simple_form_for :report, url: send_report_listing_path, html: { id: 'swap-form' } do |f|
-      
+    .modal-header.align-items-center.justify-content-center
       .text-large.text-center
         = icon 'fas', 'exclamation-triangle', 'Report'
-      .text-medium.text-center.p-2 Sending a report for '#{@listing.title}' created by user #{@listing.creator.username}
-      = f.error_notification
+    .modal-body.align-items-center.justify-content-center
+      .font-weight-bold.text-medium.text-center Sending a report for '#{@listing.title}'
+      
+      .row.d-flex.align-items-center.justify-content-center.mb-4.mt-4
+        .col-12.col-md-6.border-right.border-secondary
+          .preview-image
+            - if @listing.images&.attached?
+              = image_tag(rails_blob_url(@listing.images.first))
+            - else
+              = icon('fas', 'tags', class: 'text-large')
+        .col-12.col-md-6
+          .text-left.text-medium.text-dark
+            %p
+              %strong TITLE: 
+              = @listing.title
+            %p 
+              %strong DESCRIPTION:
+              = @listing.description
+      .text-small.text-center.text-darkgray Listing created by #{@listing.creator.username}
       %hr
-
-      = f.input :message, as: :text, label: "Report Reason:"
-      .form-actions.d-flex.align-items-center.justify-content-center
-        = f.button :submit, 'Send', class: 'btn-secondary btn-lg w-25'
-        = dismiss_modal_button
+      = simple_form_for :report, url: send_report_listing_path, html: { id: 'swap-form' } do |f|
+        = f.error_notification
+        = f.input :message, as: :text, label: "Report Reason:"
+        .form-actions.d-flex.align-items-center.justify-content-center
+          = f.button :submit, 'Send', class: 'btn-secondary btn-lg w-25'
+          = dismiss_modal_button
