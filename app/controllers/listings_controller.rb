@@ -125,13 +125,18 @@ class ListingsController < ApplicationController
         delivery_ids = params[:search_and_filter][:filter_delivery]
         new_delivery_ids = delivery_ids.drop(1)
 
-        puts "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
-        puts new_delivery_ids
-        puts "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT"
+        # Checking if array is empty
+        @empty_del = false
+        @delivery_numbers = ["1", "2", "3"]
+        if (new_delivery_ids & @delivery_numbers).empty?
+          @empty_del = true
+        end
 
         current_delivery = Delivery.where(id: new_delivery_ids)
-        unless current_delivery.nil?
-          @listings = @listings.where(listing_deliveries: current_delivery.ids)
+        current_listing_delivery = ListingDelivery.where(delivery_id: current_delivery.ids)
+
+        unless current_delivery.nil? || @empty_del
+          @listings = @listings.where(listing_deliveries: current_listing_delivery)
         end
       end
 
