@@ -77,7 +77,7 @@ class ReportsController < ApplicationController
           @report.conversation_message.update(is_deleted: false)
         end
       end
-      redirect_to reports_path
+      redirect_to reports_path, notice: "Report successfuly moderated"
     end
   
     private

@@ -6,6 +6,35 @@
     .modal-body
       .text-medium.text-center.mb-3
         - if @report.listing.present?
+          %strong Listing created by #{@report.listing.creator.username}
+          .row.d-flex.align-items-center.justify-content-center
+            .col-12.col-md-6.border-right.border-secondary
+              .preview-image
+                - if @report.listing.images&.attached?
+                  = image_tag(rails_blob_url(@report.listing.images.first))
+                - else
+                  = icon('fas', 'tags', class: 'text-large')
+            .col-12.col-md-6
+              .text-left.text-medium.text-dark
+                %p
+                  .font-weight-bold TITLE: 
+                  = @report.listing.title
+                %p 
+                  .font-weight-bold DESCRIPTION:
+                  = @report.listing.description
+                  
+
+        
+        - else 
+          %strong Conversation message sent by #{@report.conversation_message.sender.username}
+          #messages-container.h-100.text-center.mt-3
+            .message
+              .content-container
+                .content
+                  = @report.conversation_message.content
+      %hr
+      .text-medium.text-center.mb-3
+        - if @report.listing.present?
           %strong Ban #{@report.listing.creator.username} from the site
         - else 
           %strong Ban #{@report.conversation_message.sender.username} from the site
@@ -28,7 +57,7 @@
           - else 
             = f.input :delete_item, as: :boolean, input_html: {checked: @report.conversation_message.is_deleted}
           = f.input :delete_report, as: :boolean
-          = f.input :outcome, as: :text, input_html: {value: @report.outcome}
+          = f.input :outcome, as: :text, required: false, input_html: {value: @report.outcome}
         .form-actions.d-flex.align-items-center.justify-content-center
           = f.submit 'Submit', class: 'btn btn-secondary'
     .modal-footer.d-flex.align-items-center.justify-content-center
