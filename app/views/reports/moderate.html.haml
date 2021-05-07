@@ -17,10 +17,10 @@
             .col-12.col-md-6
               .text-left.text-medium.text-dark
                 %p
-                  .font-weight-bold TITLE: 
+                  %strong TITLE: 
                   = @report.listing.title
                 %p 
-                  .font-weight-bold DESCRIPTION:
+                  %strong DESCRIPTION:
                   = @report.listing.description
                   
 
@@ -44,6 +44,7 @@
             = f.input :id, as: :hidden, input_html: { value: @report.listing.creator.id }
           - else
             = f.input :id, as: :hidden, input_html: { value: @report.conversation_message.sender.id }
+          = f.input :report, as: :hidden, input_html: { value: @report }
           = f.input :ban_reason, as: :text
         .form-actions.d-flex.align-items-center.justify-content-center
           = f.submit 'Submit', class: 'btn btn-secondary'
