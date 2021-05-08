@@ -12,6 +12,7 @@ class ListingRatingsController < ApplicationController
   
     # GET /listing_ratings/new
     def new
+      render layout: false
       @listing_rating = ListingRating.new
     end
   
@@ -21,13 +22,7 @@ class ListingRatingsController < ApplicationController
   
     # POST /listing_ratings
     def create
-      @listing_rating = ListingRating.new(listing_rating_params)
-  
-      if @listing_rating.save
-        redirect_to listing_ratings_path, notice: 'Listing rating was successfully created.'
-      else
-        render :new
-      end
+      
     end
   
     # PATCH/PUT /listing_ratings/1

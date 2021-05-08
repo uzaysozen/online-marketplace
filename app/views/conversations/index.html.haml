@@ -1,4 +1,4 @@
-- listing = @conversation.listing
+- @listing_rating = ListingRating.where(listing_id: @conversation.listing_id).first
 
 #conversation-id{"data-conversation-id" => "#{@conversation.try(:id)}"}
 
@@ -17,13 +17,14 @@
           #messages
             - @conversation.active_messages.each do |message|
               = render 'conversation_messages/conversation_message', message: message
-            - if listing.listing_status.name == 'Complete'
-              - if listing.creator != current_user or listing.receiver != current_user
+            - if @conversation.listing.listing_status.name == 'Complete'
+              - if @conversation.listing.creator == current_user and @listing_rating.seller_rating.present? or @conversation.listing.receiver == current_user and not @listing_rating.buyer_rating.present?
                 .alert.alert-light.border.text-center
                   Leave a review 
-                  = link_to edit_listing_path(listing), class: 'ajax-modal btn btn-primary d-flex align-items-center justify-content-center w-25' do
-                    Review
-                    .far.fa-comment-dots.ml-3
+                  .d-flex.justify-content-center.pt-2
+                    = link_to rating_listing_path(@conversation.listing), class: 'ajax-modal btn btn-primary d-flex align-items-center justify-content-center w-25' do
+                      Review
+                      .far.fa-comment-dots.ml-3
               - else 
                 .alert.alert-warning.text-center
                   .fas.fa-exclamation-triangle
