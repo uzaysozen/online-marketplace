@@ -63,6 +63,8 @@
               .text-small.text-center.text-blue.listing-blue.rounded
                 See Details
 
-            .text-small.text-center.text-blue.listing-blue.rounded.my-2.my-md-0
-              = icon('far', 'flag') 
-              Report
+            - if can? :create, Report.new(listing: listed_item)
+              = link_to report_listing_path(listed_item), class: 'ajax-modal listing-button button-blue' do
+                .text-small.text-center.text-blue.listing-blue.rounded.my-2.my-md-0
+                  = icon('far', 'flag')
+                  Report

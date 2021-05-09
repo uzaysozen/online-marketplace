@@ -1,25 +1,44 @@
+- if report.conversation_message.present?
+  - conversation_listing = report.conversation_message.conversation.listing
 .row.justify-content-left.flex-column-reverse.flex-md-row.reported-item
   .col-12.col-md-12.listing-container
     .border-none.rounded.h-100
       .row.p-0
-        .col-12.col-sm-3.pl-0.pt-1
+        .col-12.col-sm-4.pl-0.pt-1
           .preview-image.preview-image-md
-            = icon('fas', 'tags', class: 'text-large')
+            - if report.listing.present?
+              - if report.listing.images&.attached?
+                = image_tag(rails_blob_url(report.listing.images.first))
+              - else
+                = icon('fas', 'tags', class: 'text-large')
+            - elsif report.conversation_message.present?
+              - if conversation_listing.images&.attached?
+                = image_tag(rails_blob_url(conversation_listing.images.first))
+              - else
+                = icon('fas', 'tags', class: 'text-large')
+        .col-12.col-sm-4.pl-0.pt-1
+          .row.justify-content-left.flex-column-rev.flex-md-row
+            .col-12.col-md-12.pl-0.text-left.pt-2
+              .col-12.col-md-12.pl-0.text-left.report-container.pt-0.mr-3
+                - if report.listing.present?
+                  %pre{:class => 'text-black text-small font-main'} Item: #{report.listing.title} 
+                  %pre{:class => 'text-black text-small font-main'} Creator: #{report.listing.creator.username} 
+                - elsif report.conversation_message.present?
+                  %pre{:class => 'text-black text-small font-main'} Item: #{conversation_listing.title} 
+                  %pre{:class => 'text-black text-small font-main'} Sender: #{report.conversation_message.sender.username} 
+              .col-12.col-md-12.pl-0.text-left.report-container.pt-0.mr-3
+                %pre{:class => 'text-darkgray text-small font-main'} Reason: #{report.message}
 
-        .row.justify-content-left.flex-column-rev.flex-md-row
-          .col-12.col-md-12.pl-0.text-left.pt-2
-            .col-12.col-md-12.pl-0
-              .text-left.pt-1.report-container
-                %pre{:class => 'text-black text-small font-main'} Item Name  acc19pm
-
-            .col-12.col-md-6.pl-0.text-left  
-              .pt-0.report-container
-                %pre{:class => 'text-darkgray text-small font-main'}Reason: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.
-
-        .col-12.col-sm-3.p-0.pt-3
-          .text-small.text-center.text-blue.listing-blue.rounded
-            See Details
-          %p
-          .text-small.text-center.btn-primary.rounded.text-white
-            Moderate 
-          
+        .col-12.col-sm-4.p-0.pt-3.mt-3
+          - if report.listing.present?
+            = link_to report.listing, class: 'listing-button button-blue' do
+              .text-small.text-center.text-blue.listing-blue.rounded
+                See Details
+          - elsif report.conversation_message.present?
+            = link_to see_message_report_path(report), class: 'ajax-modal button-blue listing-button' do
+              .text-small.text-center.text-blue.listing-blue.rounded
+                See Message
+          %br
+            = link_to moderate_report_path(report), class: 'ajax-modal listing-button' do
+              .text-small.text-center.btn-primary.rounded.text-white
+                Moderate    

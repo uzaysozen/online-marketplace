@@ -42,7 +42,8 @@
       .col-2.col-lg-1.text-medium.text-blue.d-flex.flex-column.justify-content-around
         .icon-button
           - if can? :create, Report.new(listing: listing)
-            = icon('far', 'flag')
+            = link_to report_listing_path(listing), class: 'ajax-modal' do
+              = icon('far', 'flag')
         .text-medium
           - if can? :create, UserFavourite.new(listing: listing)
             - if user_favourite.present?

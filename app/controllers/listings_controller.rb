@@ -1,6 +1,6 @@
 class ListingsController < ApplicationController
     load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-    load_resource only: [:swap, :swap_conversation, :add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
+    load_resource only: [:report, :send_report, :swap, :swap_conversation, :add_favourite, :delete_favourite, :start_conversation, :delete_conversation]
 
     # GET /listings
     def index
@@ -306,6 +306,15 @@ class ListingsController < ApplicationController
       end
     end
 
+    def report
+      render layout: false
+    end
+
+    def send_report
+      report_message = params[:report][:message]
+      Report.create(message: report_message, listing: @listing, reporter: current_user)
+    end
+
     private
       def accessible_listings
         Listing.includes(:creator, :listing_condition).accessible_by(current_ability, :list)
@@ -315,4 +324,4 @@ class ListingsController < ApplicationController
         params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
                                         :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
       end
-  end
+end
