@@ -56,14 +56,20 @@ class ReportsController < ApplicationController
     end
 
     def moderate_update
-      
+      # Getting parameters
       delete_item = params[:report_options][:delete_item]
       delete_report = params[:report_options][:delete_report]
       report_outcome = params[:report_options][:outcome]
+      # Update report outcome and moderator
       @report.update(outcome: report_outcome, moderator: current_user)
+      
+      # Delete report 
       if delete_report == "1"
         @report.destroy
       end
+      
+      # Delete conversation message or listing
+      # Check which one is present in the current report and change its status to deleted
       if delete_item == "1"
         if @report.listing.present?
           @report.listing.update(listing_status: ListingStatus.find_by(name: 'Deleted'), moderator: current_user)
