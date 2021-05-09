@@ -2,7 +2,11 @@
 .row
   .col-12.col-lg-3
     .row.text-huge.text-black.text-center
-      = icon('far', 'image', class: 'conversation-listing-image ')
+      .preview-image
+        - if listing.images&.attached?
+          = image_tag(rails_blob_url(listing.images.first))
+        - else
+          = icon('fas', 'tags', class: 'text-large')
   
   .col-lg-9
     .row.text-medium.text-black.text-left
@@ -27,8 +31,9 @@
           = link_to listing , class: 'conversation-link btn btn-outline-dark btn-block' do
             See Details
       .col-12.col-lg-6.text-small.text-center.text-darkgray.rounded.mt-2
-        = link_to listing , class: 'conversation-link btn btn-outline-dark btn-block' do
-          = icon('far', 'flag')
-          Report
+        - if can? :create, Report.new(listing: listing)
+          = link_to report_listing_path(listing), class: 'ajax-modal conversation-link btn btn-outline-dark btn-block' do
+            = icon('far', 'flag')
+            Report
           
 

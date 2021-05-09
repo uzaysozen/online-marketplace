@@ -1,7 +1,6 @@
 class ListingsController < ApplicationController
-
   load_and_authorize_resource only: [:show, :edit, :update, :destroy]
-  load_resource only: [:add_favourite, :delete_favourite, :start_conversation, :delete_conversation, :complete, :swap, :swap_conversation, :rating, :add_rating]
+  load_resource only: [:report, :send_report, :add_favourite, :delete_favourite, :start_conversation, :delete_conversation, :complete, :swap, :swap_conversation, :rating, :add_rating]
 
   # GET /listings
   def index
@@ -121,10 +120,27 @@ class ListingsController < ApplicationController
       session[:search_swap] = false
     end
 
+<<<<<<< HEAD
     #Filter by Delivery
     if params[:search_and_filter][:filter_delivery].present?
       delivery_ids = params[:search_and_filter][:filter_delivery]
       new_delivery_ids = delivery_ids.drop(1)
+=======
+        # Checking if array is empty
+        @empty_del = false
+        @delivery_numbers = ["1", "2", "3"]
+        if (new_delivery_ids & @delivery_numbers).empty?
+          @empty_del = true
+        end
+
+        current_delivery = Delivery.where(id: new_delivery_ids)
+        current_listing_delivery = ListingDelivery.where(delivery_id: current_delivery.ids)
+
+        unless current_delivery.nil? || @empty_del
+          @listings = @listings.where(listing_deliveries: current_listing_delivery)
+        end
+      end
+>>>>>>> master
 
       current_delivery = Delivery.where(id: new_delivery_ids)
       unless current_delivery.nil?
@@ -343,13 +359,22 @@ class ListingsController < ApplicationController
     end
   end
 
-  private
-  def accessible_listings
-    Listing.includes(:creator, :listing_condition).accessible_by(current_ability, :list)
-  end
-  # Only allow a trusted parameter "white list" through.
-  def listing_params
-    params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
-                                    :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
-  end
+    def report
+      render layout: false
+    end
+
+    def send_report
+      report_message = params[:report][:message]
+      Report.create(message: report_message, listing: @listing, reporter: current_user)
+    end
+
+    private
+      def accessible_listings
+        Listing.includes(:creator, :listing_condition).accessible_by(current_ability, :list)
+      end
+      # Only allow a trusted parameter "white list" through.
+      def listing_params
+        params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
+                                        :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
+      end
 end

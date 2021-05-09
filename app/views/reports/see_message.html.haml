@@ -1,0 +1,13 @@
+.modal-dialog
+  .modal-content.p-4
+    .modal-header.d-flex.align-items-center.justify-content-center
+      .text-large.text-center.modal-title
+        = icon 'fas', 'comment-dots', "Message by #{@report.conversation_message.sender.username}"
+    .modal-body
+      #messages-container.h-100.text-center
+        .message
+          .content-container
+            .content
+              = @report.conversation_message.content
+    .modal-footer.d-flex.align-items-center.justify-content-center
+      = dismiss_modal_button

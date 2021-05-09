@@ -1,10 +1,11 @@
 class ReportsController < ApplicationController
-    before_action :set_report, only: [:show, :edit, :update, :destroy]
+    load_resource only: [:show, :edit, :update, :destroy, :see_message, :moderate, :moderate_update]
     load_and_authorize_resource
 
     # GET /reports
     def index
-      @reports = Report.all
+      @message_reports = Report.includes([:listing, conversation_message: [:sender, :conversation]]).where.not(conversation_message: nil)
+      @listing_reports = Report.includes([:listing, conversation_message: [:sender, :conversation]]).where.not(listing: nil)
     end
   
     # GET /reports/1
@@ -44,6 +45,45 @@ class ReportsController < ApplicationController
     def destroy
       @report.destroy
       redirect_to reports_url, notice: 'Report was successfully deleted.'
+    end
+
+    def see_message
+      render layout: false
+    end
+
+    def moderate
+      render layout: false
+    end
+
+    def moderate_update
+      # Getting parameters
+      delete_item = params[:report_options][:delete_item]
+      delete_report = params[:report_options][:delete_report]
+      report_outcome = params[:report_options][:outcome]
+      # Update report outcome and moderator
+      @report.update(outcome: report_outcome, moderator: current_user)
+      
+      # Delete report 
+      if delete_report == "1"
+        @report.destroy
+      end
+      
+      # Delete conversation message or listing
+      # Check which one is present in the current report and change its status to deleted
+      if delete_item == "1"
+        if @report.listing.present?
+          @report.listing.update(listing_status: ListingStatus.find_by(name: 'Deleted'), moderator: current_user)
+        else
+          @report.conversation_message.update(is_deleted: true)
+        end
+      else
+        if @report.listing.present?
+          @report.listing.update(listing_status: ListingStatus.find_by(name: 'Active'), moderator: current_user)
+        else
+          @report.conversation_message.update(is_deleted: false)
+        end
+      end
+      redirect_to reports_path, notice: "Report successfuly moderated"
     end
   
     private
