@@ -1,10 +1,12 @@
 - if @covid_guidance.present? and cookies[:dismissed_covid_guidance] != "true"
   #covid-guidance.alert.alert-warning.alert-dismissible.fade.w-100.show.m-0{role: "alert"}
     %div{style: "padding: 5px;"}
+      = icon 'fas', 'exclamation-circle'
       %strong COVID-19 GUIDANCE!
-      %p
-      %p
+      .pt-3.guidance-container
         = @covid_guidance.content[0]
+      = link_to covid_path, class: 'strong',  title: "COVID Guidance page" do
+        see more
       // On click we set a cookie that will last two weeks to keep the banner at bay
       %button.close{"aria-label" => "Close", "data-dismiss" => "alert", type: "button",
       onclick: "
