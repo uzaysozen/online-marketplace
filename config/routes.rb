@@ -81,6 +81,7 @@ Rails.application.routes.draw do
   get :terms, to: "pages#terms"
   get :faq, to: "pages#faq"
   get :about, to: "pages#about"
+  get :covid, to: "pages#covid"
 
   # Error Routes
 

@@ -1,0 +1,50 @@
+- content_for :title, 'COVID Guidance'
+
+.row.justify-content-center.flex-column-reverse.flex-md-row
+  .col-12.col-md-12
+    .text-large.text-darkgray.text-center 
+      %strong Coronavirus
+    .text-medium.text-darkgray.text-center
+      Keep the marketplace safe for students and staff
+
+.row.justify-content-center.flex-column-reverse.flex-md-row
+  .col-12.col-md-12
+    .border-none
+      .p-4
+        .text-medium.text-darkgray
+          %strong Our Advice  
+        .text-black.text-small.pt-2
+          %pre{:class=> 'text-small text-black font-main guidance'}= @covid_guidance.content[0]
+
+.row.justify-content-left.flex-column-reverse.flex-md-row
+  .col-12.col-md-12
+    %br
+    #accordion.accordion
+      .card
+        #headingOne.card-header
+          %h5.mb-0
+            %button.btn.btn-link{"aria-controls" => "collapseOne", "aria-expanded" => "false", "data-target" => "#collapseOne", "data-toggle" => "collapse", type: "button"}
+              Useful Links
+        #collapseOne.collapse.show{"aria-labelledby" => "headingOne", "data-parent" => "#accordion"}
+          .card-body
+            .row.justify-content-center.flex-column-reverse.flex-md-row
+              .col-12.col-md-6.listing-description-container.p-2
+                .text-darkgray.text-left.pl-3
+                  =link_to( 'https://www.sheffield.ac.uk/coronavirus/covid-19-statistics', class: 'text-darkgray') do
+                    %strong University COVID Dashboard 
+                    =icon('fas', 'angle-right')
+                .text-darkgray.pt-3.pl-3
+                  =link_to( 'https://www.sheffield.ac.uk/coronavirus', class: 'text-darkgray') do
+                    %strong University COVID Page
+                    =icon('fas', 'angle-right')
+              .col-12.col-md-6.p-2
+                .text-darkgray.pl-3
+                  =link_to( 'https://www.sheffield.ac.uk/coronavirus/safety/covid-19-testing', class: 'text-darkgray') do
+                    %strong University Testing Centre
+                    =icon('fas', 'angle-right')
+                .text-darkgray.pt-3.pl-3
+                  =link_to( 'https://sheffieldcics.getconnect2.com/', class: 'text-darkgray') do
+                    %strong COVID-19 Testing for staff and students
+                    =icon('fas', 'angle-right')
+
+
