@@ -14,10 +14,21 @@ describe 'End to end test' do
     
 
     before do
-      user = FactoryBot.create(:user)
+      user = FactoryBot.create(:user. id: 1)
+      admin = FactoryBot.create(:user, administrator: true)
+      @condition_new = ListingCondition.create(name: "New")
+      @condition_used = ListingCondition.create(name: "Used")
+      @category_electronics = ListingCategory.create(name: "Electronics")
+      @category_cloting = ListingCategory.create(name: "Cloting")
+      @category_books = ListingCategory.create(name: "Books")
       @public_post  = Listing.create(title: 'A title for a post',        description: 'Some public content')
       @private_post = Listing.create(title: 'A title for a secret post', description: 'Some private content')
-      
+      @iphone_post = Listing.create(title: 'Iphone', listing_condition: @condition_used, price: 500, listing_category: @category_electronics )
+      @airpods_post = Listing.create(title: 'Airpods', Listing_condition: @condition_used, price: 200, Listing_category: @category_electronics)
+      @status_pending = ListingStatus.create(id: 1, name: "Pending")
+      @status_complete = ListingStatus.create(id: 2, name: "Complete")
+      @sold_post = Listing.create(title: 'a sold listing', receiver_id: 1, listing_status_id: 2)
+      @sold_out_post = Listing.create(title: 'a sold listing by me', creator_id: 1, listing_status_id: 2)
       login_as(user, scope: :user)
     end
     def create_new_listing 
@@ -93,7 +104,7 @@ describe 'End to end test' do
       expect(page).to have_content "My Reviews"
     end 
 
-    specify "I can checkout my setting page " do 
+    specify "I can checkout my setting page and choose when to got email notifications " do 
       visit '/'
       click_link "Settings"
       check "When I receive a message"
@@ -135,167 +146,142 @@ describe 'End to end test' do
       expect(page).to have_content "£ 321"
     end
 
-    specify "As admin, I can promote and demote other users as admin " do
-      login_as(admin)
-      visit "/"
-      click_link "Other"
-      click_button "Add a new admin"
-      fill_in "Username", with: "ace19cl"
-      fill_in "Email". with: "cliu85@sheffield.ac.uk"
-      click_button "Add a admin"
-      expect(page). to have_content "ace19cl"
-      click_button "Remove"
-      expect(pa)
 
 
+    specify "Search listing by inputing keyword " do
+      visit '/'
+      fill_in "Search Bar", with "A title for a post"
+      click_button "Confirm"
+      expect(page).to have_content "A title for a post"
+      visit '/'
+      select2("Education", from: "Select Tags")
+      click_button "Confirm"
+      expect(page).to have_content "Book"
+    end
 
-    # specify "I cannot perform an SQL injection attack" do
-      # Check search works correctly
-    #   page.driver.submit :listing, search_listings_path(search: { title: "A title for a post" }), {}
-    #   expect(page).to have_content 'A title for a post'
-    #   expect(page).not_to have_content 'A title for a secret post'
+    specify "I can sort listings by different options" do
+      visit '/'
+      click_button "Sort By Title"
+      click_button "Sort By Price"
+      click_button "Sort by Date Created"
+      # could be done by unit test
+    end
 
-    #   # Check search is not vulnerable to SQL injection
-    #   page.driver.submit :listing, search_listings_path(search: { title: "A title for a post') OR '1'--" }), {}
-    #   expect(page).not_to have_content 'A title for a post'
-    #   expect(page).not_to have_content 'A title for a secret post'
-    # end
+    specify "I can filter through items by different options" do
+      visit '/'
+      select 'Electronics', from: 'Categories'
+      fill_in "Max Price", with "200"
+      select 'Used', from: 'Condition'
+      check "Collection"
+      check 'Drop-off'
+      check 'Postage'
+      click_button 'Confirm'
+      expect(page).to have_content "Airpods"
+      expect(page).not_to have_content "Iphone"
+    end
+    specify "I can view COVID-19 guidance in website" do
+      visit '/'
+      expect(page).to have_content "COVID-19 Guidance"
+    end
 
-    # specify "I cannot access the admin only management section" do
-    #   visit "/categories"
-    #   expect(page.status_code).to eq 403
-    #   expect(page).not_to have_content 'Manage categories'
-    # end
+    specify "As a buyer, I can review a seller I have purchased an item from " do
+      visit '/'
+      click_link "Reviews"
+      expect(page).to have_content "a sold listing"
+      click_button "Review"
+    end
 
-    # specify "My html in sanitised to avoid XSS attacks", js: true do
-    #   visit new_post_path
-    #   fill_in 'Title', with: 'My title'
-    #   fill_in 'Content', with: "<h1>Hello</h1>
-    #                             <script>
-    #                               $(function() {
-    #                                 window.location.replace('http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html');
-    #                               });
-    #                             </script>"
-    #   click_button 'Create Post'
-    #   sleep(2)
-    #   expect(current_url).not_to eq 'http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html'
-    #   expect(page).to have_css 'h1'
-    #   within(:css, 'h1') { expect(page).to have_content 'Hello' }
-    # end
-
-    # specify "I cannot make myself an administrator through abuse of mass assignment", js: true do
-    #   visit '/'
-    #   click_link 'Edit my details'
-    #   page.execute_script "$('#user-form').append(\"<input value='t' name='user[admin]'>\")"
-    #   sleep 1
-    #   click_button 'Update User'
-    #   expect(user2.reload.admin).to be false
-    # end
-
-    # specify "I cannot create a post as another user through abuse of mass assignment", js: true do
-    #   visit new_post_path
-    #   fill_in 'Title', with: 'A controversial title'
-    #   fill_in 'Content', with: 'Some inflammatory context'
-    #   page.execute_script "$('#posts-form').append(\"<input value='#{user1.id}' name='post[author_id]'>\")"
-    #   sleep 1
-    #   click_button 'Create Post'
-    #   expect(Post.last.author).not_to eq user1
-    # end
-
-    # specify "I cannot edit the details of another user" do
-    #   visit edit_user_path(user1)
-    #   expect(page.status_code).to eq 403
-    # end
+    specify "As a seller, I can review a buyer who has purchased an item from me" do
+      visit '/'
+      click_link "Reviews"
+      expect(page).to have_content "a sold listing by me"
+      click_button "Review"
 
   end
 
-  # context 'As a non signed in user' do
+  specify "I can check FAQ page" do
+    visit '/'
+    click_link "FAQ"
+    epect(page).to have_content "Frequently Asked Questions"
+  end
 
-  #   specify "I cannot sign up with a password that is too short" do
-  #     visit "/users/sign_up"
-  #     fill_in "Email", with: 'a.n@email.com'
-  #     fill_in "Password", with: 'pass'
-  #     fill_in "Password confirmation", with: 'pass'
-  #     click_button 'Sign up'
-  #     expect(page).to have_content 'is too short (minimum is 8 characters)'
-  #     expect(page).to_not have_content 'Welcome! You have signed up successfully.'
-  #   end
+  context 'As a logged in admin' do
+    before do
 
-  #   specify "I can sign up with a long password" do
-  #     visit "/users/sign_up"
-  #     fill_in "Email", with: 'a.n@email.com'
-  #     fill_in "Password", with: '3fNPg6fqScrZs0m3'
-  #     fill_in "Password confirmation", with: '3fNPg6fqScrZs0m3'
-  #     click_button 'Sign up'
-  #     expect(page).to_not have_content 'is too long (maximum is 8 characters)'
-  #     expect(page).to have_content 'Welcome! You have signed up successfully.'
-  #   end
+      admin = FactoryBot.create(:user, administrator: true)
+      user = FactoryBot.create(:user, administrator: false, username: "username", email: "username@sheffield.ac.uk")
+      @condition_new = ListingCondition.create(name: "New")
+      @condition_used = ListingCondition.create(name: "Used")
+      @category_electronics = ListingCategory.create(name: "Electronics")
+      @category_cloting = ListingCategory.create(name: "Cloting")
+      @category_books = ListingCategory.create(name: "Books")
+      @public_post  = Listing.create(title: 'A title for a post',        description: 'Some public content')
+      @private_post = Listing.create(title: 'A title for a secret post', description: 'Some private content')
+      @iphone_post = Listing.create(title: 'Iphone', listing_condition: @condition_used, price: 500, listing_category: @category_electronics )
+      @airpods_post = Listing.create(title: 'Airpods', Listing_condition: @condition_used, price: 200, Listing_category: @category_electronics)
+      @status_pending = ListingStatus.create(id: 1, name: "Pending")
+      @status_complete = ListingStatus.create(id: 2, name: "Complete")
+      @pending_post = Listing.create(title: 'A pending listing', listing_status_id: 1)
+      @pending_approve_posy = Listing.create(title: 'A pending listing need to approve', listing_status_id: 1)
+      login_as(admin, scope: :user)
+    end
+    specify "I can promote and demote other users as admin " do
 
-  #   specify "I cannot sign up with a simple password" do
-  #     visit "/users/sign_up"
-  #     fill_in "Email", with: 'a.n@email.com'
-  #     fill_in "Password", with: 'alllowercase'
-  #     fill_in "Password confirmation", with: 'alllowercase'
-  #     click_button 'Sign up'
-  #     expect(page).to have_content 'Password must contain at least one digit and Password must contain at least one upper-case letter'
-  #     expect(page).to_not have_content 'Welcome! You have signed up successfully.'
-  #   end
+      visit "/"
+      click_link "Other"
+      click_button "Add a new admin"
+      fill_in "Username", with: "username"
+      fill_in "Email", with: "username@sheffield.ac.uk"
+      click_button "Add a admin"
+      expect(page).to have_content "username"
+      click_button "Remove"
+      expect(page).not_to have_content "username" 
+    end
+    specify "I can moderate new postings before they are released" do
+      visit '/'
+      click_link "Moderation"
+      expect(page).to have_content "A pending listing"
+      # need approve case here
+      # click_button "See Details"
+      click_button "Delete"
+      expect(page).not_to have_content "A pending listing"
+    end
 
-  #   specify "My account is locked if I enter my password wrong too many times" do
-  #     visit "/users/sign_in"
-  #     20.times do
-  #       fill_in "Email", with: user2.email
-  #       fill_in "Password", with: 'notmypassword'
-  #       click_button 'Log in'
-  #     end
-  #     expect(page).to have_content 'Your account is locked.'
-  #   end
+    specify "I can send emails notifications to all users" do
+      visit '/'
+      click_link "Other"
+      fill_in "Send an email...", with: "Everyone should follow COVID-19 guidance"
+      click_button "Send"
+      expect(page).to have_content "The announcement has been sent to all user."
+    end
 
-  # end
+    specify "I can view statistics pertaining to the usage of the website" do
+      visit '/'
+      click_link "Statistics"
+      expect(page).to have_content "Site Traffic"
+      expect(page).to have_content "Items sold"
+      expect(page).to have_content "Items swapped"
+      expect(page).to have_content "Overall item value sold"
+      expect(page).to have_content "Top Categories"
+    end
+    # @javascript
+    specify "I can add or remove questions and answers in FAQ page" do
+      visit '/'
+      click_link "Other"
+      click_button "Add a new question"
+      fill_in "Question", with: "Hello, I have a question."
+      fill_in "Answer", with: "Hello, I have an answer."
+      click_button "Add question"
+      visit '/faq'
+      expect(page).to have_content "Hello, I have a question."
+      expect(page).to have_content "Hello, I have an answer."
+      visit '/admin/other'
+      within_fieldset('FAQs') do
+        click_button "Remove"
+      end
+      expect(page).not_to have_content "Hello, I have a question."
+    end
 
-  # context 'Audit log' do
 
-  #   before do
-  #     @public_post  = Post.create(title: 'A title for a post',        content: 'Some public content',  author: user1, private_post: false)
-  #     @private_post = Post.create(title: 'A title for a secret post', content: 'Some private content', author: user1, private_post: true)
-  #     @category = FactoryBot.create :category, name: 'My cat'
-  #   end
-
-  #   specify 'I cannot view the audit log as a normal user' do
-  #     login_as user2
-  #     visit "/audits"
-  #     expect(page.status_code).to eq 403
-  #   end
-
-    # context 'As an admin' do
-    #   before { login_as admin_user }
-
-    #   specify 'I can see an audit log of categories' do
-    #     visit "/categories"
-    #     click_link 'Edit'
-    #     fill_in 'Name', with: 'Updated cat'
-    #     click_button 'Update Category'
-    #     visit '/audits'
-    #     within(:css, 'table') do
-    #       expect(page).to have_content 'Category'
-    #       expect(page).to have_content 'Name From: My cat - To: Updated cat'
-    #     end
-    #   end
-
-    #   specify 'I can see a list of data accessed for categories', js: true do
-    #     visit "/categories"
-    #     click_link 'Edit'
-    #     visit '/audits'
-    #     click_link 'Views'
-    #     within(:css, 'table') do
-    #       expect(page).to have_content 'categories'
-    #       expect(page).to have_content 'edit'
-    #       expect(page).to have_content @category.id
-    #     end
-    #   end
-
-    # end
-
-  # end
 
 end
