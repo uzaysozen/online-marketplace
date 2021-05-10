@@ -115,7 +115,11 @@ class AdminController < ApplicationController
     @user = User.find(params[:user][:id])
     if params[:user][:ban_reason] != ""
       @user.update(is_banned: true, ban_reason: params[:user][:ban_reason])
-      render 'user_banned'
+      if params[:user][:report].present?
+        render 'user_banned_report'
+      else
+        render 'user_banned'
+      end
     end
   end
 

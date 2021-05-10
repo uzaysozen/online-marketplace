@@ -2,7 +2,7 @@
   *= require bootstrap_setup
   *= require font_awesome_setup
 
-  *= require select2
+  *= require select2.min
   *= require select2-bootstrap
 
   *= require colours
