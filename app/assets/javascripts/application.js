@@ -3,6 +3,7 @@
 //= require ajax_modal_fixed
 //= require popper
 //= require bootstrap
+//= require bootstrap-rating.min
 //= require flash_message
 //= require visibility_map
 //= require modal
