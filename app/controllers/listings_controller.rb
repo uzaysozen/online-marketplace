@@ -38,7 +38,7 @@ class ListingsController < ApplicationController
   def search_and_filter
     @listings = session[:category_listings] ||= accessible_listings
 
-    #Filter by Category
+    # Filter by Category
     if params[:search_and_filter][:filter_category].present?
       current_category = ListingCategory.where(id: params[:search_and_filter][:filter_category]).first
       unless current_category.nil?
@@ -85,7 +85,7 @@ class ListingsController < ApplicationController
       session[:search_string] = ""
     end
 
-    #Filter by Minimum Price
+    # Filter by Minimum Price
     if params[:search_and_filter][:filter_minprice].present?
       @listings = @listings.where("price >= ?", params[:search_and_filter][:filter_minprice])
       session[:search_minprice] = params[:search_and_filter][:filter_minprice]
@@ -93,7 +93,7 @@ class ListingsController < ApplicationController
       session[:search_minprice] = ""
     end
 
-    #Filter by Maximum Price
+    # Filter by Maximum Price
     if params[:search_and_filter][:filter_maxprice].present?
       @listings = @listings.where("price <= ?", params[:search_and_filter][:filter_maxprice])
       session[:search_maxprice] = params[:search_and_filter][:filter_maxprice]
@@ -101,7 +101,7 @@ class ListingsController < ApplicationController
       session[:search_maxprice] = ""
     end
 
-    #Filter by Condition
+    # Filter by Condition
     if params[:search_and_filter][:filter_condition].present?
       current_condition = ListingCondition.where(id: params[:search_and_filter][:filter_condition]).first
       session[:search_condition] = params[:search_and_filter][:filter_condition]
@@ -112,7 +112,7 @@ class ListingsController < ApplicationController
       session[:search_condition] = ""
     end
 
-    #Filter by Swap-Only Listings
+    # Filter by Swap-Only Listings
     if params[:search_and_filter][:filter_swap] == "1"
       @listings = @listings.where("swap = ?", params[:search_and_filter][:filter_swap])
       session[:search_swap] = true
@@ -120,38 +120,30 @@ class ListingsController < ApplicationController
       session[:search_swap] = false
     end
 
-<<<<<<< HEAD
-    #Filter by Delivery
+    # Filter by Delivery
     if params[:search_and_filter][:filter_delivery].present?
       delivery_ids = params[:search_and_filter][:filter_delivery]
       new_delivery_ids = delivery_ids.drop(1)
-=======
-        # Checking if array is empty
-        @empty_del = false
-        @delivery_numbers = ["1", "2", "3"]
-        if (new_delivery_ids & @delivery_numbers).empty?
-          @empty_del = true
-        end
 
-        current_delivery = Delivery.where(id: new_delivery_ids)
-        current_listing_delivery = ListingDelivery.where(delivery_id: current_delivery.ids)
-
-        unless current_delivery.nil? || @empty_del
-          @listings = @listings.where(listing_deliveries: current_listing_delivery)
-        end
+      # Checking if array is empty
+      @empty_del = false
+      @delivery_numbers = ["1", "2", "3"]
+      if (new_delivery_ids & @delivery_numbers).empty?
+        @empty_del = true
       end
->>>>>>> master
 
       current_delivery = Delivery.where(id: new_delivery_ids)
-      unless current_delivery.nil?
-        @listings = @listings.where(listing_deliveries: current_delivery.ids)
+      current_listing_delivery = ListingDelivery.where(delivery_id: current_delivery.ids)
+
+      unless current_delivery.nil? || @empty_del
+        @listings = @listings.where(listing_deliveries: current_listing_delivery)
       end
     end
 
-    if params[:search_button] == 'Confirm'
+    if params[:search_button] != 'Clear'
       session[:sort_listings] = @listings
       render :index
-    elsif params[:search_button] == 'Clear'
+    else
       @listings = accessible_listings
       session[:sort_listings] = accessible_listings
       session[:category_listings] = accessible_listings
@@ -197,9 +189,6 @@ class ListingsController < ApplicationController
     delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
 
     @listing = Listing.new(params)
-    if !@listing.price?
-      @listing.price = 0.0
-    end
     @listing.listing_status = ListingStatus.first
     @listing.creator_id = current_user.id
     @listing.is_active = true
@@ -296,20 +285,6 @@ class ListingsController < ApplicationController
     end
   end
 
-  # Mark listing as complete
-  def complete 
-    @listing.listing_status = ListingStatus.where(name: 'Complete').first
-    if params[:receiver].present?
-      @listing.receiver = User.find_by_id(params[:receiver])
-    end
-    
-    if @listing.save
-      redirect_to request.referrer, notice: 'Listing has been marked as complete'
-    else
-      redirect_to request.referrer, notice: 'Failed to complete listing'
-    end
-  end 
-
   def swap
     @user_listings = Listing.where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active'))
     render layout: false
@@ -359,22 +334,22 @@ class ListingsController < ApplicationController
     end
   end
 
-    def report
-      render layout: false
-    end
+  def report
+    render layout: false
+  end
 
-    def send_report
-      report_message = params[:report][:message]
-      Report.create(message: report_message, listing: @listing, reporter: current_user)
-    end
+  def send_report
+    report_message = params[:report][:message]
+    Report.create(message: report_message, listing: @listing, reporter: current_user)
+  end
 
-    private
-      def accessible_listings
-        Listing.includes(:creator, :listing_condition).accessible_by(current_ability, :list)
-      end
-      # Only allow a trusted parameter "white list" through.
-      def listing_params
-        params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
-                                        :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
-      end
+  private
+    def accessible_listings
+      Listing.includes(:creator, :listing_condition).accessible_by(current_ability, :list)
+    end
+    # Only allow a trusted parameter "white list" through.
+    def listing_params
+      params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
+                                      :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
+    end
 end

@@ -1,16 +1,26 @@
 .panel.panel-default
-  .panel-heading
-    %h3.panel-title Listings
-
-  .row.m-0.pt-4
+  
+  = simple_form_for :search_and_filter, url: search_and_filter_listings_path, method: :post do |f|
+    .row.mx-md-5.px-3
+      .col-sm-3.col-xs-4.p-0.text-right.d-none.d-sm-block
+        = f.input :filter_category, label: false, collection: ListingCategory.all, required: false, include_blank: 'All', selected: session[:search_category], input_html: { class: 'bg-light'}
+      .col-sm-6.col-xs-4.p-0
+        = f.input :search_bar, label: false, required: false, placeholder: 'Search...', input_html: { value: session[:search_string] }
+      .col-sm-3.col-xs-4.p-0
+        = f.submit 'Search', class: 'btn btn-secondary w-100', name: 'search_button'
+  
+  .pt-4.pb-2.text-medium
+    Sort By
+  .row.m-0
     .col-12.col-lg-3
-      = link_to "Sort By Title", '/listings?sort=title', sort: "title"
+      = link_to "Title", '/listings?sort=title', sort: "title", class: 'text-dark'
       \|
-      = link_to "Sort By Price", '/listings?sort=price', sort: "price"
+      = link_to "Price", '/listings?sort=price', sort: "price", class: 'text-dark'
       \|
-      = link_to "Sort by Date Created", '/listings?sort=created_at', sort: "created_at"
+      = link_to "Date Created", '/listings?sort=created_at', sort: "created_at", class: 'text-dark'
       
-      = render partial: 'search_and_filter_menu'
+      .pt-3
+        = render partial: 'search_and_filter_menu'
     
     .col-12.col-lg-8.offset-lg-1
       #listings.h-100
