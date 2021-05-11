@@ -38,7 +38,7 @@ class ListingsController < ApplicationController
     def search_and_filter
       @listings = session[:category_listings] ||= accessible_listings
 
-      #Filter by Category
+      # Filter by Category
       if params[:search_and_filter][:filter_category].present?
         current_category = ListingCategory.where(id: params[:search_and_filter][:filter_category]).first
         unless current_category.nil?
@@ -140,10 +140,10 @@ class ListingsController < ApplicationController
         end
       end
 
-      if params[:search_button] == 'Confirm'
+      if params[:search_button] != 'Clear'
         session[:sort_listings] = @listings
         render :index
-      elsif params[:search_button] == 'Clear'
+      else
         @listings = accessible_listings
         session[:sort_listings] = accessible_listings
         session[:category_listings] = accessible_listings
