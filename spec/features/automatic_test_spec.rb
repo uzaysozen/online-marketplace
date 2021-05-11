@@ -202,8 +202,38 @@ describe 'End to end test' do
   specify "I can check FAQ page" do
     visit '/'
     click_link "FAQ"
-    epect(page).to have_content "Frequently Asked Questions"
+    expect(page).to have_content "Frequently Asked Questions"
+    expect(page).to have_current_path('/faq')
   end
+
+  specify "I can check About page" do
+    visit '/'
+    click_link "About"
+    expect(page).to have_content "About this site"
+    expect(page).to have_current_path('/about')
+  end
+
+  specify "I can check Contact page" do
+    visit '/'
+    click_link "Contact"
+    expect(page).to have_content "Get in touch"
+    expect(page).to have_current_path('/contact')
+  end
+
+  specify "I can add a listing to my favourite listings " do
+    # https://stackoverflow.com/questions/51457862/capybara-click-button-with-no-text-or-id
+    visit '/'
+    find('a.heart-link').click
+    visit '/profile/user_favourites'
+    # https://stackoverflow.com/questions/12851932/rails-capybara-how-to-click-a-link-in-a-table-row-that-also-contains-unique-tex
+    # https://stackoverflow.com/questions/37405002/capybara-ambiguous-matching-link-or-button-nil
+    # https://stackoverflow.com/questions/37405002/capybara-ambiguous-matching-link-or-button-nil
+
+
+  end
+
+  specify "I can add and delete ban words " do
+
 
   context 'As a logged in admin' do
     before do
@@ -234,8 +264,11 @@ describe 'End to end test' do
       fill_in "Email", with: "username@sheffield.ac.uk"
       click_button "Add a admin"
       expect(page).to have_content "username"
-      click_button "Remove"
-      expect(page).not_to have_content "username" 
+      # within_fieldset('Admin permissions') do
+      #   click_button "Remove"
+      # end
+      find(:xpath, "//tr[td[contains(.,'username')]]/td/a", :text => 'Remove').click
+      expect(page).not_to have_content "username@sheffield.ac.uk" 
     end
     specify "I can moderate new postings before they are released" do
       visit '/'
