@@ -25,16 +25,15 @@
           #images-preview.row
             - (1..8).each do |i|
               %div.col-4.preview{:id => "preview_#{i}"}
-                %div.image-container{:id => "image_#{i}"}
-                  %div.far.fa-image.placeholder
+                %div.image-container{:id => "image_#{i}", :style => "background-image: url(/images/placeholder.png)" }
 
-          = f.input :description, hint: '(Max 200 words)'
-          = f.association :listing_condition, label: 'Condition'
-          = f.association :listing_category, label: 'Category'
-          = f.input :listing_deliveries, label: 'Delivery', as: :check_boxes, collection: Delivery.all, checked: @listing.delivery_ids, input_html: { multiple: true }
+          = f.input :description, hint: '(Max 200 words)', input_html: { maxlength: 200 }
+          = f.association :listing_condition, label: 'Condition', input_html: { class: 'select2-basic'}, include_blank: false, include_hidden: false
+          = f.association :listing_category, label: 'Category', input_html: { class: 'select2-basic'}, include_blank: false, include_hidden: false
+          = f.input :listing_deliveries, label: 'Delivery', as: :select,  collection: Delivery.all, required: true, input_html: { class: 'select2-multiple', multiple: true }
           = f.input :location, hint: 'Describe the general area of Sheffield you are based (E.g. \'Crookesmoor\')'
           %p Swaps
-          = f.input :swap, label: 'Open to swaps', class: 'hello'
+          = f.input :swap, label: 'Open to swaps'
           = f.input :listing_tags, label: 'Tags', hint: 'Add relevant keywords to ensure your listing appear on search (E.g. Education)', as: :select, collection: @listing.tags.map{|t| [t.name, t.name, {"selected": "selected"}]}, input_html: { class: 'select2-tags', multiple: true }
 
       .modal-footer

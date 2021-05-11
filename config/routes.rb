@@ -29,6 +29,9 @@ Rails.application.routes.draw do
     post :swap_conversation, on: :member
     get :swap, on: :member
     post :delete_conversation, on: :member
+    get :rating, on: :member
+    post :add_rating, on: :member
+    post :delete_rating, on: :member
     get :report, on: :member
     post :send_report, on: :member
   end

@@ -2,12 +2,16 @@
 #
 # Table name: listing_ratings
 #
-#  id            :bigint           not null, primary key
-#  buyer_rating  :integer
-#  seller_rating :integer
-#  created_at    :datetime         not null
-#  updated_at    :datetime         not null
-#  listing_id    :bigint
+#  id             :bigint           not null, primary key
+#  buyer_anon     :boolean
+#  buyer_comment  :text
+#  buyer_rating   :integer
+#  seller_anon    :boolean
+#  seller_comment :text
+#  seller_rating  :integer
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  listing_id     :bigint
 #
 # Indexes
 #

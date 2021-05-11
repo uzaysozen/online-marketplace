@@ -12,18 +12,24 @@
     .row.text-medium.text-black.text-left
       = listing.title 
 
-    .row.text-small.text-black.text-left
+    .row.text-small.text-black.text-left.pb-3
       = listing.creator.username
-    %p
 
-    .row.text-medium.text-black.text-left
-      £
-      = listing.price 
-    %p
+    .row.text-medium.text-black.text-left.pb-1
+      - if listing.price == 0
+        .text-muted
+          Free
+      - else
+        £
+        = sprintf '%.2f', @listing.price 
     .row   
       .col-12.col-lg-6.text-small.text-center.text-darkgray.rounded.mt-2
-        = link_to listing , class: 'conversation-link btn btn-outline-dark btn-block' do
-          See Details
+        - if listing.creator == current_user
+          = link_to complete_listing_path(listing, receiver: @conversation.participant_id), method: :complete, class: 'conversation-link btn btn-outline-dark btn-block' do
+            Complete Listing
+        - else
+          = link_to listing , class: 'conversation-link btn btn-outline-dark btn-block' do
+            See Details
       .col-12.col-lg-6.text-small.text-center.text-darkgray.rounded.mt-2
         - if can? :create, Report.new(listing: listing)
           = link_to report_listing_path(listing), class: 'ajax-modal conversation-link btn btn-outline-dark btn-block' do
