@@ -87,16 +87,17 @@ describe 'End to end test' do
     #   expect(page).not_to have_content 'My Title'
     # end
 
-    # # Message page didn't work yet due to listing can't not show 
-    # specify "I can see my conversations with different users" do 
-    #   @status_active = ListingStatus.create(id:20, name: "Active")
+    # Message page didn't work yet due to listing can't not show 
+    specify "I can see my conversations with different users" do 
+      status_active = ListingStatus.create(name: "Active")
 
-    #   @iphone_post = Listing.create(title: 'Iphone', listing_condition_id: 2, price: 500, listing_category_id: 3, listing_status_id: 20 )
-    #   visit '/listings'
-    #   save_and_open_page
-    #   expect(page).to have_content 'Iphone'
+      some_post = Listing.create(title: 'something', listing_condition_id: 2, price: 500, listing_category_id: 3, listing_status: status_active)
+      visit '/listings'
+      save_and_open_page # this is for debug  path is  /tmp/capybara/
+      expect(page).to have_content 'something'
+      expect(page).to have_content 'Iphone'
       
-    # end 
+    end 
 
     # specify "I can check out all my favourite listings " do
       
@@ -403,22 +404,25 @@ describe 'End to end test' do
     #   expect(page).to have_content "Top Categories"
     # end
     # # @javascript
-    # specify "I can add or remove questions and answers in FAQ page" do
-    #   visit '/'
-    #   click_link "Other"
-    #   click_button "Add a new question"
-    #   fill_in "Question", with: "Hello, I have a question."
-    #   fill_in "Answer", with: "Hello, I have an answer."
-    #   click_button "Add question"
-    #   visit '/faq'
-    #   expect(page).to have_content "Hello, I have a question."
-    #   expect(page).to have_content "Hello, I have an answer."
-    #   visit '/admin/other'
-    #   within_fieldset('FAQs') do
-    #     click_button "Remove"
-    #   end
-    #   expect(page).not_to have_content "Hello, I have a question."
-    # end
+    specify "I can add or remove questions and answers in FAQ page" do
+      visit '/admin/add_question'
+      # click_link "Other"
+      # click_link "Add a new question"
+      # using_wait_time 3 do
+
+      # end
+      fill_in "Question", with: "Hello, I have a question."
+      fill_in "Answer", with: "Hello, I have an answer."
+      click_button "Add question"
+      visit '/faq'
+      expect(page).to have_content "Hello, I have a question."
+      expect(page).to have_content "Hello, I have an answer."
+      visit '/admin/other'
+      within_fieldset('FAQs') do
+        click_button "Remove"
+      end
+      expect(page).not_to have_content "Hello, I have a question."
+    end
 
     # specify "I can add or remove ban words" do
     # end
