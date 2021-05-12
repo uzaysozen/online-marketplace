@@ -6,8 +6,6 @@
           %p Select Tags
           = f.input :filter_tags, label: false, as: :select, collection: Tag.pluck(:name), input_html: { class: 'select2-tags', multiple: true }, required: false
 
-          %br
-
           %p.text-medium Filter Menu
           = f.input :filter_category, label: 'Categories', collection: ListingCategory.all, required: false, include_blank: 'All', selected: session[:search_category]
           .row
