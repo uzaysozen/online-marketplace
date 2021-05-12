@@ -14,16 +14,15 @@ describe 'End to end test' do
     
 
     before do
-      user = FactoryBot.create(:user, id: 100)
-      admin = FactoryBot.create(:user, id: 101, administrator: true)
+      user = FactoryBot.create(:user,  email: "user@sheffied.ac.uk", username:"user", uid: "user", mail: "user@sheffied.ac.uk", ou: "COM", dn: "uid=user,ou=Undergraduates,ou=Students,ou=Users,dc=sheffield,dc=ac,dc=uk", sn: "lastname", givenname: "givenname", administrator: false, is_banned: false, ban_reason: nil)
+      @admin = FactoryBot.create(:user, administrator: true)
       # @condition_new = ListingCondition.create(name: "New")
       # @condition_used = ListingCondition.create(name: "Used")
       # @category_electronics = ListingCategory.create(name: "Electronics")
       # @category_cloting = ListingCategory.create(name: "Cloting")
-      # @category_books = ListingCategory.create(name: "Books")
-      @public_post  = Listing.create(title: 'A title for a post',        description: 'Some public content')
-      @private_post = Listing.create(title: 'A title for a secret post', description: 'Some private content')
-      @iphone_post = Listing.create(title: 'Iphone', listing_condition_id: 2, price: 500, listing_category_id: 3 )
+      # @category_something = ListingCategory.create(id: 88,name: "Something else")
+
+      @iphone_post = Listing.create(title: 'Iphone', listing_condition_id: 2, price: 500, listing_category_id: 3, listing_status_id: 2 )
       @airpods_post = Listing.create(title: 'Airpods', listing_condition_id: 2, price: 200, listing_category_id: 3)
       # @status_pending = ListingStatus.create(id: 1, name: "Pending")
       # @status_complete = ListingStatus.create(id: 2, name: "Complete")
@@ -46,6 +45,7 @@ describe 'End to end test' do
       select 'New', from: 'Condition'
       select 'Books', from: 'Category'
       # check 'Collection' 
+      select "Collection", from: "Delivery"
       fill_in 'Location', with: 'My Location'
       # # fill_in 'Tags', with: 'Education'
       # # select 'Education', from: 'Tags'
@@ -54,41 +54,48 @@ describe 'End to end test' do
     end
 
 
-    # Home page 
-    specify "I can find this new listing in my listing page" do
-
-      create_new_listing
-      click_link "My Listings"
-      save_and_open_page
-      expect(page).to have_content 'My Title'
+    # # Home page 
+    # specify "I can find this new listing in my listing page" do
+    #   create_new_listing
+    #   click_link "My Listings"
+    #   save_and_open_page
+    #   expect(page).to have_content 'My Title'
       
-    end
+    # end
 
     # specify "I can click 'Edit' button on that listing" do 
       
     #   create_new_listing
     #   click_link "My Listings"
-    #   click_button "Edit"
-    #   expect(page).to have_content "My Title" """it is javesript so """
+    #   click_link "Edit"
+    #   expect(page).to have_content "Updating Listing" 
     # end 
 
     # specify "I can click 'See Details' " do 
     #   create_new_listing
     #   click_link "My Listings"
-    #   click_button "See Details"
+    #   click_link "See Details"
     #   expect(page).to have_content "My Title"
     # end 
 
     # specify "I can delete my listing" do 
     #   create_new_listing
+    #   expect(page).to have_content 'Listing was successfully created.'
     #   click_link "My Listings"
-    #   click_button "Delete"
-    #   expect(page).to not_to have_content 'My Title'
+    #   expect(page).to have_content 'My Title'
+    #   click_link "Delete"
+    #   expect(page).not_to have_content 'My Title'
     # end
 
-    # # Message page
+    # # Message page didn't work yet due to listing can't not show 
     # specify "I can see my conversations with different users" do 
-    
+    #   @status_active = ListingStatus.create(id:20, name: "Active")
+
+    #   @iphone_post = Listing.create(title: 'Iphone', listing_condition_id: 2, price: 500, listing_category_id: 3, listing_status_id: 20 )
+    #   visit '/listings'
+    #   save_and_open_page
+    #   expect(page).to have_content 'Iphone'
+      
     # end 
 
     # specify "I can check out all my favourite listings " do
@@ -99,6 +106,7 @@ describe 'End to end test' do
     #   expect(page).to have_content 'User2 listing'
 
     # end 
+    # need countinue after reviews finished 
     # specify "check the reviews" do
     #   visit '/'
     #   click_link "Reviews"
@@ -106,20 +114,23 @@ describe 'End to end test' do
     #   expect(page).to have_content "My Reviews"
     # end 
 
+    # routing error
     # specify "I can checkout my setting page and choose when to got email notifications " do 
     #   visit '/'
     #   click_link "Settings"
-    #   check "When I receive a message"
-    #   select "All", from: "When an item from this category is posted"
-    #   radio_check "Weekly", from: "When?"
+    #   check "email"
+    #   select "All", from: "when"
+    #   choose "Weekly"
     #   click_button "Save"
     #   expect(page).to have_content "succussful?"
     # end 
+
     # specify "I could create a new listing" do
     #   create_new_listing
     #   expect(page).to have_content 'Listing was successfully created.'
     # end
 
+    # need to be finish by backend 
     # specify "Swapping Items" do 
     #   visit '/'
     #   click_button "See Details"
@@ -127,31 +138,31 @@ describe 'End to end test' do
     #   expect(page.status_code).to eq 500
     # end 
 
+    # Failure/Error: render 'update_success'
     # specify "I can editing my listings" do 
+    #   create_new_listing 
     #   visit '/'
-    #   click_button "My Listings"
-    #   click_button "Edit"
-    #   #click x to delete current image
-    #   #upload images
+    #   click_link "My Listings"
+    #   click_link "Edit"
+
     #   fill_in "Title", with: "My New Title"
     #   fill_in 'Price', with: '321'
     #   fill_in 'Description', with: 'My new description'
     #   select 'Used', from: 'Condition'
-    #   select 'Cloting', from: 'Category'
-    #   uncheck 'Collection'
-    #   check "Postage"
-    #   fill_in 'New Location', with: 'My Location'
-    #   # # fill_in 'Tags', with: 'Education'
-    #   # # select 'Education', from: 'Tags'
-    #   # # select2("Education", from: "Tags")
+    #   select 'Books', from: 'Category'
+    #   select "Postage", from: "Delivery"
+
+    #   fill_in 'Location', with: 'New Location'
+
     #   click_button 'Update Listing'
+    #   click_link "My Listings"
     #   expect(page).to have_content "My New Title"
     #   expect(page).to have_content "My new description"
     #   expect(page).to have_content "£ 321"
     # end
 
 
-
+    # search function havent deployed
     # specify "Search listing by inputing keyword " do
     #   visit '/'
     #   fill_in "Search Bar", with: "A title for a post"
@@ -171,6 +182,7 @@ describe 'End to end test' do
     #   # could be done by unit test
     # end
 
+    # havent deployed yet 
     # specify "I can filter through items by different options" do
     #   visit '/'
     #   select 'Electronics', from: 'Categories'
@@ -183,6 +195,7 @@ describe 'End to end test' do
     #   expect(page).to have_content "Airpods"
     #   expect(page).not_to have_content "Iphone"
     # end
+
     # specify "I can view COVID-19 guidance in website" do
     #   visit '/'
     #   expect(page).to have_content "COVID-19 Guidance"
@@ -231,11 +244,71 @@ describe 'End to end test' do
     #   visit '/profile/user_favourites'
     #   # https://stackoverflow.com/questions/12851932/rails-capybara-how-to-click-a-link-in-a-table-row-that-also-contains-unique-tex
     #   # https://stackoverflow.com/questions/37405002/capybara-ambiguous-matching-link-or-button-nil
-    #   # https://stackoverflow.com/questions/37405002/capybara-ambiguous-matching-link-or-button-nil
+
     # end
 
+    # specify "I can't access admin page" do 
+    #   visit '/admin/other'
+    #   expect(page.status_code).to eq 403
+    # end
+
+    # specify "I cannot perform an SQL injection attack" do
+    #   # Check search is not vulnerable to SQL injection
+    #   page.driver.submit :post, search_and_filter_listings_path(search: { search_and_filter: "Iphone') OR '1'--" , filter_category: @category_books }), {}
+    #   expect(page).not_to have_content 'Iphone'
+    #   expect(page).not_to have_content 'Iphone'
+    # end
+
+    # specify "My html in sanitised to avoid XSS attacks", js: true do
+    #   visit '/'
+    #   click_link 'Create Listing'
+    #   save_and_open_page
+    #   fill_in 'Title', with: 'My Title'
+    #   fill_in 'Price', with: '123'
+    #   fill_in 'Description', with: 'My description'
+
+    #   select 'New', from: 'Condition'
+    #   select 'Books', from: 'Category'
+    #   select "Collection", from: "Delivery"
+    #   fill_in 'Location', with: 'My Location'
+  
+    #   fill_in 'Description', with: "<h1>Hello</h1>
+    #                             <script>
+    #                               $(function() {
+    #                                 window.location.replace('http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html');
+    #                               });
+    #                             </script>"
+    #   click_button 'Create Listing'
+    #   sleep(2)
+    #   expect(current_url).not_to eq 'http://api.rubyonrails.org/classes/ActionView/Helpers/SanitizeHelper.html'
+    #   # expect(page).to have_css 'h1'
+    #   # within(:css, 'h1') { expect(page).to have_content 'Hello' }
+    # end
+
+    # specify "I cannot create a post as another user through abuse of mass assignment", js: true do
+    #   visit new_listing_path
+    #   fill_in 'Title', with: 'A controversial title'
+    #   fill_in 'Price', with: '123'
+    #   fill_in 'Description', with: 'My description'
+    #   select 'New', from: 'Condition'
+    #   select 'Books', from: 'Category'
+    #   select "Collection", from: "Delivery"
+    #   fill_in 'Location', with: 'My Location'
+    #   page.execute_script "$('#posts-form').append(\"<input value='#{@admin.id}' name='post[author_id]'>\")"
+    #   sleep 1
+    #   click_button 'Create Listing'
+    #   # not sure why creator function is not working  undefined method `creator' for nil:NilClass
+    #   expect(Listing.last.creator).not_to eq @admin
+    # end
+
+    # specify "I cannot edit the details of another user" do
+    #   visit settings_path(@admin)
+    #   expect(page.status_code).to eq 200
+    # end
 
   end
+
+
 
   context 'As a logged in admin' do
     before do
@@ -258,6 +331,7 @@ describe 'End to end test' do
       @pending_approve_posy = Listing.create(title: 'A pending listing need to approve', listing_status_id: 10, is_active: true, creator_id: 100 )
       login_as(admin, scope: :user)
     end
+    # render error
     # specify "I can promote and demote other users as admin " do
     #   # https://stackoverflow.com/questions/12851932/rails-capybara-how-to-click-a-link-in-a-table-row-that-also-contains-unique-tex
     #   # visit "/"
@@ -278,6 +352,7 @@ describe 'End to end test' do
     #   find(:xpath, "//tr[td[contains(.,'username')]]/td/a", :text => 'Remove').click
     #   expect(page).not_to have_content "username@sheffield.ac.uk" 
     # end
+
     # specify "I can moderate new postings before they are released" do
     #   user = FactoryBot.create(:user,  administrator: false)
     #   login_as user

@@ -9,7 +9,7 @@
 #
 FactoryBot.define do
   factory :listing_status do
-    id { 5 }
+    id { 2 }
     name {"Active"}
     
   end
