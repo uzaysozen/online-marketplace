@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_08_203318) do
+ActiveRecord::Schema.define(version: 2021_05_12_101527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -153,7 +153,7 @@ ActiveRecord::Schema.define(version: 2021_05_08_203318) do
     t.boolean "is_moderated"
     t.string "title", limit: 50
     t.text "description"
-    t.decimal "price"
+    t.decimal "price", default: "0.0"
     t.decimal "discounted_price"
     t.string "location", limit: 50
     t.datetime "created_at", precision: 6, null: false
