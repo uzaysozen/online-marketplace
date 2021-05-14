@@ -59,10 +59,11 @@ class ListingsController < ApplicationController
         @search_params = params[:search_and_filter][:search_bar]
         @listing_locations = Listing.pluck(:location)
         @all_tag_names = Tag.pluck(:name)
+        @search_cases = [@search_params, @search_params.capitalize, @search_params.downcase, @search_params.upcase]
 
         # Filter by a tag
-        if @all_tag_names.include? @search_params
-          @tag_object = Tag.where(name: @search_params)
+        if not (@all_tag_names & @search_cases).empty?
+          @tag_object = Tag.where(name: @search_cases)
           @listingtag_object = ListingTag.where(tag_id: @tag_object.ids)
 
           @listings = @listings.where(listing_tags: @listingtag_object)
