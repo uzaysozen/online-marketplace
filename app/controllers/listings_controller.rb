@@ -54,33 +54,24 @@ class ListingsController < ApplicationController
         @listings = accessible_listings
       end
 
-      # Filter the Listings by Tags
-      if params[:search_and_filter][:filter_tags].present?
-        @entered_tags = params[:search_and_filter][:filter_tags].reject(&:blank?)
-        @all_tag_names = Tag.pluck(:name)
-
-        @empty_tags = false
-
-        if not (@all_tag_names & @entered_tags).empty?
-          @common_tags = @all_tag_names & @entered_tags
-          @tag_objects = Tag.where(name: @common_tags)
-          @listing_tag_objects = ListingTag.where(tag_id: @tag_objects.ids)
-        else
-          @empty_tags = true
-        end
-
-        unless @listing_tag_objects.nil? || @empty_tags
-          @listings = @listings.where(listing_tags: @listing_tag_objects)
-        end
-      end
-
       # Search through Listings
       if params[:search_and_filter][:search_bar].present?
         @search_params = params[:search_and_filter][:search_bar]
         @listing_locations = Listing.pluck(:location)
-        if @listing_locations.include? @search_params
+        @all_tag_names = Tag.pluck(:name)
+
+        # Filter by a tag
+        if @all_tag_names.include? @search_params
+          @tag_object = Tag.where(name: @search_params)
+          @listingtag_object = ListingTag.where(tag_id: @tag_object.ids)
+
+          @listings = @listings.where(listing_tags: @listingtag_object)
+          session[:search_string] = @search_params
+        # Filter by a listing's locatiojn
+        elsif @listing_locations.include? @search_params
           @listings = @listings.where("location = ?", "#{params[:search_and_filter][:search_bar]}")
           session[:search_string] = @search_params
+        # Filter by a listing's title
         else
           @listings = @listings.where("title ilike ?", "%#{params[:search_and_filter][:search_bar]}%")
           session[:search_string] = @search_params
