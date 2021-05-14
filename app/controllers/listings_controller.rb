@@ -320,14 +320,19 @@ class ListingsController < ApplicationController
       @listing_rating.seller_rating = rating_params[:rating]
       @listing_rating.seller_comment = rating_params[:comment]
       @listing_rating.seller_anon = rating_params[:anonymous] == '1'
+      rated_user = User.find_by_id(@listing.receiver_id)
     else
       # buyer
       @listing_rating.buyer_rating = rating_params[:rating]
       @listing_rating.buyer_comment rating_params[:comment]
       @listing_rating.buyer_anon = rating_params[:anonymous] == '1'
+      rated_user = @listing.creator
     end
 
     if @listing_rating.save
+      # update user rating
+      if current_user == @listing.creator
+        @listing.creator.
       head :ok
     else
       head :bad_request

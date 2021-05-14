@@ -103,8 +103,13 @@
 
             .row
               .col-lg-6.col-sm-12.text-medium.text-black.border-right-black
-                .fas.fa-user-alt.pr-2
-                = @listing.creator.username
+                .ml-3
+                  .row
+                    .fas.fa-user-alt.pr-2
+                    = @listing.creator.username
+                  .row 
+                    %input.rating.text-small{ type: 'hidden', value: 3, 'data-readonly' => true, 'data-filled' => 'fas fa-star text-gold', 'data-empty' => 'fas fa-star text-gray' }
+                    .text-small.text-muted.ml-1.pt-1 (13)
               .col-lg-6.col-sm-12.text-large.text-black.text-right
                 - if @listing.price == 0
                   .text-muted

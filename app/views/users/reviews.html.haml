@@ -6,8 +6,7 @@
 .row.justify-content-center.flex-column-reverse.flex-md-row.pt-3
   .col-12.col-md-12
     .text-left.text-large.text-black
-      - 4.times do
-        =render 'reviewed-item'
+      = render partial: 'reviewed item', collection: @review_collection, as: :review
 
 .row.justify-content-center.flex-column-reverse.flex-md-row
   .col-12.col-md-8.pt-3
@@ -27,5 +26,5 @@
         %th.bg-white.w-auto.text-left{scope: "col"} When
     %tbody#questions{style: 'max-height: 400px'}
       - 4.times do
-        =render 'reviews_row'
+        = render 'reviews_row'
         

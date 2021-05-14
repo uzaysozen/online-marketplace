@@ -5,8 +5,6 @@
 #  id                   :bigint           not null, primary key
 #  description          :text
 #  discounted_price     :decimal(, )
-#  is_active            :boolean
-#  is_moderated         :boolean
 #  location             :string(50)
 #  price                :decimal(, )
 #  swap                 :boolean

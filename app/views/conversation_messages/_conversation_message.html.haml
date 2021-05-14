@@ -1,7 +1,7 @@
 - if message.sender != current_user and can? :create, Report.new(conversation_message: message)
-  =link_to report_conversation_conversation_message_path(message.conversation, message), class: 'ajax-modal' do
+  = link_to report_conversation_conversation_message_path(message.conversation, message), class: 'ajax-modal' do
     .text-extra-small
-      =icon('far', 'flag')
+      = icon('far', 'flag')
 %div{class: "message #{'me' if message.sender.id == current_user.id}", id: "message-#{message.id}"}
   .content-container
     .content
