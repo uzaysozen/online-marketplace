@@ -1,4 +1,5 @@
 - @listing_rating = ListingRating.where(listing_id: @conversation.listing_id).first
+- no_rating = !@listing_rating.present?
 
 #conversation-id{"data-conversation-id" => "#{@conversation.try(:id)}"}
 
@@ -18,8 +19,8 @@
             - @conversation.active_messages.each do |message|
               = render 'conversation_messages/conversation_message', message: message
             - if @conversation.listing.listing_status.name == 'Complete'
-              - if @conversation.listing.creator == current_user and @listing_rating.seller_rating.present? or @conversation.listing.receiver == current_user and not @listing_rating.buyer_rating.present?
-                .alert.alert-light.border.text-center
+              - if @conversation.listing.creator == current_user and (no_rating or not @listing_rating.seller_rating.present?) or @conversation.listing.receiver == current_user and (no_rating or not @listing_rating.buyer_rating.present?)
+                .alert.alert-light.border.text-center.mt-2
                   Leave a review 
                   .d-flex.justify-content-center.pt-2
                     = link_to rating_listing_path(@conversation.listing), class: 'ajax-modal btn btn-primary d-flex align-items-center justify-content-center w-25' do

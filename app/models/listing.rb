@@ -46,7 +46,7 @@ class Listing < ApplicationRecord
 
     has_many :listing_views, dependent: :destroy
     has_many :listing_questions, dependent: :destroy
-    has_many :listing_ratings, dependent: :destroy
+    has_one :listing_rating, dependent: :destroy
     has_many :reports
     has_many :conversations, dependent: :destroy
     has_many_attached :images

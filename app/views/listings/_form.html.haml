@@ -32,5 +32,8 @@
     = f.input :swap, label: 'Open to swaps'
     = f.input :listing_tags, label: 'Tags', hint: 'Add relevant keywords to ensure your listing appear on search (E.g. Education)', as: :select, collection: @listing.tags.map{|t| [t.name, t.name, {"selected": "selected"}]}, input_html: { class: 'select2-tags', multiple: true }
 
-  .form-actions
-    = f.button :submit, class: 'btn-secondary btn-lg'
+  .form-actions.row.mt-4
+    .col-6.d-flex.justify-content-center.mb-2
+      = f.button :submit, class: 'btn-secondary btn-lg text-medium w-75' 
+    .col-6.d-flex.justify-content-center.mb-2
+      = link_to 'Discard', listings_path, class: 'btn btn-outline-primary btn-lg text-medium w-75'

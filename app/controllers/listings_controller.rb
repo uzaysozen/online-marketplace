@@ -189,6 +189,9 @@ class ListingsController < ApplicationController
     delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
 
     @listing = Listing.new(params)
+    if !@listing.price?
+      @listing.price = 0.0
+    end
     @listing.listing_status = ListingStatus.first
     @listing.creator_id = current_user.id
     @listing.is_active = true
@@ -305,6 +308,26 @@ class ListingsController < ApplicationController
     end
   end
 
+  # Mark listing as complete
+  def complete
+    @listing.listing_status = ListingStatus.where(name: 'Complete').first
+    if params[:receiver].present?
+      @listing.receiver = User.find_by_id(params[:receiver])
+      print "test"
+      puts @listing.receiver.username
+    end
+
+    print 
+    
+    if @listing.save
+      redirect_to request.referrer, notice: 'Listing has been marked as complete'
+    else
+      print @listing.errors.full_messages
+      redirect_to request.referrer, notice: 'Failed to complete listing'
+    end
+
+  end
+
   def rating
     render layout: false
   end
@@ -330,10 +353,42 @@ class ListingsController < ApplicationController
     end
 
     if @listing_rating.save
-      # update user rating
-      if current_user == @listing.creator
-        @listing.creator.
-      head :ok
+      n_rating = 0
+      # find receiver ratings
+      listings = Listing.where(receiver_id: rated_user.id).all
+      n_rating = listings.size()
+      
+      # add to total rating
+      total_rating = 0
+      for listing in listings do
+        if listing.listing_rating.present? and listing.listing_rating.buyer_rating.present?
+          total_rating += listing.listing_rating.buyer_rating
+          n_rating += 1
+        end
+      end
+
+      # find seller ratings
+      listings = Listing.where(creator_id: rated_user).where.not(receiver_id: nil).all
+      n_rating += listings.size()
+      
+      # add to total rating
+      for listing in listings do
+        if listing.listing_rating.present? and listing.listing_rating.seller_rating.present?
+          total_rating += listing.listing_rating.seller_rating
+          n_rating += 1
+        end
+      end
+
+      # save total rating
+      rated_user.rating = total_rating / n_rating
+      rated_user.rating_count = n_rating
+
+      # save user
+      if rated_user.save()
+        head :ok
+      else
+        head :bad_request
+      end
     else
       head :bad_request
     end
