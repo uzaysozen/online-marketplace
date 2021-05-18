@@ -1,30 +1,55 @@
+- received_items = Listing.where(receiver_id: current_user.id)
+- received_items_reviews = ListingRating.where(listing_id: received_items.ids).where.not(buyer_rating: nil)
+- given_items = Listing.where(creator_id: current_user.id, listing_status: ListingStatus.find_by(name: 'Complete')).where.not(receiver_id: nil)
+- given_items_reviews = ListingRating.where(listing_id: given_items.ids).where.not(seller_rating: nil)
+- @review_items =  received_items.or(given_items).order('updated_at DESC')
+
 .row.justify-content-center.flex-column-reverse.flex-md-row.pl-0
   .col-12.col-md-12
     .text-left.text-medium.text-black
-      %strong Leave a Review
+      %strong Leave a review
 
 .row.justify-content-center.flex-column-reverse.flex-md-row.pt-3
   .col-12.col-md-12
     .text-left.text-large.text-black
-      = render partial: 'reviewed item', collection: @review_collection, as: :review
+      .overflow-auto{style: 'max-height: 600px; overflow-x: hidden !important'}
+        = render partial: 'reviewed-item', collection: @review_items, as: :listing
 
-.row.justify-content-center.flex-column-reverse.flex-md-row
+.row.justify-content-center.flex-column-reverse.flex-md-row.pt-5
   .col-12.col-md-8.pt-3
     .text-left.text-medium.text-black
-      %strong My Reviews
+      %strong My reviews
 
   .col-12.col-md-4.pt-3.pr-4
     .text-right.text-medium.text-darkgray
-      = render 'review-filter'
+      = select_tag "review-select", options_for_select([["Received as buyer", 1],["Received as seller", 2]]), :class => 'text-darkgray pt-1 pb-1 pr-3'
 
-.row.justify-content-left.flex-column-reverse.flex-md-row.ml-2.mr-2.pt-3
+.row.justify-content-left.flex-column-reverse.flex-md-row.mx-2.pt-3
   %table.table
     %thead.thead-light.w-100
       %tr
-        %th.bg-white.w-auto.pr-5.text-left{scope: "col"} Feedback
+        %th.bg-white.w-auto.pr-5.text-left{scope: "col"} Rating
+        %th.bg-white.w-auto.pr-5.text-left{scope: "col"} Comment
         %th.bg-white.w-auto.pr-5.text-left{scope: "col"} From
-        %th.bg-white.w-auto.text-left{scope: "col"} When
-    %tbody#questions{style: 'max-height: 400px'}
-      - 4.times do
-        = render 'reviews_row'
-        
+    %tbody#buyer-reviews{style: 'max-height: 400px; border: none;'}
+      - if received_items_reviews.present?
+        = render partial: 'reviews_row', collection: received_items_reviews, as: :buyer_review
+      - else 
+        %tr.w-100
+          %td.w-auto 
+          %td.text-center.w-auto
+            .question-box.text-darkgray.text-medium.p-4
+              No buyer reviews 
+          %td.w-auto
+
+    %tbody#seller-reviews{style: 'max-height: 400px; border: none; display: none'}
+      - if received_items_reviews.present?
+        = render partial: 'reviews_row', collection: received_items_reviews, as: :buyer_review
+      - else 
+        %tr.w-100
+          %td.w-auto 
+          %td.text-center.w-auto
+            .question-box.text-darkgray.text-medium.p-4
+              No seller reviews
+          %td.w-auto
+                

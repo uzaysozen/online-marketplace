@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_14_135611) do
+ActiveRecord::Schema.define(version: 2021_05_18_152306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -159,7 +159,6 @@ ActiveRecord::Schema.define(version: 2021_05_14_135611) do
     t.boolean "swap"
     t.bigint "listing_category_id"
     t.bigint "creator_id"
-    t.bigint "moderator_id"
     t.bigint "receiver_id"
     t.bigint "listing_condition_id"
     t.bigint "listing_status_id"
@@ -167,7 +166,6 @@ ActiveRecord::Schema.define(version: 2021_05_14_135611) do
     t.index ["listing_category_id"], name: "index_listings_on_listing_category_id"
     t.index ["listing_condition_id"], name: "index_listings_on_listing_condition_id"
     t.index ["listing_status_id"], name: "index_listings_on_listing_status_id"
-    t.index ["moderator_id"], name: "index_listings_on_moderator_id"
     t.index ["receiver_id"], name: "index_listings_on_receiver_id"
   end
 
@@ -281,7 +279,6 @@ ActiveRecord::Schema.define(version: 2021_05_14_135611) do
   add_foreign_key "listings", "listing_conditions"
   add_foreign_key "listings", "listing_statuses"
   add_foreign_key "listings", "users", column: "creator_id"
-  add_foreign_key "listings", "users", column: "moderator_id"
   add_foreign_key "listings", "users", column: "receiver_id"
   add_foreign_key "reports", "conversation_messages"
   add_foreign_key "reports", "listings"

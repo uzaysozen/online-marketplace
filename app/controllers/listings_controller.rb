@@ -194,10 +194,6 @@ class ListingsController < ApplicationController
     end
     @listing.listing_status = ListingStatus.first
     @listing.creator_id = current_user.id
-    @listing.is_active = true
-    @listing.is_moderated = true
-    @listing.receiver_id = current_user.id
-    @listing.moderator_id = current_user.id
 
     tags.each do |tag|
       # create new tags, add to listing

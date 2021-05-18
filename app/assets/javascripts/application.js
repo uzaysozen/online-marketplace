@@ -19,3 +19,4 @@
 //= require notifications
 //= require admin
 //= require swap
+//= require reviews
