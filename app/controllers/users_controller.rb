@@ -34,6 +34,40 @@ class UsersController < ApplicationController
     end
 
     def settings
+      @user_categories = current_user.user_categories.sort
+      @email_message = current_user.email_message
+      @email_category = current_user.email_category
+      if current_user.when == 'immediately'
+        @when = ['Immediately', 'immediately']
+      elsif current_user.when == 'weekly'
+        @when = ['Weekly', 'weekly']
+      elsif current_user.when == 'monthly'
+        @when = ['Monthly', 'monthly']
+      else
+        @when = []
+      end
+    end
+
+    def settings_update
+      if params[:settings][:email_message] == "1"
+        current_user.update(email_message: true)
+      else
+        current_user.update(email_message: false)
+      end
+      
+      if params[:settings][:email_category] == "1"
+        current_user.update(email_category: true)
+      else
+        current_user.update(email_category: false)
+      end
+
+      if params[:settings][:categories].present?
+        current_user.update(user_categories: params[:settings][:categories])
+      end
+      
+      if params[:settings][:when].present?
+        current_user.update(when: params[:settings][:when])
+      end
     end
 
     def reviews
