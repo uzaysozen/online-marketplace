@@ -129,7 +129,7 @@ class AdminController < ApplicationController
   end
 
   def user_view
-    @users = User.where(administrator: false)
+    @users = User.where(administrator: false).or(User.where(administrator: nil))
     puts @users.first.username
     # Sorting Function
     table_col = @users.column_names
@@ -138,13 +138,13 @@ class AdminController < ApplicationController
     # Verifying Parameters
     if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
       sort_order = session[:sort_order] || 'asc'
-      @users = session[:sort_users] ||= User.where(administrator: false)
+      @users = session[:sort_users] ||= User.where(administrator: false).or(User.where(administrator: nil))
       @users = @users.order("#{params[:sort]} #{sort_order}")
       session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
     else
       params[:sort] = "givenname"
       sort_order = 'asc'
-      @users = session[:sort_users] ||= User.where(administrator: false)
+      @users = session[:sort_users] ||= User.where(administrator: false).or(User.where(administrator: nil))
       @users = @users.order("#{params[:sort]} #{sort_order}")
       session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
     end
