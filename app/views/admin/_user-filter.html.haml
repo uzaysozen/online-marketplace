@@ -1,0 +1,4 @@
+= simple_form_for(:user_view, url: user_view_path) do |f|
+  = f.error_notification
+
+  %p= select_tag(:when,options_for_select([["A to Z", 1],["Z to A", 2]]), :class => 'text-darkgray pt-1 pb-1 pr-3')

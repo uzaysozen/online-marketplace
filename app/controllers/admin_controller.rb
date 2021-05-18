@@ -127,4 +127,7 @@ class AdminController < ApplicationController
     @user = User.find(params[:user][:id])
     @user.update(is_banned: false)
   end
+
+  def user_view
+  end
 end

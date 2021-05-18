@@ -64,3 +64,17 @@
   .row
     = link_to add_question_path, class: 'ajax-modal btn btn-primary col-6 offset-3 col-lg-4 offset-lg-4' do
       Add a new question
+
+  .pt-4
+  %strong Users
+  %table.table.table-bordered.pt-2
+    %thead.thead-light.w-100
+      %tr
+        %th.w-auto.pr-5.text-center{scope: "col"} Username
+        %th.w-auto.pr-5.text-center{scope: "col"} Name
+        %th.w-auto.text-center{scope: "col"}
+    %tbody#questions{style: 'max-height: 400px'}
+      = render partial: 'users-table'
+  .row
+    = link_to user_view_path, class: 'ajax-modal btn btn-primary col-6 offset-3 col-lg-4 offset-lg-4' do
+      View All Users 
