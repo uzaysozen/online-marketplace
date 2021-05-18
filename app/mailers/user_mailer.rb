@@ -9,4 +9,8 @@ class UserMailer < ApplicationMailer
     mail(bcc: users, subject: 'General Announcement', body: message)
   end
 
+  def message_email(user, subject, message)
+    mail(to: user, subject: subject, body: message)
+  end
+
 end

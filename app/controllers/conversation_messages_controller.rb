@@ -25,6 +25,16 @@ class ConversationMessagesController < ApplicationController
     if @conversation_message.valid?
       @conversation_message.save
       SendConversationMessageJob.perform_later(@conversation_message, current_user)
+      # emailing message if messages enabled by the receiver
+      if current_user == @conversation_message.conversation.listing.creator
+        if @conversation_message.conversation.participant.email_message
+          UserMailer.message_email(@conversation_message.conversation.participant.email, "Message From " + current_user.username, @conversation_message.content).deliver
+        end
+      else
+        if @conversation_message.conversation.listing.creator.email_message
+          UserMailer.message_email(@conversation_message.conversation.listing.creator.email, "Message From " + current_user.username, @conversation_message.content).deliver
+        end
+      end
       head :ok
     else
       head :bad_request
