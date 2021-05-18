@@ -77,6 +77,7 @@ Rails.application.routes.draw do
     post :ban_user, to: 'admin#ban_user'
     post :unban_user, to: 'admin#unban_user'
     get :user_view, to: 'admin#user_view'
+    get :view_listings, to: 'admin#view_listings'
   end
   
   # Static Pages

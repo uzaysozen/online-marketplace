@@ -1,0 +1,8 @@
+.modal-dialog.modal-lg
+  .modal-content.p-5
+    .modal-header
+      %h3 User Listings
+    #listings.h-100
+      = render partial: 'listings/listing', collection: @user_listings, as: :listing
+      .text-center
+        = dismiss_modal_button

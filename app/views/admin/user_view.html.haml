@@ -1,10 +1,14 @@
 - content_for :title, 'User View Page'
-.row.justify-content-center.flex-column-reverse.flex-md-row
-  .col-12.col-md-6
-    .text-large
-      %strong Users
-  .col-12.col-md-6.pt-2
-    .text-right.text-medium.text-darkgray
-      = render 'user-filter'
-- 5.times do
-  = render partial: 'user_details'
+- if @users.empty?
+  .jumbotron.text-center
+    %h4
+      %strong Currently there are no registered users on the page...
+- else
+  .row.justify-content-center.flex-column-reverse.flex-md-row
+    .col-12.col-md-6
+      .text-large
+        %strong Users
+    .col-12.col-md-6.pt-2
+      .text-right.text-medium.text-darkgray
+        = link_to "Sort by Name", '/admin/user_view?sort=givenname', sort: "givenname", class: 'text-dark'
+  = render partial: 'user_details', collection: @users, as: :user
