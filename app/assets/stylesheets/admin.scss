@@ -23,7 +23,7 @@
   table-layout: fixed;
 }
 
-#pending-posts {
+#pending-posts, #users, #user-listings {
   overflow-y: auto;
   max-height: 500px;
 }

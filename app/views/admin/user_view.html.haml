@@ -11,4 +11,5 @@
     .col-12.col-md-6.pt-2
       .text-right.text-medium.text-darkgray
         = link_to "Sort by Name", '/admin/user_view?sort=givenname', sort: "givenname", class: 'text-dark'
-  = render partial: 'user_details', collection: @users, as: :user
+  #users
+    = render partial: 'user_details', collection: @users, as: :user
