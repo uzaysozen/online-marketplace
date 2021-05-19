@@ -6,7 +6,7 @@
       .border-none.rounded.h-100
         .row.p-2
           .col-12.col-sm-2.pl-0.text-left.listing-image-container.text-black.text-large.pt-3
-            .preview-image
+            .preview-image.preview-image-md
               - if listing.images&.attached?
                 = image_tag(rails_blob_url(listing.images.first))
               - else
@@ -18,15 +18,19 @@
                 = listing.title 
                 
             .text-small.text-darkgray.border-right-black.text-medium
-              = number_to_currency listing.price, unit: "£"
+              - if listing.price == 0
+                .text-muted
+                  Free
+              - else
+                = number_to_currency listing.price, unit: "£"
 
           .col-12.col-sm-4.pl-3.text-left.listing-price-container  
-            .text-large.text-darkgray.pt-3.pl-2
+            .text-large.text-center.text-darkgray.pt-3.pl-2
               = icon('fas', 'user-circle') 
-            .pl-2.pt-2.text-small 
+            .text-center.text-small.pl-2.pt-2
               - if listing.creator_id == current_user.id
                 Receiver: 
-                = listing.receiver&.username
+                = listing.receiver.username
               - else
                 Seller: 
                 = listing.creator.username

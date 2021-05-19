@@ -33,10 +33,10 @@
         %th.bg-white.w-auto.pr-5.text-left{scope: "col"} Rating
         %th.bg-white.w-auto.pr-5.text-left{scope: "col"} Comment
         %th.bg-white.w-auto.pr-5.text-left{scope: "col"} From
-        
+
     %tbody#buyer-reviews{style: 'max-height: 400px; border: none;'}
-      - if @given_items_reviews.present?
-        = render partial: 'reviews_row', collection: @given_items_reviews, as: :buyer_review
+      - if @received_items_reviews.present?
+        = render partial: 'reviews_row', collection: @received_items_reviews, as: :buyer_review
       - else 
         %tr.w-100.mt-4
           %td.w-auto 
@@ -46,8 +46,8 @@
           %td.w-auto
 
     %tbody#seller-reviews{style: 'max-height: 400px; border: none; display: none'}
-      - if @received_items_reviews.present?
-        = render partial: 'reviews_row', collection: @received_items_reviews, as: :buyer_review
+      - if @given_items_reviews.present?
+        = render partial: 'reviews_row', collection: @given_items_reviews, as: :seller_review
       - else 
         %tr.w-100.mt-4
           %td.w-auto 
