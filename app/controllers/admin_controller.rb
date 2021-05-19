@@ -130,7 +130,6 @@ class AdminController < ApplicationController
 
   def user_view
     @users = User.where(administrator: false).or(User.where(administrator: nil))
-    puts @users.first.username
     # Sorting Function
     table_col = @users.column_names
     sort_val = ['asc', 'desc']
