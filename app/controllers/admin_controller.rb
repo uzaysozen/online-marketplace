@@ -134,4 +134,31 @@ class AdminController < ApplicationController
     @user = User.find(params[:user][:id])
     @user.update(is_banned: false)
   end
+
+  def user_view
+    @users = User.where(administrator: false).or(User.where(administrator: nil))
+    # Sorting Function
+    table_col = @users.column_names
+    sort_val = ['asc', 'desc']
+
+    # Verifying Parameters
+    if table_col.include? params[:sort] and sort_val.include? session[:sort_order]
+      sort_order = session[:sort_order] || 'asc'
+      @users = session[:sort_users] ||= User.where(administrator: false).or(User.where(administrator: nil))
+      @users = @users.order("#{params[:sort]} #{sort_order}")
+      session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+    else
+      params[:sort] = "givenname"
+      sort_order = 'asc'
+      @users = session[:sort_users] ||= User.where(administrator: false).or(User.where(administrator: nil))
+      @users = @users.order("#{params[:sort]} #{sort_order}")
+      session[:sort_order] = sort_order == 'asc' ? 'desc' : 'asc'
+    end
+  end
+
+  def view_listings
+    @user_listings = User.find(params[:user]).user_listings
+    render layout: false
+  end
+  
 end
