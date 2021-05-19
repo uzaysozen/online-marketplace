@@ -195,7 +195,7 @@ class ListingsController < ApplicationController
     tags.each do |tag|
       # create new tags, add to listing
       @listing.tags << Tag.where(name: tag).first_or_create
-    end 
+    end
 
     delivery_methods.each do |delivery|
       # get delivery methods by id and add to listing
@@ -244,7 +244,7 @@ class ListingsController < ApplicationController
     @listing.destroy
     redirect_to listings_url, notice: 'Listing was successfully deleted.'
   end
-  
+
   def add_favourite
     @favourite = UserFavourite.new(listing: @listing, user: current_user)
     @listings = accessible_listings
