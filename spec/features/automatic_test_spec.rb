@@ -6,6 +6,8 @@ describe 'End to end test' do
   specify 'I cannot access the blog without logging in' do
     visit '/'
     expect(page).to have_content 'Sheffield University Marketplace'
+    visit '/listings'
+    expect(page.status_code).to eq 200
   end
   
   context 'As a logged in user' do
@@ -15,27 +17,17 @@ describe 'End to end test' do
       user = FactoryBot.create(:user,  email: "user@sheffied.ac.uk", username:"user", uid: "user", mail: "user@sheffied.ac.uk", ou: "COM", dn: "uid=user,ou=Undergraduates,ou=Students,ou=Users,dc=sheffield,dc=ac,dc=uk", sn: "lastname", givenname: "givenname", administrator: false, is_banned: false, ban_reason: nil)
       @admin = FactoryBot.create(:user, administrator: true)
       @user2 = FactoryBot.create(:user)
-      # @condition_new = ListingCondition.create(name: "New")
-      # @condition_used = ListingCondition.create(name: "Used")
-      # @category_electronics = ListingCategory.create(name: "Electronics")
-      # @category_cloting = ListingCategory.create(name: "Cloting")
-      # @category_books = ListingCategory.create(name: "Books", id: 99)
-      # @category_something = ListingCategory.create(id: 88,name: "Something else")
+
       status_active = ListingStatus.create(name: "Active")
       @iphone_post = Listing.create(title: 'Iphone', listing_condition_id: 2, price: 500, listing_category_id: 3, listing_status: ListingStatus.create(name: "Active") )
       @airpods_post = Listing.create(title: 'Airpods', listing_condition_id: 2, price: 200, listing_category_id: 3, )
-      # @status_pending = ListingStatus.create(id: 1, name: "Pending")
-      # @status_complete = ListingStatus.create(id: 2, name: "Complete")
+
       @sold_post = Listing.create(title: 'a sold listing', receiver_id: 100, listing_status_id: 2)
       @sold_out_post = Listing.create(title: 'a sold listing by me', creator_id: 100, listing_status_id: 2)
       login_as(user, scope: :user)
     end
     def create_new_listing 
-      # condition_new = FactoryBot.create :listing_condition, name: 'New'
-      # condition_new = ListingCondition.create(name: "New")
-      # category_books = ListingCategory.create(name: "Books")
-      # category_books = FactoryBot.create :listing_category, name: 'Books'
-      # tag_education = Tag.create(name: "Education")
+
       visit '/'
       click_link 'Create Listing'
       fill_in 'Title', with: 'My Title'
@@ -47,9 +39,7 @@ describe 'End to end test' do
       check 'Open to swaps' 
       select "Collection", from: "Delivery"
       fill_in 'Location', with: 'My Location'
-      # # fill_in 'Tags', with: 'Education'
-      # # select 'Education', from: 'Tags'
-      # # select2("Education", from: "Tags")
+
       click_button 'Create Listing'
     end
 
@@ -87,7 +77,7 @@ describe 'End to end test' do
       expect(page).not_to have_content 'My Title'
     end
 
-    # Message page didn't work yet due to listing can't not show 
+    # can't find the button
     # specify "I can see my conversations with different users" do 
     #   # status_active = ListingStatus.create(name: "Active", id: 99)
     #   @admin = FactoryBot.create(:user, administrator: true)
@@ -379,16 +369,6 @@ describe 'End to end test' do
       @user = FactoryBot.create(:user,  email: "user@sheffied.ac.uk", username:"user", uid: "user", mail: "user@sheffied.ac.uk", ou: "COM", dn: "uid=user,ou=Undergraduates,ou=Students,ou=Users,dc=sheffield,dc=ac,dc=uk", sn: "lastname", givenname: "givenname", administrator: false, is_banned: false, ban_reason: nil)
       @admin = FactoryBot.create(:user, administrator: true, givenname: "give_admin", sn: "sn")
       @user2 = FactoryBot.create(:user)
-      # admin = FactoryBot.create(:user, administrator: true, givenname: "give_admin", sn: "sn", id: 101)
-      # user = FactoryBot.create(:user, id: 100, administrator: false, username: "username", uid: "username", mail: "username@sheffield.ac.uk", ou: "COM", dn: "dn", sn: "SN", givenname: "givenname", email: "username@sheffield.ac.uk")
-      # @condition_new = ListingCondition.create(name: "New")
-      # @condition_used = ListingCondition.create(name: "Used")
-      # @category_electronics = ListingCategory.create(name: "Electronics")
-      # @category_cloting = ListingCategory.create(name: "Cloting")
-      # @category_books = ListingCategory.create(name: "Books")
-      # @status_pending = ListingStatus.create(id: 10, name: "Pending")
-      # @status_complete = ListingStatus.create(id: 20, name: "Complete")
-      # @status_active = ListingStatus.create(id:2, name: "Active")
 
       @iphone_post = Listing.create(title: 'Iphone', listing_condition_id: 2, price: 500, listing_category_id: 3 )
       @airpods_post = Listing.create(title: 'Airpods', listing_condition_id: 2, price: 200, listing_category_id: 3)
@@ -409,9 +389,7 @@ describe 'End to end test' do
       check 'Open to swaps' 
       select "Collection", from: "Delivery"
       fill_in 'Location', with: 'My Location'
-      # # fill_in 'Tags', with: 'Education'
-      # # select 'Education', from: 'Tags'
-      # # select2("Education", from: "Tags")
+
       click_button 'Create Listing'
     end
 
