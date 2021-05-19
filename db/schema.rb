@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_164804) do
+ActiveRecord::Schema.define(version: 2021_05_19_142323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,7 +151,6 @@ ActiveRecord::Schema.define(version: 2021_05_18_164804) do
   create_table "listings", force: :cascade do |t|
     t.string "title", limit: 50
     t.text "description"
-    t.decimal "price", default: "0.0"
     t.decimal "discounted_price"
     t.string "location", limit: 50
     t.datetime "created_at", precision: 6, null: false
@@ -162,6 +161,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_164804) do
     t.bigint "receiver_id"
     t.bigint "listing_condition_id"
     t.bigint "listing_status_id"
+    t.decimal "price"
     t.index ["creator_id"], name: "index_listings_on_creator_id"
     t.index ["listing_category_id"], name: "index_listings_on_listing_category_id"
     t.index ["listing_condition_id"], name: "index_listings_on_listing_condition_id"

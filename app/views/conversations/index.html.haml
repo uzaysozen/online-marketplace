@@ -19,8 +19,11 @@
           #messages
             - @conversation.active_messages.each do |message|
               = render 'conversation_messages/conversation_message', message: message
+
+            -# check if listing is complete
             - if @conversation.listing.listing_status.name == 'Complete'
-              - if @conversation.listing.creator == current_user and (no_rating or not @listing_rating.seller_rating.present?) or @conversation.listing.receiver == current_user and (no_rating or not @listing_rating.buyer_rating.present?)
+              -# check if user is apart of complete listing and if they have left a review
+              - if (@conversation.listing.creator == current_user and (no_rating or not @listing_rating.buyer_rating.present?)) or (@conversation.listing.receiver == current_user and (no_rating or not @listing_rating.seller_rating.present?))
                 .alert.alert-light.border.text-center.mt-2
                   Leave a review 
                   .d-flex.justify-content-center.pt-2

@@ -185,6 +185,7 @@ class ListingsController < ApplicationController
     delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
 
     @listing = Listing.new(params)
+    # if no price set to 0 (free)
     if !@listing.price?
       @listing.price = 0.0
     end
@@ -204,6 +205,7 @@ class ListingsController < ApplicationController
     if @listing.save
       redirect_to listings_path, notice: 'Listing was successfully created.'
     else
+      puts @listing.errors.full_messages
       render :new
     end
   end
@@ -327,17 +329,17 @@ class ListingsController < ApplicationController
     @listing_rating = ListingRating.find_or_create_by(listing_id: @listing.id)
 
     # Check user is seller or buyer
-    if current_user == @listing.creator
-      # seller
+    if current_user.id == @listing.creator_id
+      # user is seller, rate buyer
+      @listing_rating.buyer_rating = rating_params[:rating]
+      @listing_rating.buyer_comment = rating_params[:comment]
+      @listing_rating.buyer_anon = rating_params[:anonymous] == '1'
+      rated_user = User.find_by_id(@listing.receiver_id)
+    else
+      # user is buyer, rate seller
       @listing_rating.seller_rating = rating_params[:rating]
       @listing_rating.seller_comment = rating_params[:comment]
       @listing_rating.seller_anon = rating_params[:anonymous] == '1'
-      rated_user = User.find_by_id(@listing.receiver_id)
-    else
-      # buyer
-      @listing_rating.buyer_rating = rating_params[:rating]
-      @listing_rating.buyer_comment rating_params[:comment]
-      @listing_rating.buyer_anon = rating_params[:anonymous] == '1'
       rated_user = @listing.creator
     end
 
@@ -345,7 +347,6 @@ class ListingsController < ApplicationController
       n_rating = 0
       # find receiver ratings
       listings = Listing.where(receiver_id: rated_user.id).all
-      n_rating = listings.size()
       
       # add to total rating
       total_rating = 0
@@ -357,8 +358,7 @@ class ListingsController < ApplicationController
       end
 
       # find seller ratings
-      listings = Listing.where(creator_id: rated_user).where.not(receiver_id: nil).all
-      n_rating += listings.size()
+      listings = Listing.where(creator_id: rated_user.id).where.not(receiver_id: nil).all
       
       # add to total rating
       for listing in listings do
@@ -374,12 +374,12 @@ class ListingsController < ApplicationController
 
       # save user
       if rated_user.save()
-        head :ok
+        render 'review_success'
       else
-        head :bad_request
+        render 'review_failure'
       end
     else
-      head :bad_request
+      render 'review_failure'
     end
   end
 

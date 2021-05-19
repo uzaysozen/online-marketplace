@@ -6,7 +6,7 @@
 #  description          :text
 #  discounted_price     :decimal(, )
 #  location             :string(50)
-#  price                :decimal(, )      default(0.0)
+#  price                :decimal(, )
 #  swap                 :boolean
 #  title                :string(50)
 #  created_at           :datetime         not null
@@ -35,8 +35,7 @@
 #
 class Listing < ApplicationRecord
     belongs_to :creator, class_name: "User"
-    belongs_to :moderator, class_name: "User"
-    belongs_to :receiver, class_name: "User"
+    belongs_to :receiver, class_name: "User", optional: true
     belongs_to :listing_condition
     belongs_to :listing_status
     belongs_to :listing_category

@@ -6,7 +6,7 @@
 #  description          :text
 #  discounted_price     :decimal(, )
 #  location             :string(50)
-#  price                :decimal(, )      default(0.0)
+#  price                :decimal(, )
 #  swap                 :boolean
 #  title                :string(50)
 #  created_at           :datetime         not null
