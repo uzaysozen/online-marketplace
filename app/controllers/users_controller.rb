@@ -34,6 +34,54 @@ class UsersController < ApplicationController
     end
 
     def settings
+      @user_categories = current_user.user_categories.sort
+      @email_message = current_user.email_message
+      @email_category = current_user.email_category
+      if current_user.when == 'immediately'
+        @when = ['Immediately', 'immediately']
+      elsif current_user.when == 'weekly'
+        @when = ['Weekly', 'weekly']
+      elsif current_user.when == 'monthly'
+        @when = ['Monthly', 'monthly']
+      else
+        @when = []
+      end
+    end
+
+    def settings_update
+      # Set variables
+      user_time = params[:settings][:when]
+      email_message = params[:settings][:email_message]
+      email_category = params[:settings][:email_category]
+      user_categories = params[:settings][:categories]
+      # Update user settings
+      if email_message == "1"
+        current_user.update(email_message: true)
+      else
+        current_user.update(email_message: false)
+      end
+      
+      if email_category == "1"
+        current_user.update(email_category: true)
+      else
+        current_user.update(email_category: false)
+      end
+
+      if user_categories.present?
+        current_user.update(user_categories: user_categories)
+      end
+      
+      if user_time.present?
+        current_user.update(when: user_time)
+      end
+      # Send scheduled email
+      if user_time == 'weekly' and email_category == "1"
+        # Enqueue a job to be performed 1 week from now.
+        SendEmailNotificationJob.set(wait: 1.week).perform_later(current_user, user_categories, user_time)
+      elsif user_time == 'monthly' and email_category == "1"
+        # Enqueue a job to be performed 1 month from now.
+        SendEmailNotificationJob.set(wait: 1.month).perform_later(current_user, user_categories, user_time)
+      end
     end
 
     def reviews

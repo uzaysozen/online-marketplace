@@ -2,7 +2,7 @@
   .col-12.col-md-12
     .text-center.text-huge.text-darkgray
       = icon('fas', 'user-circle')
-      %p{:class => 'text-large'} acc19pm
+      %p{:class => 'text-large'} #{current_user.username}
 
 .row.justify-content-center.flex-column-reverse.flex-md-row
   .col-12.col-md-6.listing-description-container

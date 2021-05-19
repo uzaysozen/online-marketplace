@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     get :mylistings, to: 'listings#mylistings'
     get :reviews, to: 'users#reviews'
     get :settings, to: 'users#settings'
+    post :settings, to: 'users#settings_update'
     resources :user_favourites
     resources :conversations do
       resources :conversation_messages, except: :create do

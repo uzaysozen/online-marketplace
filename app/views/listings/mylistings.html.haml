@@ -1,6 +1,15 @@
 .panel.panel-default
-  .panel-heading
-    %h3.panel-title My Listings
-  .panel-body
-
-    = render partial: 'listed_item', collection: @listings
+  - if @listings.size == 0
+    .row.flex-column.justify-content-center.align-items-center.text-center.h-100
+      %h1
+        We couldn't find any listings
+      %h4
+        You can create one of your own though!
+      = link_to new_listing_path do
+        %button.btn.btn-outline-primary.text-medium{type: "primary"}
+          Make New Listing
+  - else
+    .panel-heading
+      %h3.panel-title My Listings
+    .panel-body
+      = render partial: 'listed_item', collection: @listings

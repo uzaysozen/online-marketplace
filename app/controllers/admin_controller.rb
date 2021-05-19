@@ -36,7 +36,7 @@ class AdminController < ApplicationController
 
     if bulk_email.present?
       User.all.each_slice(50) do |users|
-        UserMailer.send_bulk_email(users.map(&:email), bulk_email[:content]).deliver
+        UserMailer.send_bulk_email(users.map(&:email), "SU Marketplace Announcement", bulk_email[:content]).deliver
       end
       redirect_to other_path, notice: "The announcement has been sent to all user."
 
@@ -104,6 +104,13 @@ class AdminController < ApplicationController
     active_status = ListingStatus.find(2)
     @listing.update(listing_status: active_status)
     redirect_to moderation_path, notice: 'Listing approved.'
+    # Notify users who want notifications immediately
+    users_to_notify = User.where("'#{@listing.listing_category.id}' = ANY (user_categories)")
+    users_to_notify = users_to_notify.where(when: 'immediately', email_category: true)
+    users_to_notify.each_slice(50) do |users|
+      UserMailer.send_bulk_email(users.map(&:email), "SU Marketplace Notification", 
+      "Hi #{users.map(&:givenname)[0]},\n\n#{@listing.creator.username} just posted #{@listing.title} in #{@listing.listing_category.name} category. Check it out before someone buys it!").deliver
+    end
   end
 
   def get_user
