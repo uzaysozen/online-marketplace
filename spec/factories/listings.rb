@@ -15,6 +15,7 @@
 #  listing_category_id  :bigint
 #  listing_condition_id :bigint
 #  listing_status_id    :bigint
+#  moderator_id         :bigint
 #  receiver_id          :bigint
 #
 # Indexes

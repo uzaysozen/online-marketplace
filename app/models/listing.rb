@@ -15,6 +15,7 @@
 #  listing_category_id  :bigint
 #  listing_condition_id :bigint
 #  listing_status_id    :bigint
+#  moderator_id         :bigint
 #  receiver_id          :bigint
 #
 # Indexes
@@ -36,6 +37,7 @@
 class Listing < ApplicationRecord
     belongs_to :creator, class_name: "User"
     belongs_to :receiver, class_name: "User", optional: true
+    belongs_to :moderator, class_name: "User", optional: true
     belongs_to :listing_condition
     belongs_to :listing_status
     belongs_to :listing_category

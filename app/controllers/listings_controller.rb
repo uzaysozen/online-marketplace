@@ -205,7 +205,6 @@ class ListingsController < ApplicationController
     if @listing.save
       redirect_to listings_path, notice: 'Listing was successfully created.'
     else
-      puts @listing.errors.full_messages
       render :new
     end
   end
@@ -308,8 +307,6 @@ class ListingsController < ApplicationController
     if params[:receiver].present?
       @listing.receiver = User.find_by_id(params[:receiver])
     end
-
-    print 
     
     if @listing.save
       redirect_to request.referrer, notice: 'Listing has been marked as complete'

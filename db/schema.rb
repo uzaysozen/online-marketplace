@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_19_142323) do
+ActiveRecord::Schema.define(version: 2021_05_19_181725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 2021_05_19_142323) do
     t.bigint "listing_condition_id"
     t.bigint "listing_status_id"
     t.decimal "price"
+    t.bigint "moderator_id"
     t.index ["creator_id"], name: "index_listings_on_creator_id"
     t.index ["listing_category_id"], name: "index_listings_on_listing_category_id"
     t.index ["listing_condition_id"], name: "index_listings_on_listing_condition_id"
