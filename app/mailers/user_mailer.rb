@@ -5,8 +5,8 @@ class UserMailer < ApplicationMailer
     mail(from: email, to: 'client-mail@sheffield.ac.uk', subject: 'Contact From ' + name, body: message)
   end
 
-  def send_bulk_email(users, message)
-    mail(bcc: users, subject: 'General Announcement', body: message)
+  def send_bulk_email(users, subject, message)
+    mail(bcc: users, subject: subject, body: message)
   end
 
   def message_email(user, subject, message)

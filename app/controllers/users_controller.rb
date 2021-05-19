@@ -49,24 +49,37 @@ class UsersController < ApplicationController
     end
 
     def settings_update
-      if params[:settings][:email_message] == "1"
+      user_time = params[:settings][:when]
+      email_message = params[:settings][:email_message]
+      email_category = params[:settings][:email_category]
+      user_categories = params[:settings][:categories]
+      
+      if email_message == "1"
         current_user.update(email_message: true)
       else
         current_user.update(email_message: false)
       end
       
-      if params[:settings][:email_category] == "1"
+      if email_category == "1"
         current_user.update(email_category: true)
       else
         current_user.update(email_category: false)
       end
 
-      if params[:settings][:categories].present?
-        current_user.update(user_categories: params[:settings][:categories])
+      if user_categories.present?
+        current_user.update(user_categories: user_categories)
       end
       
-      if params[:settings][:when].present?
-        current_user.update(when: params[:settings][:when])
+      if user_time.present?
+        current_user.update(when: user_time)
+      end
+      
+      if user_time == 'weekly' and email_category == "1"
+        # Enqueue a job to be performed 1 week from now.
+        SendEmailNotificationJob.set(wait: 1.week).perform_later(current_user, user_categories, user_time)
+      elsif user_time == 'monthly' and email_category == "1"
+        # Enqueue a job to be performed 1 month from now.
+        SendEmailNotificationJob.set(wait: 1.month).perform_later(current_user, user_categories, user_time)
       end
     end
 
