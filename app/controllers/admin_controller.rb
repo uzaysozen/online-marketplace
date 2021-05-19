@@ -38,6 +38,30 @@ class AdminController < ApplicationController
       else
         ListingView.where(date_filter).group_by_month(:created_at).count
       end
+
+    @listing_create_data =
+      case @filter_group_by
+      when 'Hour'
+        Listing.where(date_filter).group_by_hour(:created_at).count
+      when 'Day'
+        Listing.where(date_filter).group_by_day(:created_at).count
+      when 'Week'
+        Listing.where(date_filter).group_by_week(:created_at).count
+      else
+        Listing.where(date_filter).group_by_month(:created_at).count
+      end
+
+    @listing_complete_data =
+      case @filter_group_by
+      when 'Hour'
+        Listing.where(date_filter).where(listing_status: ListingStatus.find_by(name: 'Complete')).group_by_hour(:updated_at).count
+      when 'Day'
+        Listing.where(date_filter).where(listing_status: ListingStatus.find_by(name: 'Complete')).group_by_day(:updated_at).count
+      when 'Week'
+        Listing.where(date_filter).where(listing_status: ListingStatus.find_by(name: 'Complete')).group_by_week(:updated_at).count
+      else
+        Listing.where(date_filter).where(listing_status: ListingStatus.find_by(name: 'Complete')).group_by_month(:updated_at).count
+      end
   end
 
   # GET admin/other
