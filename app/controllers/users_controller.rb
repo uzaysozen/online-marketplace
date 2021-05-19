@@ -49,11 +49,12 @@ class UsersController < ApplicationController
     end
 
     def settings_update
+      # Set variables
       user_time = params[:settings][:when]
       email_message = params[:settings][:email_message]
       email_category = params[:settings][:email_category]
       user_categories = params[:settings][:categories]
-      
+      # Update user settings
       if email_message == "1"
         current_user.update(email_message: true)
       else
@@ -73,7 +74,7 @@ class UsersController < ApplicationController
       if user_time.present?
         current_user.update(when: user_time)
       end
-      
+      # Send scheduled email
       if user_time == 'weekly' and email_category == "1"
         # Enqueue a job to be performed 1 week from now.
         SendEmailNotificationJob.set(wait: 1.week).perform_later(current_user, user_categories, user_time)
