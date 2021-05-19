@@ -12,6 +12,7 @@
         = render @conversations
     .col-9.conversation-box.p-0  
       - if @conversation.present?
+        - @listing_rating = ListingRating.where(listing_id: @conversation.listing_id).first
         .listing-preview
           = render 'conversation_listing'
         #messages-container.pt-2

@@ -9,6 +9,9 @@
     = link_to reports_path, class: "nav-link #{'active' if path_contains? 'report'}" do
       = icon 'fas', 'exclamation-triangle', 'Reports'
   %li.nav-item
+    = link_to user_view_path, class: "nav-link #{'active' if path_contains? 'user'}" do
+      = icon 'fas', 'users', 'Users'
+  %li.nav-item
     = link_to other_path, class: "nav-link #{'active' if path_contains? 'other'}" do
       = icon 'fas', 'align-justify', 'Other'
   

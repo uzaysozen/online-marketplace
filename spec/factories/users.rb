@@ -9,6 +9,8 @@
 #  current_sign_in_ip :inet
 #  dn                 :string
 #  email              :string           default(""), not null
+#  email_category     :boolean
+#  email_message      :boolean
 #  givenname          :string
 #  is_banned          :boolean          default(FALSE)
 #  last_sign_in_at    :datetime
@@ -20,7 +22,9 @@
 #  sign_in_count      :integer          default(0), not null
 #  sn                 :string
 #  uid                :string
+#  user_categories    :text             default([]), is an Array
 #  username           :string
+#  when               :text
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #

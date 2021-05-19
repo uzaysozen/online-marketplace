@@ -167,6 +167,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    chartkick (4.0.4)
     childprocess (3.0.0)
     chronic (0.10.2)
     coffee-rails (5.0.0)
@@ -233,6 +234,8 @@ GEM
       rchardet (~> 1.8)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    groupdate (5.2.2)
+      activesupport (>= 5)
     haml (5.2.1)
       temple (>= 0.8.0)
       tilt
@@ -456,6 +459,7 @@ DEPENDENCIES
   capistrano3-puma!
   capybara
   capybara-select2!
+  chartkick
   coffee-rails
   daemons (= 1.1.9)
   database_cleaner
@@ -472,6 +476,7 @@ DEPENDENCIES
   eventmachine
   factory_bot_rails
   font-awesome-sass
+  groupdate
   haml-rails
   jquery-rails
   jwt

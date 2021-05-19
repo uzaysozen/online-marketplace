@@ -54,29 +54,25 @@ class ListingsController < ApplicationController
       @listings = accessible_listings
     end
 
-    # Filter the Listings by Tags
-    if params[:search_and_filter][:filter_tags].present?
-      @entered_tags = params[:search_and_filter][:filter_tags].reject(&:blank?)
-      @all_tag_names = Tag.pluck(:name)
-
-      if not (@all_tag_names & @entered_tags).empty?
-        @common_tags = @all_tag_names & @entered_tags
-        @tag_objects = Tag.where(name: @common_tags)
-        @listing_tag_objects = ListingTag.where(tag_id: @tag_objects.ids)
-
-        unless @listing_tag_objects.nil?
-          @listings = @listings.where(id: @listing_tag_objects.listing_id)
-        end
-      end
-    end
-
     # Search through Listings
     if params[:search_and_filter][:search_bar].present?
       @search_params = params[:search_and_filter][:search_bar]
       @listing_locations = Listing.pluck(:location)
-      if @listing_locations.include? @search_params
+      @all_tag_names = Tag.pluck(:name)
+      @search_cases = [@search_params, @search_params.capitalize, @search_params.downcase, @search_params.upcase]
+
+      # Filter by a tag
+      if not (@all_tag_names & @search_cases).empty?
+        @tag_object = Tag.where(name: @search_cases)
+        @listingtag_object = ListingTag.where(tag_id: @tag_object.ids)
+
+        @listings = @listings.where(listing_tags: @listingtag_object)
+        session[:search_string] = @search_params
+      # Filter by a listing's locatiojn
+      elsif @listing_locations.include? @search_params
         @listings = @listings.where("location = ?", "#{params[:search_and_filter][:search_bar]}")
         session[:search_string] = @search_params
+      # Filter by a listing's title
       else
         @listings = @listings.where("title ilike ?", "%#{params[:search_and_filter][:search_bar]}%")
         session[:search_string] = @search_params
@@ -198,7 +194,7 @@ class ListingsController < ApplicationController
     tags.each do |tag|
       # create new tags, add to listing
       @listing.tags << Tag.where(name: tag).first_or_create
-    end 
+    end
 
     delivery_methods.each do |delivery|
       # get delivery methods by id and add to listing
@@ -247,7 +243,7 @@ class ListingsController < ApplicationController
     @listing.destroy
     redirect_to listings_url, notice: 'Listing was successfully deleted.'
   end
-  
+
   def add_favourite
     @favourite = UserFavourite.new(listing: @listing, user: current_user)
     @listings = accessible_listings

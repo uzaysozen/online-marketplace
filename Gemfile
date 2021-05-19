@@ -26,6 +26,8 @@ gem 'jquery-rails'
 gem 'bootstrap'
 gem 'font-awesome-sass'
 # select2-rails is vendored under vendor/assets
+gem 'chartkick'
+gem 'groupdate'
 
 gem 'simple_form'
 gem 'draper'

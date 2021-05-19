@@ -4,3 +4,6 @@ $ ->
     $('.toast').each( (_) ->
       $(this).toast('show');
     )
+
+    # Load all tooltips
+    $('[data-toggle="tooltip"]').tooltip()

@@ -21,7 +21,7 @@
           Free
       - else
         £
-        = sprintf '%.2f', @listing.price 
+        = sprintf '%.2f', listing.price 
     .row   
       .col-12.col-lg-6.text-small.text-center.text-darkgray.rounded.mt-2
         - if listing.creator == current_user

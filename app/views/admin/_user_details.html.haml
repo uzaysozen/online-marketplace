@@ -1,0 +1,25 @@
+.border-none.rounded.h-100
+  .row.p-2
+    .col-12.col-sm-1.pl-3.text-left.listing-image-container.text-black.text-large.pt-3
+      = icon('fas', 'user-circle')
+
+    .col-12.col-sm-3.pl-0.text-left.listing-description-container.pl-1
+      .pt-3
+        %pre{:class => 'text-darkgray text-medium font-main'}
+          Name: #{user.givenname} #{user.sn}
+             
+      .text-small.text-darkgray.border-right-black.text-medium
+        Username: #{user.username}
+
+    .col-12.col-sm-5.pl-3.text-left.listing-price-container  
+      .text-medium.text-darkgray.pt-3
+        Number of Listings: #{user.user_listings.size}
+
+    .col-12.col-sm-3.pl-5.pt-2.text-small
+      = link_to ban_user_path(user: user), class: 'ajax-modal button-white listing-button' do
+        .text-small.text-center.listing-red.rounded.btn-primary
+          Ban User
+      %br
+      = link_to view_listings_path(user: user), class: 'ajax-modal button-blue listing-button' do
+        .text-small.text-center.text-blue.listing-blue.rounded 
+          View Listings

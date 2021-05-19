@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_152306) do
+ActiveRecord::Schema.define(version: 2021_05_18_164804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,7 +151,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_152306) do
   create_table "listings", force: :cascade do |t|
     t.string "title", limit: 50
     t.text "description"
-    t.decimal "price"
+    t.decimal "price", default: "0.0"
     t.decimal "discounted_price"
     t.string "location", limit: 50
     t.datetime "created_at", precision: 6, null: false
@@ -256,6 +256,10 @@ ActiveRecord::Schema.define(version: 2021_05_18_152306) do
     t.text "ban_reason"
     t.float "rating"
     t.bigint "rating_count"
+    t.text "when"
+    t.boolean "email_message"
+    t.boolean "email_category"
+    t.text "user_categories", default: [], array: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["username"], name: "index_users_on_username"
   end

@@ -44,6 +44,7 @@ Rails.application.routes.draw do
     get :mylistings, to: 'listings#mylistings'
     get :reviews, to: 'users#reviews'
     get :settings, to: 'users#settings'
+    post :settings, to: 'users#settings_update'
     resources :user_favourites
     resources :conversations do
       resources :conversation_messages, except: :create do
@@ -76,6 +77,8 @@ Rails.application.routes.draw do
     get :ban_user, to: 'admin#get_user'
     post :ban_user, to: 'admin#ban_user'
     post :unban_user, to: 'admin#unban_user'
+    get :user_view, to: 'admin#user_view'
+    get :view_listings, to: 'admin#view_listings'
   end
   
   # Static Pages
