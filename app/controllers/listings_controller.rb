@@ -192,7 +192,7 @@ class ListingsController < ApplicationController
     if !@listing.price?
       @listing.price = 0.0
     end
-    @listing.listing_status = ListingStatus.first
+    @listing.listing_status = ListingStatus.find_by(name: 'Pending')
     @listing.creator_id = current_user.id
 
     tags.each do |tag|
@@ -309,8 +309,6 @@ class ListingsController < ApplicationController
     @listing.listing_status = ListingStatus.where(name: 'Complete').first
     if params[:receiver].present?
       @listing.receiver = User.find_by_id(params[:receiver])
-      print "test"
-      puts @listing.receiver.username
     end
 
     print 
@@ -318,7 +316,6 @@ class ListingsController < ApplicationController
     if @listing.save
       redirect_to request.referrer, notice: 'Listing has been marked as complete'
     else
-      print @listing.errors.full_messages
       redirect_to request.referrer, notice: 'Failed to complete listing'
     end
 
@@ -405,7 +402,7 @@ class ListingsController < ApplicationController
     end
     # Only allow a trusted parameter "white list" through.
     def listing_params
-      params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
+      params.require(:listing).permit(:title, :description, :price, :location, :listing_condition_id,
                                       :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
     end
 end
