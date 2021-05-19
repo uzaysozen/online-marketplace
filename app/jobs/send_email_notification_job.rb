@@ -20,6 +20,7 @@ class SendEmailNotificationJob < ApplicationJob
         message += "There are no listings available in this category for now.\n\n"
       end
     end
+    message += "PLEASE SAVE YOUR PREFERENCES IN THE USER SETTINGS TO CONTINUE RECEIVING EMAILS"
     UserMailer.delay.message_email(user.email, "SU Marketplace Notification", message)
   end
 end

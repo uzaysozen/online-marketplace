@@ -7,38 +7,21 @@
 
 .row.justify-content-left.flex-column-reverse.flex-md-row
   .col-12.col-md-12
-    %p
-    Why?
+    .text-medium.pl-4.pr-4.pt-5
+      %p
+        %strong Welcome to the University of Sheffield Online Marketplace, the only place at the University where you can buy, sell and swap items you no longer need! 
 
 .row.justify-content-left.flex-column-reverse.flex-md-row
   .col-12.col-md-12
-    .text-small.p-4
-      %p Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      %p Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-
-.row.justify-content-left.flex-column-reverse.flex-md-row
-  .col-12.col-md-12
-    The team
-%br
-.row.justify-content-center.flex-column-reverse.flex-md-row
-  .col-12.col-md-12
-    #slider.carousel.slide{"data-ride" => "carousel"}
-      / The slideshow
-      .carousel-inner
-        .carousel-item.active.text-center
-          .row.justify-content-center.flex-column-reverse.flex-md-row
-            - 5.times do
-              =render 'user_image', image_loc: '/images/logos/user.png', name: 'James Smith', role: 'Manager'
-           
-        .carousel-item.text-center 
-          .row.justify-content-center.flex-column-reverse.flex-md-row
-            - 5.times do
-              =render 'user_image', image_loc: '/images/logos/user.png', name: 'Peter Parker', role: 'Manager'
-            
-      / Left and right controls
-      %a.carousel-control-prev.pb-5{"data-slide" => "prev", href: "#slider"}
-        .text-black
-          =icon('fas', 'chevron-left')
-      %a.carousel-control-next.pb-5{"data-slide" => "next", href: "#slider"}
-        .text-black  
-          =icon('fas', 'chevron-right')
+    .text-medium.pl-5.pr-5.pt-4.pb-3
+      %p The marketplace is available exclusively for current staff and students of the University. Get started by signing up with your University login credentials, set your preferences and list your item or start searching!
+      %p 
+        The marketplace has been created as a reaction to the new 
+        %a{:href => 'https://www.sheffield.ac.uk/sustainability/strategy'} University of Sheffield Sustainability Strategy
+        \. It is important for the environment to try and decrease the amount of waste we produce and you can do your part by selling the items you no longer need instead of throwing them away, and buying second hand items instead of new ones.
+      %p There are no selling fees on the marketplace, it’s all free and user friendly. Please make sure you read the Advertising policy before you start listing your items. Once you create a new listing, it will be submitted for the moderators approval - this will be done the next day. 
+      %p The moderators may exercise their discretion over the inclusion of any listing as per the Advertising policy. You may delete your listing at any point (e.g. when your item sells). You can edit your listings but please note that any edits will cause the listing to go back to the moderators approval queue.
+      %p If you’re interested in an item, you can use the chat feature to express your interest to the seller. Some items are marked as swappable so you can try and swap them for an item that you yourself have listed.
+      %p It is up to you and the seller/buyer to decide how the item will be delivered/collected and paid for. Once the exchange is complete, sellers can rate the item and the exchange process. You can also report an item if you think that it shouldn’t be on the marketplace - the moderators will review these reports and decide whether the listing should be deleted.
+      %p The University takes no responsibility for these advertisements or their claims of content. All advertisements are accepted in good faith. Advertisers should take appropriate precautions when dealing with any response to their ads particularly in relation to payment and parting with goods. The University takes no responsibility for any dispute that may arise from placing an advert on this site.
+      %p The marketplace is moderated by a group of volunteers - we always welcome new moderators so if you want to become one of them, please let us know at [insert group email address here].
