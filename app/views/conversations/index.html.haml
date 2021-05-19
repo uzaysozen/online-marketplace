@@ -9,12 +9,26 @@
         = render @conversations
     .col-9.conversation-box.p-0  
       - if @conversation.present?
+        - @listing_rating = ListingRating.where(listing_id: @conversation.listing_id).first
         .listing-preview
           = render 'conversation_listing'
         #messages-container.pt-2
           #messages
             - @conversation.active_messages.each do |message|
               = render 'conversation_messages/conversation_message', message: message
+            - if @conversation.listing.listing_status.name == 'Complete'
+              - if @conversation.listing.creator == current_user and @listing_rating.seller_rating.present? or @conversation.listing.receiver == current_user and not @listing_rating.buyer_rating.present?
+                .alert.alert-light.border.text-center
+                  Leave a review 
+                  .d-flex.justify-content-center.pt-2
+                    = link_to rating_listing_path(@conversation.listing), class: 'ajax-modal btn btn-primary d-flex align-items-center justify-content-center w-25' do
+                      Review
+                      .far.fa-comment-dots.ml-3
+              - else 
+                .alert.alert-warning.text-center
+                  .fas.fa-exclamation-triangle
+                  This listing is no longer available as it has been completed/sold
+          
           = simple_form_for(ConversationMessage.new, url: send_conversation_conversation_message_path(@conversation.id), remote: true) do |f|
             -# Hidden field to associate the message with it's conversation
             = f.hidden_field :conversation_id, :value => @conversation.id

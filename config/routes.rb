@@ -29,6 +29,11 @@ Rails.application.routes.draw do
     post :swap_conversation, on: :member
     get :swap, on: :member
     post :delete_conversation, on: :member
+    get :rating, on: :member
+    post :add_rating, on: :member
+    post :delete_rating, on: :member
+    get :report, on: :member
+    post :send_report, on: :member
   end
   
   resources :users do
@@ -39,9 +44,12 @@ Rails.application.routes.draw do
     get :mylistings, to: 'listings#mylistings'
     get :reviews, to: 'users#reviews'
     get :settings, to: 'users#settings'
+    post :settings, to: 'users#settings_update'
     resources :user_favourites
     resources :conversations do
       resources :conversation_messages, except: :create do
+        get :report, on: :member
+        post :send_report, on: :member
         post :send_message, :as => 'send', on: :member
         patch :delete_message, :as => 'delete', on: :member
       end
@@ -50,7 +58,11 @@ Rails.application.routes.draw do
 
   # Admin Pages
   scope :admin do
-    resources :reports
+    resources :reports do
+      get :see_message, on: :member
+      get :moderate, on: :member
+      post :moderate_update, on: :member
+    end
     get :moderation, to: 'admin#moderation'
     get :statistics, to: 'admin#statistics'
     get :other, to: 'admin#other'
@@ -65,6 +77,8 @@ Rails.application.routes.draw do
     get :ban_user, to: 'admin#get_user'
     post :ban_user, to: 'admin#ban_user'
     post :unban_user, to: 'admin#unban_user'
+    get :user_view, to: 'admin#user_view'
+    get :view_listings, to: 'admin#view_listings'
   end
   
   # Static Pages
@@ -73,6 +87,7 @@ Rails.application.routes.draw do
   get :terms, to: "pages#terms"
   get :faq, to: "pages#faq"
   get :about, to: "pages#about"
+  get :covid, to: "pages#covid"
 
   # Error Routes
 

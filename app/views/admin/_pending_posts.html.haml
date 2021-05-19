@@ -3,7 +3,12 @@
     .border-none.rounded.h-100
       .row.p-2
         .col-12.col-sm-1.pl-0.text-left.listing-image-container.text-black.text-large.pt-3
-          =icon('fas', 'image')
+          .preview-image.preview-image-md
+            - if listing.present?
+              - if listing.images&.attached?
+                = image_tag(rails_blob_url(listing.images.first))
+              - else
+                = icon('fas', 'tags', class: 'text-large')
 
         .col-12.col-sm-3.pl-0.text-left.listing-description-container.pl-1
           .pt-3

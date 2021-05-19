@@ -1,0 +1,17 @@
+.modal-dialog
+  .modal-content.p-4
+    = simple_form_for :rating_form, url: add_rating_listing_path, remote: true do |f|
+      
+      .text-large.text-center Review
+      .text-medium.text-center.p-2 Leave a review for #{@listing.creator.username}
+      = f.error_notification
+
+      .text-center
+        = f.input :rating, label: false, input_html: { class: 'rating', type: 'hidden', 'data-filled' => 'fas fa-star fa-2x text-gold', 'data-empty' => 'fas fa-star fa-2x text-gray' }
+      = f.input :comment, required: false, input_html: { maxlength: 50 }
+      .text-center.pt-2.pb-4
+        = f.collection_radio_buttons :anonymous, [[1, '⠀Post Anonymously'], [2, '⠀Share My Details']], :first, :last, :item_wrapper_class => 'mx-3'
+      
+      .form-actions.d-flex.align-items-center.justify-content-center
+        = f.button :submit, 'Send', class: 'btn-secondary w-25', id: 'swap-send-btn'
+        = dismiss_modal_button

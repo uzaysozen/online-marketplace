@@ -2,26 +2,19 @@
   = f.error_notification
 
   .text-medium.text-black.pl-2
-    = check_box_tag(:email, "message")
-    = label_tag(:email_message, "When I receive a message")
-  .text-medium.text-black.pl-2
-    = check_box_tag(:email, "category")
-    = label_tag(:email_category, "When an item from this category is posted")
+    = f.input :email_message, label: "When I receive a message", as: :boolean, input_html: {checked: @email_message}
+    = f.input :email_category, label: "When an item from this category is posted", as: :boolean, input_html: {checked: @email_category}
+  %p{:class => 'text-small text-darkgray'} Select categories
   .col-12.col-md-11
-    .text-medium.text-black.pl-3.pt-2
-      %p= select_tag(:when,options_for_select([["All", 1],["Custom", 2]]),:class => 'w-100')
+    .text-medium.text-black.pb-2.pt-1
+      = f.input :categories, label: false, as: :select, collection: ListingCategory.all, selected: @user_categories, required: false, include_blank: false, include_hidden: false, input_html: { class: 'select2-multiple', multiple: true }
 
   When?
-  .col-12.col-md-12
+  .col-12.col-md-12.pt-3
     .text-small.pb-4.pl-3.w-100
-      = radio_button_tag(:when, "immediately")
-      = label_tag(:when_immediately, "Immediately", :class => 'pr-5')
-      = radio_button_tag(:when, "weekly")
-      = label_tag(:when_weekly, "Weekly", :class => 'pr-5')
-      = radio_button_tag(:when, "Monthly")
-      = label_tag(:when_monthly, "Monthly")
- 
+      = f.input :when, required: false, as: :radio_buttons, collection: [['Immediately', 'immediately'], ['Weekly', 'weekly'], ['Monthly', 'monthly']], legend_tag: false, checked: @when
     
   .form-actions.text-center
-    = f.button :button, class: 'btn-huge listing-red text-red pl-5 pr-5 pt-2 pb-2' do
-      Save
+    = f.button :button do
+      %button.btn.btn-outline-primary.text-medium.mr-5{type: "primary"}
+        Save Changes

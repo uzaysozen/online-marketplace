@@ -8,7 +8,7 @@
 #  is_active            :boolean
 #  is_moderated         :boolean
 #  location             :string(50)
-#  price                :decimal(, )
+#  price                :decimal(, )      default(0.0)
 #  swap                 :boolean
 #  title                :string(50)
 #  created_at           :datetime         not null
@@ -71,5 +71,5 @@ class Listing < ApplicationRecord
     validates :description, presence: true
     validates :images, presence: true
     validates :location, presence: true
-    validates :title, presence: true
+    validates :title, presence: true  
 end

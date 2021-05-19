@@ -59,9 +59,6 @@ load = ->
         messageContentContainer = conversationPreview.querySelector('.message-content')
         dateContentContainer = conversationPreview.querySelector('.date')
         messageContentContainer.innerText = el.querySelector('.content').innerText
-      else
-        # Send notification
-        console.log("hit")
 
 
 document.addEventListener 'turbolinks:load', load

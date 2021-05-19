@@ -1,6 +1,5 @@
 class ConversationMessagesController < ApplicationController
-  before_action :set_conversation_message, only: [:show, :edit, :update, :destroy, :delete_message]
-
+  load_resource only: [:report, :send_report, :show, :edit, :update, :destroy, :delete_message]
   # GET /conversation_messages
   def index
     @conversation_messages = ConversationMessage.all
@@ -26,6 +25,16 @@ class ConversationMessagesController < ApplicationController
     if @conversation_message.valid?
       @conversation_message.save
       SendConversationMessageJob.perform_later(@conversation_message, current_user)
+      # emailing message if messages enabled by the receiver
+      if current_user == @conversation_message.conversation.listing.creator
+        if @conversation_message.conversation.participant.email_message
+          UserMailer.message_email(@conversation_message.conversation.participant.email, "Message From " + current_user.username, @conversation_message.content).deliver
+        end
+      else
+        if @conversation_message.conversation.listing.creator.email_message
+          UserMailer.message_email(@conversation_message.conversation.listing.creator.email, "Message From " + current_user.username, @conversation_message.content).deliver
+        end
+      end
       head :ok
     else
       head :bad_request
@@ -59,6 +68,15 @@ class ConversationMessagesController < ApplicationController
     @conversation_messages = ConversationMessage.where(conversation_id: params[:search][:conversation_id], sender_id: params[:search][:sender_id])
     @conversation_messages = @conversation_messages.where(content: params[:search][:content]) if params[:search][:content].present?
     render :index
+  end
+
+  def report
+    render layout: false
+  end
+
+  def send_report
+    report_message = params[:report][:message]
+    Report.create(message: report_message, conversation_message: @conversation_message, reporter: current_user)
   end
 
   private

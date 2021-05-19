@@ -45,6 +45,8 @@
                 = icon 'fas', 'edit', 'Moderation'
               = link_to reports_path,  class: 'dropdown-item', title: "Admin Reports Page" do
                 = icon 'fas', 'exclamation-triangle', 'Reports'
+              = link_to user_view_path, class: 'dropdown-item', title: "Admin Users Page" do
+                = icon 'fas', 'users', 'Users'
               = link_to other_path,  class: 'dropdown-item', title: "Admin Other Page" do
                 = icon 'fas', 'align-justify', 'Other'
               
