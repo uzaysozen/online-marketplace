@@ -1,19 +1,34 @@
+- is_buyer = defined?(buyer_review) != nil ? true : false
+- puts "\n\n\n"
+- puts seller_review.id
+
 %tr.w-100
+  %td.text-left.w-auto
+    .p-4 
+      - if is_buyer
+        %input.rating.text-small{ type: 'hidden', value: buyer_review.buyer_rating, 'data-readonly' => true, 'data-filled' => 'fas fa-star text-gold', 'data-empty' => 'fas fa-star text-gray' }
+      - else
+        %input.rating.text-small{ type: 'hidden', value: seller_review.seller_rating, 'data-readonly' => true, 'data-filled' => 'fas fa-star text-gold', 'data-empty' => 'fas fa-star text-gray' }
+  
   %td.text-left.w-auto 
-    .question-box.text-darkgray
-      - 3.times do
-        = icon('fas', 'star', :class =>'text-gold')
-      - 2.times do
-        = icon('fas', 'star')
-      %p{:class => 'pt-2'} Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque.
-      Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique,
-      tortor mauris molestie elit, et lacinia ipsum quam nec dui. Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna.
-      Aenean velit odio, elementum in tempus ut, vehicula eu di
+    .text-darkgray.p-4
+      %p{:class => 'pt-2'} 
+        - if (is_buyer and  not buyer_review.buyer_comment.present?) or (not is_buyer and not seller_review.seller_comment.present?)
+          No comment
+        - elsif is_buyer
+          = buyer_review.buyer_comment
+        - else
+          = seller_review.seller_comment
       
   %td.text-left.w-auto
-    .question-box.text-darkgray.text-medium.p-4
+    .text-darkgray.text-medium.p-4
       = icon('fas', 'user-circle') 
-      Anonymous
-  %td.text-left.w-auto
-    .text-medium.text-darkgray.p-4 
-      23rd July 2021
+      - if (is_buyer and buyer_review.buyer_anon) or (not is_buyer and seller_review.seller_anon)
+        Anonymous
+      - else
+        - if is_buyer
+          - listing = Listing.find_by_id(buyer_review.listing_id)
+        - else 
+          - listing = Listing.find_by_id(seller_review.listing_id)
+        - user = User.find_by_id(listing.creator_id)
+        = user.username

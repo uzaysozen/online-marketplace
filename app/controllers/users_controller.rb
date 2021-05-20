@@ -85,6 +85,19 @@ class UsersController < ApplicationController
     end
 
     def reviews
+      # find all items received
+      received_items = Listing.where(receiver_id: current_user.id, listing_status: ListingStatus.find_by(name: 'Complete'))
+      # find reviewed received items
+      @received_items_reviews = ListingRating.where(listing_id: received_items.ids).where.not(buyer_rating: nil)
+
+      # find all items given
+      given_items = Listing.where(creator_id: current_user.id, listing_status: ListingStatus.find_by(name: 'Complete')).where.not(receiver_id: nil)
+      # find reviewed given items
+      @given_items_reviews = ListingRating.where(listing_id: given_items.ids).where.not(seller_rating: nil)
+
+      # find all items unreviewed by user
+      @review_items = Listing.joins('LEFT OUTER JOIN listing_ratings ON listings.id = listing_ratings.listing_id').where("(listings.creator_id = #{current_user.id} 
+        AND listing_ratings.buyer_rating IS NULL AND listings.receiver_id IS NOT NULL) OR (listings.receiver_id = #{current_user.id} AND listing_ratings.seller_rating IS NULL)").where(listing_status: ListingStatus.find_by(name: 'Complete'))
     end
   
     private

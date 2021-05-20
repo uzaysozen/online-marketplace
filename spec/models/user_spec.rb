@@ -17,6 +17,8 @@
 #  last_sign_in_ip    :inet
 #  mail               :string
 #  ou                 :string
+#  rating             :float
+#  rating_count       :bigint
 #  sign_in_count      :integer          default(0), not null
 #  sn                 :string
 #  uid                :string

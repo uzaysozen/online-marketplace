@@ -185,12 +185,12 @@ class ListingsController < ApplicationController
     delivery_methods = params.delete(:listing_deliveries).reject(&:blank?)
 
     @listing = Listing.new(params)
-    @listing.listing_status = ListingStatus.first
+    # if no price set to 0 (free)
+    if !@listing.price?
+      @listing.price = 0.0
+    end
+    @listing.listing_status = ListingStatus.find_by(name: 'Pending')
     @listing.creator_id = current_user.id
-    @listing.is_active = true
-    @listing.is_moderated = true
-    @listing.receiver_id = current_user.id
-    @listing.moderator_id = current_user.id
 
     tags.each do |tag|
       # create new tags, add to listing
@@ -301,6 +301,21 @@ class ListingsController < ApplicationController
     end
   end
 
+  # Mark listing as complete
+  def complete
+    @listing.listing_status = ListingStatus.where(name: 'Complete').first
+    if params[:receiver].present?
+      @listing.receiver = User.find_by_id(params[:receiver])
+    end
+    
+    if @listing.save
+      redirect_to request.referrer, notice: 'Listing has been marked as complete'
+    else
+      redirect_to request.referrer, notice: 'Failed to complete listing'
+    end
+
+  end
+
   def rating
     render layout: false
   end
@@ -311,22 +326,57 @@ class ListingsController < ApplicationController
     @listing_rating = ListingRating.find_or_create_by(listing_id: @listing.id)
 
     # Check user is seller or buyer
-    if current_user == @listing.creator
-      # seller
+    if current_user.id == @listing.creator_id
+      # user is seller, rate buyer
+      @listing_rating.buyer_rating = rating_params[:rating]
+      @listing_rating.buyer_comment = rating_params[:comment]
+      @listing_rating.buyer_anon = rating_params[:anonymous] == '1'
+      rated_user = User.find_by_id(@listing.receiver_id)
+    else
+      # user is buyer, rate seller
       @listing_rating.seller_rating = rating_params[:rating]
       @listing_rating.seller_comment = rating_params[:comment]
       @listing_rating.seller_anon = rating_params[:anonymous] == '1'
-    else
-      # buyer
-      @listing_rating.buyer_rating = rating_params[:rating]
-      @listing_rating.buyer_comment rating_params[:comment]
-      @listing_rating.buyer_anon = rating_params[:anonymous] == '1'
+      rated_user = @listing.creator
     end
 
     if @listing_rating.save
-      head :ok
+      n_rating = 0
+      # find receiver ratings
+      listings = Listing.where(receiver_id: rated_user.id).all
+      
+      # add to total rating
+      total_rating = 0
+      for listing in listings do
+        if listing.listing_rating.present? and listing.listing_rating.buyer_rating.present?
+          total_rating += listing.listing_rating.buyer_rating
+          n_rating += 1
+        end
+      end
+
+      # find seller ratings
+      listings = Listing.where(creator_id: rated_user.id).where.not(receiver_id: nil).all
+      
+      # add to total rating
+      for listing in listings do
+        if listing.listing_rating.present? and listing.listing_rating.seller_rating.present?
+          total_rating += listing.listing_rating.seller_rating
+          n_rating += 1
+        end
+      end
+
+      # save total rating
+      rated_user.rating = total_rating / n_rating
+      rated_user.rating_count = n_rating
+
+      # save user
+      if rated_user.save()
+        render 'review_success'
+      else
+        render 'review_failure'
+      end
     else
-      head :bad_request
+      render 'review_failure'
     end
   end
 
@@ -345,7 +395,7 @@ class ListingsController < ApplicationController
     end
     # Only allow a trusted parameter "white list" through.
     def listing_params
-      params.require(:listing).permit(:title, :description, :price, :discounted_price, :location, :listing_condition_id,
+      params.require(:listing).permit(:title, :description, :price, :location, :listing_condition_id,
                                       :listing_category_id, :swap, images: [], listing_tags: [], listing_deliveries: [])
     end
 end

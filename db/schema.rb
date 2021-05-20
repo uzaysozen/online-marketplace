@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_164804) do
+ActiveRecord::Schema.define(version: 2021_05_19_181725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -149,11 +149,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_164804) do
   end
 
   create_table "listings", force: :cascade do |t|
-    t.boolean "is_active"
-    t.boolean "is_moderated"
     t.string "title", limit: 50
     t.text "description"
-    t.decimal "price", default: "0.0"
     t.decimal "discounted_price"
     t.string "location", limit: 50
     t.datetime "created_at", precision: 6, null: false
@@ -161,15 +158,15 @@ ActiveRecord::Schema.define(version: 2021_05_18_164804) do
     t.boolean "swap"
     t.bigint "listing_category_id"
     t.bigint "creator_id"
-    t.bigint "moderator_id"
     t.bigint "receiver_id"
     t.bigint "listing_condition_id"
     t.bigint "listing_status_id"
+    t.decimal "price"
+    t.bigint "moderator_id"
     t.index ["creator_id"], name: "index_listings_on_creator_id"
     t.index ["listing_category_id"], name: "index_listings_on_listing_category_id"
     t.index ["listing_condition_id"], name: "index_listings_on_listing_condition_id"
     t.index ["listing_status_id"], name: "index_listings_on_listing_status_id"
-    t.index ["moderator_id"], name: "index_listings_on_moderator_id"
     t.index ["receiver_id"], name: "index_listings_on_receiver_id"
   end
 
@@ -258,6 +255,8 @@ ActiveRecord::Schema.define(version: 2021_05_18_164804) do
     t.boolean "administrator"
     t.boolean "is_banned", default: false
     t.text "ban_reason"
+    t.float "rating"
+    t.bigint "rating_count"
     t.text "when"
     t.boolean "email_message"
     t.boolean "email_category"
@@ -285,7 +284,6 @@ ActiveRecord::Schema.define(version: 2021_05_18_164804) do
   add_foreign_key "listings", "listing_conditions"
   add_foreign_key "listings", "listing_statuses"
   add_foreign_key "listings", "users", column: "creator_id"
-  add_foreign_key "listings", "users", column: "moderator_id"
   add_foreign_key "listings", "users", column: "receiver_id"
   add_foreign_key "reports", "conversation_messages"
   add_foreign_key "reports", "listings"

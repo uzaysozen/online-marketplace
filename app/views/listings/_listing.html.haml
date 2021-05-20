@@ -24,7 +24,13 @@
           = listing.listing_condition.name
 
         .text-small.text-darkgray.mb-2
-          Delivery Option
+          - if listing.deliveries
+            - is_first = true
+            - listing.deliveries.each do |delivery|
+              - if !is_first
+                = "/ "
+              = delivery.name
+              - is_first = false
 
         .text-medium.text-black.mb-2
           = number_to_currency listing.price, unit: "£"
@@ -39,10 +45,10 @@
             = link_to listing, class: 'listing-button button-blue' do
               .text-small.text-center.text-blue.listing-blue.rounded
                 See Details
-      .col-2.col-lg-1.text-medium.text-blue.d-flex.flex-column.justify-content-around
+      .col-2.col-lg-1.d-flex.flex-column.justify-content-around
         .icon-button
           - if can? :create, Report.new(listing: listing)
-            = link_to report_listing_path(listing), class: 'ajax-modal' do
+            = link_to report_listing_path(listing), class: 'ajax-modal text-blue' do
               = icon('far', 'flag')
         .text-medium
           - if can? :create, UserFavourite.new(listing: listing)

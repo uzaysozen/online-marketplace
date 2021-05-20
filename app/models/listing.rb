@@ -5,10 +5,8 @@
 #  id                   :bigint           not null, primary key
 #  description          :text
 #  discounted_price     :decimal(, )
-#  is_active            :boolean
-#  is_moderated         :boolean
 #  location             :string(50)
-#  price                :decimal(, )      default(0.0)
+#  price                :decimal(, )
 #  swap                 :boolean
 #  title                :string(50)
 #  created_at           :datetime         not null
@@ -26,7 +24,6 @@
 #  index_listings_on_listing_category_id   (listing_category_id)
 #  index_listings_on_listing_condition_id  (listing_condition_id)
 #  index_listings_on_listing_status_id     (listing_status_id)
-#  index_listings_on_moderator_id          (moderator_id)
 #  index_listings_on_receiver_id           (receiver_id)
 #
 # Foreign Keys
@@ -35,20 +32,19 @@
 #  fk_rails_...  (listing_category_id => listing_categories.id)
 #  fk_rails_...  (listing_condition_id => listing_conditions.id)
 #  fk_rails_...  (listing_status_id => listing_statuses.id)
-#  fk_rails_...  (moderator_id => users.id)
 #  fk_rails_...  (receiver_id => users.id)
 #
 class Listing < ApplicationRecord
     belongs_to :creator, class_name: "User"
-    belongs_to :moderator, class_name: "User"
-    belongs_to :receiver, class_name: "User"
+    belongs_to :receiver, class_name: "User", optional: true
+    belongs_to :moderator, class_name: "User", optional: true
     belongs_to :listing_condition
     belongs_to :listing_status
     belongs_to :listing_category
 
     has_many :listing_views, dependent: :destroy
     has_many :listing_questions, dependent: :destroy
-    has_many :listing_ratings, dependent: :destroy
+    has_one :listing_rating, dependent: :destroy
     has_many :reports
     has_many :conversations, dependent: :destroy
     has_many_attached :images

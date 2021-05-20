@@ -61,10 +61,11 @@
             -# Carousel
             #car.carousel.slide.card.w-100{"data-ride" => "carousel", "data-interval" => "false"}
               -# Indicators
-              %ol.carousel-indicators
-                - len = images.length
-                - for i in 0..len - 1 do
-                  %li.bg-gray{"data-slide-to" => i, "data-target" => "#car", :class => ("active" unless i != 0)}
+              - if images.size > 1
+                %ol.carousel-indicators
+                  - len = images.length
+                  - for i in 0..len - 1 do
+                    %li.bg-gray{"data-slide-to" => i, "data-target" => "#car", :class => ("active" unless i != 0)}
 
               -# Images
               .carousel-inner
@@ -76,23 +77,24 @@
                   - counter += 1
 
               -# Carousel navigation arrows
-              %a.carousel-control-prev{"data-slide" => "prev", :href => "#car", :role => "button"}
-                %span.carousel-control-prev-icon{"aria-hidden" => "true"}
-                %span.sr-only Previous
-              %a.carousel-control-next{"data-slide" => "next", :href => "#car", :role => "button"}
-                %span.carousel-control-next-icon{"aria-hidden" => "true"}
-                %span.sr-only Next
+              - if images.size > 1
+                %a.carousel-control-prev{"data-slide" => "prev", :href => "#car", :role => "button"}
+                  %span.carousel-control-prev-icon{"aria-hidden" => "true"}
+                  %span.sr-only Previous
+                %a.carousel-control-next{"data-slide" => "next", :href => "#car", :role => "button"}
+                  %span.carousel-control-next-icon{"aria-hidden" => "true"}
+                  %span.sr-only Next
 
           -# Horizontal image cards
-          #preview.container-fluid
-            .row.flex-row.flex-nowrap.overflow-auto
-              - counter = 0
-              - images.each do |image|
-                .col-3.p-1
-                  - if image.representable?
-                    %div.card.card-block.mini-image{"data-slide-to" => counter, "data-target" => "#car", :style => "background-image: url(#{rails_blob_url(image)})"}
-                  - counter += 1
-
+          - if images.size > 1
+            #preview.container-fluid
+              .row.flex-row.flex-nowrap.overflow-auto
+                - counter = 0
+                - images.each do |image|
+                  .col-3.p-1
+                    - if image.representable?
+                      %div.card.card-block.mini-image{"data-slide-to" => counter, "data-target" => "#car", :style => "background-image: url(#{rails_blob_url(image)})"}
+                    - counter += 1
 
         .col-lg-7.col-sm-12.text-left
           .text-large.text-black.text-left
@@ -103,8 +105,16 @@
 
             .row
               .col-lg-6.col-sm-12.text-medium.text-black.border-right-black
-                .fas.fa-user-alt.pr-2
-                = @listing.creator.username
+                .ml-3
+                  .row
+                    .fas.fa-user-alt.pr-2
+                    = @listing.creator.username
+                  .row 
+                    %input.rating.text-small{ type: 'hidden', value: @listing.creator.rating, 'data-readonly' => true, 'data-filled' => 'fas fa-star text-gold', 'data-empty' => 'fas fa-star text-gray' }
+                    .text-small.text-muted.ml-1.pt-1 
+                      (
+                      = @listing.creator.rating_count
+                      )
               .col-lg-6.col-sm-12.text-large.text-black.text-right
                 - if @listing.price == 0
                   .text-muted
