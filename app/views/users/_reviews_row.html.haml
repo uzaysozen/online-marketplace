@@ -26,7 +26,7 @@
       - else
         - if is_buyer
           - listing = Listing.find_by_id(buyer_review.listing_id)
+          = listing.creator.username
         - else 
           - listing = Listing.find_by_id(seller_review.listing_id)
-        - user = User.find_by_id(listing.creator_id)
-        = user.username
+          = listing.receiver.username
