@@ -82,6 +82,11 @@
   color: $secondary-color !important;
 }
 
+.btn-outline-secondary:hover {
+  background: $secondary-color !important;
+  color: white !important;
+}
+
 .listing-red{
   border: solid 2px $primary-color;
 }
