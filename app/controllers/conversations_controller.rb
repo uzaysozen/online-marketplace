@@ -66,5 +66,7 @@ class ConversationsController < ApplicationController
                          .includes(:last_message, listing: [:creator]).joins(:listing)
                          .where("conversations.participant_id = :user OR listings.creator_id = :user", user: current_user.id)
                          .order(updated_at: :desc)
+
+      Listing.joins('LEFT OUTER JOIN listing_ratings ON listing.id = listing_rating.listing_id').where('listing_rating.listing_id IS NULL')
     end
 end

@@ -57,8 +57,12 @@ body, .font-main {
   color: $gray
 }
 
+.text-hover-gray:hover {
+  color: $gray !important;
+}
+
 .text-white, .white-button, .white-button:hover  {
-  color: $secondary-font;
+  color: $secondary-font !important;
 }
 
 .text-blue, .button-blue, .button-blue:hover {

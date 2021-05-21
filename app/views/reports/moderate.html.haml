@@ -22,9 +22,7 @@
                 %p 
                   %strong DESCRIPTION:
                   = @report.listing.description
-                  
 
-        
         - else 
           %strong Conversation message sent by #{@report.conversation_message.sender.username}
           #messages-container.h-100.text-center.mt-3

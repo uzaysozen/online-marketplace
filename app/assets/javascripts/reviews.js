@@ -19,6 +19,8 @@ load = (loadEvent) => {
             }
         })
     }
+
+    $('.rating').rating();
 }
 
 document.addEventListener('turbolinks:load', load);

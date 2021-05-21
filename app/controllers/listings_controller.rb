@@ -154,7 +154,7 @@ class ListingsController < ApplicationController
   end
 
   def mylistings
-    @listings = Listing.includes([:creator, :listing_condition, :images_attachments]).accessible_by(current_ability, :update)
+    @listings = Listing.includes([:creator, :listing_condition, :images_attachments]).where(creator: current_user, listing_status: ListingStatus.find_by(name: 'Active'))
   end
 
   # GET /listings/1
