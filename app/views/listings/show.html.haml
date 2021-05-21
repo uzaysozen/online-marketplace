@@ -121,7 +121,7 @@
                   .text-muted
                     Free
                 - else
-                  = number_to_currency listing.price, unit: "£" 
+                  = number_to_currency @listing.price, unit: "£" 
 
             .row
               - if @listing.listing_status.name != 'Complete'

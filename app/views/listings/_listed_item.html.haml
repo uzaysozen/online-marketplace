@@ -34,12 +34,12 @@
             Delivery Option
 
           .text-medium.text-black
-            - if @listing.price == 0
+            - if listed_item.price == 0
               .text-muted
                 Free
             - else
               £
-              = sprintf '%.2f', @listing.price
+              = sprintf '%.2f', listed_item.price
 
 
         - if current_user.id == listed_item.creator_id
