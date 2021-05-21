@@ -11,7 +11,10 @@
         .text-black.text-medium.text-left.text-bold.text-truncate
           = conversation.listing.title
         .text-medium.text-black.text-truncate
-          = conversation.listing.creator.givenname
+          - if current_user == conversation.listing.creator
+            = conversation.participant.givenname
+          - else
+            = conversation.listing.creator.givenname
         - if conversation.last_message
           .message-content.text-small.text-darkgray.text-truncate
             = conversation.last_message.content
