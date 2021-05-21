@@ -26,8 +26,8 @@ class Ability
         # Conversation
         can :create, Conversation
 
-        can :delete, Conversation, listing: { creator_id: user.id }
-        can :delete, Conversation, participant_id: user.id
+        can [:read, :delete], Conversation, listing: { creator_id: user.id }
+        can [:read, :delete], Conversation, participant_id: user.id
 
         # Favourites
         can :create, UserFavourite
