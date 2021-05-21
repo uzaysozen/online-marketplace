@@ -1,9 +1,15 @@
+- if @listing.creator_id == current_user.id
+  - username = @listing.receiver.username
+- else
+  - username = @listing.creator.username
+
 .modal-dialog
   .modal-content.p-4
     = simple_form_for :rating_form, url: add_rating_listing_path, remote: true do |f|
       
       .text-large.text-center Review
-      .text-medium.text-center.p-2 Leave a review for #{@listing.creator.username}
+      .text-medium.text-center.p-2 Leave a review for #{username}
+        
       = f.error_notification
 
       .text-center

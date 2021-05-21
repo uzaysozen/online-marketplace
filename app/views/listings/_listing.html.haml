@@ -33,7 +33,11 @@
               - is_first = false
 
         .text-medium.text-black.mb-2
-          = number_to_currency listing.price, unit: "£"
+          - if @listing.price == 0
+            .text-muted
+              Free
+          - else
+            = number_to_currency listing.price, unit: "£" 
 
         .row.p-2
           .col
